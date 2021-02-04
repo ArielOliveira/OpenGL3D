@@ -145,7 +145,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="Entity.h" />
-    <ClInclude Include="fileLoader.h" />
+    <ClInclude Include="FileLoader.h" />
     <ClInclude Include="GLRender.h" />
     <ClInclude Include="GLSLShader.h" />
     <ClInclude Include="GLTexture.h" />
@@ -176,7 +176,18 @@
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shader.shader" />
+    <None Include="..\data\msh\asian_town.msh" />
+    <None Include="..\data\msh\bunny.gts" />
+    <None Include="..\data\msh\cube.msh" />
+    <None Include="..\data\msh\Mesh.msh" />
+    <None Include="..\data\msh\meshExample.msh" />
+    <None Include="..\data\shaders\fragment.shader" />
+    <None Include="..\data\shaders\vertex.shader" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\data\textures\asian_town.png" />
+    <Image Include="..\data\textures\front.png" />
+    <Image Include="..\data\textures\top.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

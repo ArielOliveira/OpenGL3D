@@ -28,9 +28,8 @@ void Object3D::load(const char* filename) {
 	
 		do {
 			std::string textureName = bufferNode.child("material").child("texture").text().as_string();
-			std::string variablePath = path + textureName;
 
-			GLTexture* texture = new GLTexture(variablePath.c_str());
+			GLTexture* texture = new GLTexture((texturePath + textureName).c_str());
 			Material* material = new Material(texture);
 
 			std::vector<glm::int32> indices = FileLoader<glm::int32>::splitString(std::string(bufferNode.child("indices").text().as_string()), ',');

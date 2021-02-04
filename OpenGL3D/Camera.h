@@ -8,7 +8,6 @@ class Camera : public Entity {
 		glm::mat4 projection;
 		glm::vec3 clearColor;
 		glm::vec3 up;
-		glm::vec3 forward;
 		glm::vec3 lookAt;
 
 		const float speed = 2.f;

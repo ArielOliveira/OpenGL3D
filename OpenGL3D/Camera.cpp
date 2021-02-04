@@ -6,8 +6,6 @@ Camera::Camera(glm::vec3 position, glm::vec3 up, glm::vec3 lookAt, glm::vec3 cle
 	this->lookAt = lookAt;
 	this->clearColor = clearColor;
 	rot = glm::vec3(0);
-	
-	prepare();
 }
 
 Camera::~Camera() {
@@ -15,29 +13,32 @@ Camera::~Camera() {
 }
 
 void Camera::move(float timeStep) {
+	glm::vec3 right = glm::normalize(glm::cross(lookAt, up));
+	glm::vec3 newUp = glm::normalize(glm::cross(lookAt, right));
+
 	if (State::keybEvent[GLFW_KEY_W])
-		pos += forward * timeStep * speed;
+		pos += lookAt * timeStep * speed;
 	if (State::keybEvent[GLFW_KEY_S])
-		pos -= forward * timeStep * speed;
+		pos -= lookAt * timeStep * speed;
 	if (State::keybEvent[GLFW_KEY_A])
-		pos -= glm::normalize(glm::cross(forward, up)) * timeStep * speed;
+		pos -= right * timeStep * speed;
 	if (State::keybEvent[GLFW_KEY_D])
-		pos += glm::normalize(glm::cross(forward, up)) * timeStep * speed;
+		pos += right * timeStep * speed;
 	if (State::keybEvent[GLFW_KEY_E])
-		pos += up * timeStep * speed;
+		pos -= newUp * timeStep * speed;
 	if (State::keybEvent[GLFW_KEY_Q]) 
-		pos -= up * timeStep * speed;
+		pos += newUp * timeStep * speed;
 	
 	glm::vec3 direction(0);
 
 	direction.x = cos(glm::radians(State::xRoll)) * cos(glm::radians(State::yRoll)) * timeStep;
 	direction.y = -sin(glm::radians(State::yRoll)) * timeStep;
 	direction.z = sin(glm::radians(State::xRoll)) * cos(glm::radians(State::yRoll)) * timeStep;
-	forward = glm::normalize(direction);
+	lookAt = glm::normalize(direction);
 }
 
 void Camera::prepare() {
-	modelMtx = glm::lookAt(pos, lookAt, up);
+	modelMtx = glm::lookAt(pos, pos + lookAt, up);
 
 	State::viewMatrix = modelMtx;
 	State::projectionMatrix = projection;
@@ -46,8 +47,6 @@ void Camera::prepare() {
 
 void Camera::step(float timeStep) {
 	move(timeStep);
-	modelMtx = glm::lookAt(pos, pos + forward, up);
-	State::viewMatrix = modelMtx;
-	State::projectionMatrix = projection;
+	prepare();
 	glClearColor(clearColor.x, clearColor.y, clearColor.z, 1);
 }

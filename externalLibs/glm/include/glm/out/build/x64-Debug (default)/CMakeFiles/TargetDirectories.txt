@@ -1,0 +1,2 @@
+F:/VSProjects/OpenGL3D/externalLibs/glm/include/glm/out/build/x64-Debug (default)/CMakeFiles/edit_cache.dir
+F:/VSProjects/OpenGL3D/externalLibs/glm/include/glm/out/build/x64-Debug (default)/CMakeFiles/rebuild_cache.dir
