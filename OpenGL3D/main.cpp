@@ -63,8 +63,9 @@ int main(void) {
 
 	State::defaultShader = new GLSLShader(parseShader(shaderPath + "vertex.shader"), parseShader(shaderPath + "fragment.shader"));
 
-	Object3D cube((meshPath + "asian_town.msh").c_str());
-	cube.setSize(glm::vec3(10.f, 10.f, 10.f));
+	//Model cube((meshPath + "asian_town.msh").c_str());
+	//cube.setSize(glm::vec3(10.f, 10.f, 10.f));
+	Cube cube;
 	render->setupObj(&cube);
 
 	World* world = new World();

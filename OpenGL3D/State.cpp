@@ -24,15 +24,15 @@ bool State::firstInput = true;
 void State::keyCallback(GLFWwindow* window, int key, int scancode, int action, int
 	mods)
 {
-	setAxis(key, action);
 	switch (action)
 	{
 	case GLFW_PRESS:
 		keybEvent[key] = 1;
-		
+		setAxis(key, 1);
 		break;
 	case GLFW_RELEASE:
 		keybEvent[key] = 0;
+		setAxis(key, 0);
 		break;
 	default:
 		break;
