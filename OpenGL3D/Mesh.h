@@ -17,7 +17,7 @@ struct vertex_t {
 	}
 };
 
-class Mesh3D {
+class Mesh {
 	private:
 		glm::uint32 meshID;
 		
@@ -25,20 +25,28 @@ class Mesh3D {
 
 		vector<vertex_t>* vVertList;
 		vector<glm::int32>* vIdxList;
-
-
+		
+		int vertexCount;
+		int textCount;
 	public:
 		static glm::uint32 globalMeshID;
 
-		Mesh3D();
-		Mesh3D(vector<vertex_t>* vertexList, vector<glm::int32>* indexList);
-		~Mesh3D();
+		Mesh();
+		Mesh(vector<vertex_t>* vertexList, vector<glm::int32>* indexList, int vertexCount, int textCount);
+		~Mesh();
 
 		glm::uint32 getMeshID();
 
 		void addVertex(const vertex_t& vertex);
 		void addTriangleIdx(const glm::int32& v1, const glm::int32& v2, const glm::int32& v3);
 		
+		void setVertexCount(const int& count);
+		void setTextCount(const int& count);
+
+		const int getVertexCount() const;
+		const int getTextCount() const;
+		
+
 		vector<vertex_t>* getVertList();
 		vector<glm::int32>* getTriangleIdxList();
 

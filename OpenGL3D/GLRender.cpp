@@ -16,9 +16,9 @@ bool GLRender::init() {
 	return true;
 }
 
-void GLRender::setupObj(Object3D* obj) {	
+void GLRender::setupObj(Model* obj) {	
 	for (int i = 0; i < obj->getMeshCount(); i++) {
-		Mesh3D* mesh = obj->getMesh(i);
+		Mesh* mesh = obj->getMesh(i);
 		GLSLShader* shader = obj->getMaterial(i).getShader();
 		
 		if (!shader)
@@ -44,18 +44,15 @@ void GLRender::setupObj(Object3D* obj) {
 		GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices->size(),
 			indices->data(), GL_STATIC_DRAW));
 
-		GLCall(glVertexAttribPointer(VERTEX_ATTRIB_IDX, 4, GL_FLOAT, GL_FALSE, sizeof(vertex_t), (void*)0));
+		GLCall(glVertexAttribPointer(VERTEX_ATTRIB_IDX, mesh->getVertexCount(), GL_FLOAT, GL_FALSE, sizeof(vertex_t), (void*)0));
 		GLCall(glEnableVertexAttribArray(VERTEX_ATTRIB_IDX));
 
-		GLCall(glVertexAttribPointer(COLOR_ATTRIB_IDX, 4, GL_FLOAT, GL_FALSE, sizeof(vertex_t), (void*)offsetof(vertex_t, color)));
-		GLCall(glEnableVertexAttribArray(COLOR_ATTRIB_IDX));
-
-		GLCall(glVertexAttribPointer(TEXT_ATTRIB_IDX, 2, GL_FLOAT, GL_FALSE, sizeof(vertex_t), (void*)offsetof(vertex_t, texture)));
+		GLCall(glVertexAttribPointer(TEXT_ATTRIB_IDX, mesh->getTextCount(), GL_FLOAT, GL_FALSE, sizeof(vertex_t), (void*)offsetof(vertex_t, texture)));
 		GLCall(glEnableVertexAttribArray(TEXT_ATTRIB_IDX));
 	}
 }
 
-void GLRender::drawObject(Mesh3D* mesh, Material* material) {
+void GLRender::drawObject(Mesh* mesh, Material* material) {
 	material->prepare(State::modelMatrix, State::viewMatrix, State::projectionMatrix);
 	GLCall(glBindVertexArray(vMeshIDs[mesh->getMeshID()].bufferID));
 	GLCall(glDrawElements(GL_TRIANGLES, mesh->getTriangleIdxList()->size(), GL_UNSIGNED_INT, nullptr));
@@ -63,7 +60,7 @@ void GLRender::drawObject(Mesh3D* mesh, Material* material) {
 
 void GLRender::drawWorld(World* world) {
 	for (int i = 0; i < world->getNumObjects(); i++) {
-		Object3D* obj = world->getObject(i);
+		Model* obj = world->getObject(i);
 		State::modelMatrix = obj->getModelMtx();
 		for (int i = 0; i < obj->getMeshCount(); i++)
 			drawObject(obj->getMesh(i), &obj->getMaterial(i));

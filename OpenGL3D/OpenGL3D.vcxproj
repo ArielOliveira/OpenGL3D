@@ -150,9 +150,8 @@
     <ClInclude Include="GLSLShader.h" />
     <ClInclude Include="GLTexture.h" />
     <ClInclude Include="Material.h" />
-    <ClInclude Include="Mesh3D.h" />
-    <ClInclude Include="meshLoader.h" />
-    <ClInclude Include="Object3D.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="OpenGLDebugger.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="Triangle.h" />
@@ -167,9 +166,8 @@
     <ClCompile Include="GLTexture.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Material.cpp" />
-    <ClCompile Include="Mesh3D.cpp" />
-    <ClCompile Include="meshLoader.cpp" />
-    <ClCompile Include="Object3D.cpp" />
+    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="Model.cpp" />
     <ClCompile Include="pugixml.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="Triangle.cpp" />

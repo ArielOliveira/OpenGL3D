@@ -24,16 +24,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Mesh3D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GLSLShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OpenGLDebugger.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Object3D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GLRender.h">
@@ -63,24 +57,21 @@
     <ClInclude Include="Cube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="meshLoader.h">
+    <ClInclude Include="FileLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FileLoader.h">
+    <ClInclude Include="Mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Mesh3D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GLSLShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Object3D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GLRender.cpp">
@@ -110,10 +101,13 @@
     <ClCompile Include="Cube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="meshLoader.cpp">
+    <ClCompile Include="pugixml.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="pugixml.cpp">
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

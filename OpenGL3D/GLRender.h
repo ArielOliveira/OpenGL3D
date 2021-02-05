@@ -4,7 +4,7 @@
 #include <glm/ext.hpp>
 #include <map>
 
-#include "Object3D.h"
+#include "Model.h"
 #include "World.h"
 
 using std::map;
@@ -24,8 +24,8 @@ class GLRender {
 
 		bool init();
 
-		void setupObj(Object3D* obj);
-		void drawObject(Mesh3D* mesh, Material* material);
+		void setupObj(Model* obj);
+		void drawObject(Mesh* mesh, Material* material);
 		void drawWorld(World* world);
 };
 

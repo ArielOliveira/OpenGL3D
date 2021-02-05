@@ -2,26 +2,26 @@
 #include <vector>
 
 #include "Entity.h"
-#include "Mesh3D.h"
+#include "Mesh.h"
 #include "Material.h"
 #include "FileLoader.h"
 
 using std::vector;
 
-class Object3D : public Entity {
+class Model : public Entity {
 	protected:
-		vector<Mesh3D*> meshList;
+		vector<Mesh*> meshList;
 		vector<Material*> materialList;
 
 	public:
-		Object3D();
-		Object3D(const Object3D& object);
-		Object3D(const char* filename);
-		~Object3D();
+		Model();
+		Model(const Model& object);
+		Model(const char* filename);
+		~Model();
 
 		void load(const char* filename);
 
-		void addMesh(Mesh3D* mesh, Material* material);
+		void addMesh(Mesh* mesh, Material* material);
 
 		const Material& getMaterial(size_t index) const;
 		Material& getMaterial(size_t index);
@@ -29,7 +29,7 @@ class Object3D : public Entity {
 		int getMeshCount();
 		int getMaterialCount();
 		
-		Mesh3D* getMesh(const int& pos);
+		Mesh* getMesh(const int& pos);
 
 		virtual void step(float deltaTime);
 };

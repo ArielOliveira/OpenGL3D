@@ -1,9 +1,13 @@
 #include "Cube.h"
 
 Cube::Cube() {
-	Material* material = new Material(new GLTexture("front.png"), nullptr);
+	Material* material = new Material(new GLTexture((texturePath + "front.png").c_str()), nullptr);
 
-	Mesh3D* front = new Mesh3D();
+	Mesh* front = new Mesh();
+	
+	front->setVertexCount(4);
+	front->setTextCount(2);
+
 	front->addVertex(vertex_t(glm::vec4(-.5f, -.5f, -.5f, 1.f), glm::vec4(1.f, 1.f, 1.f, 1.f), glm::vec2(.0f, .0f)));
 	front->addVertex(vertex_t(glm::vec4(.5f, -.5f, -.5f, 1.f), glm::vec4(1.f, 1.f, 1.f, 1.f), glm::vec2(1.f, .0f)));
 	front->addVertex(vertex_t(glm::vec4(.5f, .5f, -.5f, 1.f), glm::vec4(1.f, 1.f, 1.f, 1.f), glm::vec2(1.f, 1.f)));
@@ -14,7 +18,10 @@ Cube::Cube() {
 
 	addMesh(front, material);
 
-	Mesh3D* back = new Mesh3D();
+	Mesh* back = new Mesh();
+	back->setVertexCount(4);
+	back->setTextCount(2);
+
 	back->addVertex(vertex_t(glm::vec4(-.5f, -.5f, .5f, 1.f), glm::vec4(1.f, 1.f, 1.f, 1.f), glm::vec2(.0f, .0f)));
 	back->addVertex(vertex_t(glm::vec4(.5f, -.5f, .5f, 1.f), glm::vec4(1.f, 1.f, 1.f, 1.f), glm::vec2(1.f, .0f)));
 	back->addVertex(vertex_t(glm::vec4(.5f, .5f, .5f, 1.f), glm::vec4(1.f, 1.f, 1.f, 1.f), glm::vec2(1.f, 1.f)));
@@ -25,7 +32,10 @@ Cube::Cube() {
 
 	addMesh(back, material);
 
-	Mesh3D* left = new Mesh3D();
+	Mesh* left = new Mesh();
+
+	left->setVertexCount(4);
+	left->setTextCount(2);
 
 	left->addVertex(vertex_t(glm::vec4(-.5f, -.5f, -.5f, 1.f), glm::vec4(1.f, 1.f, 1.f, 1.f), glm::vec2(.0f, .0f)));
 	left->addVertex(vertex_t(glm::vec4(-.5f, .5f, -.5f, 1.f), glm::vec4(1.f, 1.f, 1.f, 1.f), glm::vec2(1.f, .0f)));
@@ -37,7 +47,11 @@ Cube::Cube() {
 
 	addMesh(left, material);
 
-	Mesh3D* right = new Mesh3D();
+	Mesh* right = new Mesh();
+
+	right->setVertexCount(4);
+	right->setTextCount(2);
+
 	right->addVertex(vertex_t(glm::vec4(.5f, -.5f, -.5f, 1.f), glm::vec4(1.f, 1.f, 1.f, 1.f), glm::vec2(.0f, .0f)));
 	right->addVertex(vertex_t(glm::vec4(.5f, .5f, -.5f, 1.f), glm::vec4(1.f, 1.f, 1.f, 1.f), glm::vec2(1.f, .0f)));
 	right->addVertex(vertex_t(glm::vec4(.5f, .5f, .5f, 1.f), glm::vec4(1.f, 1.f, 1.f, 1.f), glm::vec2(1.f, 1.f)));
@@ -48,8 +62,11 @@ Cube::Cube() {
 
 	addMesh(right, material);
 
-	Material* material2 = new Material(new GLTexture("top.png"), nullptr);
-	Mesh3D* top = new Mesh3D();
+	Material* material2 = new Material(new GLTexture((texturePath + "top.png").c_str()), nullptr);
+	Mesh* top = new Mesh();
+
+	top->setVertexCount(4);
+	top->setTextCount(2);
 
 	top->addVertex(vertex_t(glm::vec4(-.5f, .5f, -.5f, 1.f), glm::vec4(1.f, 1.f, 1.f, 1.f), glm::vec2(.0f, .0f)));
 	top->addVertex(vertex_t(glm::vec4(.5f, .5f, -.5f, 1.f), glm::vec4(1.f, 1.f, 1.f, 1.f), glm::vec2(1.f, .0f)));
@@ -61,7 +78,10 @@ Cube::Cube() {
 
 	addMesh(top, material2);
 
-	Mesh3D* bottom = new Mesh3D();
+	Mesh* bottom = new Mesh();
+
+	bottom->setVertexCount(4);
+	bottom->setTextCount(2);
 
 	bottom->addVertex(vertex_t(glm::vec4(-.5f, -.5f, -.5f, 1.f), glm::vec4(1.f, 1.f, 1.f, 1.f), glm::vec2(.0f, .0f)));
 	bottom->addVertex(vertex_t(glm::vec4(.5f, -.5f, -.5f, 1.f), glm::vec4(1.f, 1.f, 1.f, 1.f), glm::vec2(1.f, .0f)));
@@ -76,9 +96,9 @@ Cube::Cube() {
 	setSize(glm::vec3(1.f, 1.f, 1.f));
 	setPos(glm::vec3(.0f, .0f, .0f));
 }
-Cube::Cube(const Cube& cube) : Object3D(cube) {}
+Cube::Cube(const Cube& cube) : Model(cube) {}
 
-Cube::Cube(const char* filename) : Object3D(filename) {}
+Cube::Cube(const char* filename) : Model(filename) {}
 
 Cube::~Cube() {}
 void Cube::step(float deltaTime) {
@@ -86,5 +106,5 @@ void Cube::step(float deltaTime) {
 	rot.y = fmodf(rot.y + glm::radians(32.0f) * deltaTime, glm::radians(360.0f));
 	//rot.z = fmodf(rot.z + glm::radians(32.0f) * deltaTime, glm::radians(360.0f));
 	
-	Object3D::step(deltaTime);
+	Model::step(deltaTime);
 }

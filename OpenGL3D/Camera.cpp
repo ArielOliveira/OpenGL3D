@@ -1,10 +1,11 @@
 #include "Camera.h"
 
-Camera::Camera(glm::vec3 position, glm::vec3 up, glm::vec3 lookAt, glm::vec3 clearColor) {
+Camera::Camera(glm::vec3 position, glm::vec3 up, glm::vec3 lookAt, glm::vec3 clearColor, glm::mat4 projection) {
 	this->pos = position;
 	this->up = up;
 	this->lookAt = lookAt;
 	this->clearColor = clearColor;
+	this->projection = projection;
 	rot = glm::vec3(0);
 }
 
@@ -16,14 +17,11 @@ void Camera::move(float timeStep) {
 	glm::vec3 right = glm::normalize(glm::cross(lookAt, up));
 	glm::vec3 newUp = glm::normalize(glm::cross(lookAt, right));
 
-	if (State::keybEvent[GLFW_KEY_W])
-		pos += lookAt * timeStep * speed;
-	if (State::keybEvent[GLFW_KEY_S])
-		pos -= lookAt * timeStep * speed;
-	if (State::keybEvent[GLFW_KEY_A])
-		pos -= right * timeStep * speed;
-	if (State::keybEvent[GLFW_KEY_D])
-		pos += right * timeStep * speed;
+	rot.x = State::mouseX;
+	rot.y = State::mouseY;
+	
+	pos += (lookAt * State::leftAxisY + right * State::leftAxisX) * timeStep * speed;
+
 	if (State::keybEvent[GLFW_KEY_E])
 		pos -= newUp * timeStep * speed;
 	if (State::keybEvent[GLFW_KEY_Q]) 
@@ -31,9 +29,9 @@ void Camera::move(float timeStep) {
 	
 	glm::vec3 direction(0);
 
-	direction.x = cos(glm::radians(State::xRoll)) * cos(glm::radians(State::yRoll)) * timeStep;
-	direction.y = -sin(glm::radians(State::yRoll)) * timeStep;
-	direction.z = sin(glm::radians(State::xRoll)) * cos(glm::radians(State::yRoll)) * timeStep;
+	direction.x = cos(glm::radians(rot.x)) * cos(glm::radians(rot.y));
+	direction.y = -sin(glm::radians(rot.y));
+	direction.z = sin(glm::radians(rot.x)) * cos(glm::radians(rot.y));
 	lookAt = glm::normalize(direction);
 }
 

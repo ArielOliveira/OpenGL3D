@@ -3,6 +3,9 @@
 #include <GLFW/glfw3.h>
 
 class State {
+private:
+	static void setAxis(int key, int input);
+
 public:
 	static GLSLShader* defaultShader;
 	static glm::mat4 projectionMatrix;
@@ -11,17 +14,21 @@ public:
 
 	static char keybEvent[512];
 
+
+	// Input
+	static float leftAxisX;
+	static float leftAxisY;
+
 	static double lastMouseX;
 	static double lastMouseY;
 
-	static double xRoll; //yaw
-	static double yRoll; //pitch
+	static double mouseX; //yaw
+	static double mouseY; //pitch
 
 	static double mouseSensitivity;
 
-	static double deltaTime;
-	
 	static bool firstInput;
+	/// ///////////////////////////
 
 	static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int
 		mods);

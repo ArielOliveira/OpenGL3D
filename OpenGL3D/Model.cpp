@@ -1,19 +1,19 @@
-#include "Object3D.h"
+#include "Model.h"
 #include "pugixml.hpp"
 
-Object3D::Object3D() {}
+Model::Model() {}
 
-Object3D::Object3D(const Object3D& object) : 
+Model::Model(const Model& object) : 
 	meshList(object.meshList),
 	materialList(object.materialList),
 	Entity(object) 
 	{}
 
-Object3D::Object3D(const char* filename) {
+Model::Model(const char* filename) {
 	load(filename);
 }
 
-void Object3D::load(const char* filename) {
+void Model::load(const char* filename) {
 	std::string path = FileLoader<void*>::extractPath(filename);
 
 	if (path == "")
@@ -38,7 +38,11 @@ void Object3D::load(const char* filename) {
 
 			int vertexCompCount = bufferNode.child("coords").attribute("vertexCompCount").as_int();
 			int texCoordCompCount = bufferNode.child("texCoords").attribute("texCoordCompCount").as_int();
-			Mesh3D* mesh = new Mesh3D();
+			
+			Mesh* mesh = new Mesh();
+			
+			mesh->setVertexCount(vertexCompCount);
+			mesh->setTextCount(texCoordCompCount);
 
 			if ((vertices.size() / vertexCompCount) == (textCoords.size() / texCoordCompCount)) {
 				auto itVt = vertices.begin();
@@ -77,22 +81,22 @@ void Object3D::load(const char* filename) {
 	computeModelMtx();
 }
 
-Object3D::~Object3D() {}
+Model::~Model() {}
 
-void Object3D::addMesh(Mesh3D* mesh, Material* material) { 
+void Model::addMesh(Mesh* mesh, Material* material) { 
 	meshList.push_back(mesh); 
 	materialList.push_back(material);
 }
 
-Mesh3D* Object3D::getMesh(const int& pos) { return meshList[pos]; }
+Mesh* Model::getMesh(const int& pos) { return meshList[pos]; }
 
-const Material& Object3D::getMaterial(size_t pos) const { return *materialList[pos]; }
-Material& Object3D::getMaterial(size_t pos) { return *materialList[pos]; }
+const Material& Model::getMaterial(size_t pos) const { return *materialList[pos]; }
+Material& Model::getMaterial(size_t pos) { return *materialList[pos]; }
 
-int Object3D::getMeshCount() { return meshList.size(); }
-int Object3D::getMaterialCount() { return materialList.size(); }
+int Model::getMeshCount() { return meshList.size(); }
+int Model::getMaterialCount() { return materialList.size(); }
 
-void Object3D::step(float deltaTime) {
+void Model::step(float deltaTime) {
 	computeModelMtx();
 }
 

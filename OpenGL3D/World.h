@@ -1,10 +1,10 @@
 #pragma once
-#include "Object3D.h"
+#include "Model.h"
 #include "Camera.h"
 
 class World {
 	private:
-		std::vector<Object3D*> objs;
+		std::vector<Model*> objs;
 		std::vector<Camera*> cameras;
 
 		int activeCamera;
@@ -12,16 +12,16 @@ class World {
 	public:
 		World();
 
-		void addObject(Object3D* obj);
+		void addObject(Model* obj);
 		void addCamera(Camera* Cam);
 
-		void removeObject(Object3D* obj);
+		void removeObject(Model* obj);
 		void removeCamera(Camera* cam);
 
 		size_t getNumObjects();
 		size_t getNumCameras();
 
-		Object3D* getObject(size_t index);
+		Model* getObject(size_t index);
 		Camera* getCamera(size_t index);
 
 		

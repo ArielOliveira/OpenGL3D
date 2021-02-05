@@ -6,33 +6,49 @@ glm::mat4 State::viewMatrix = glm::mat4(1);
 glm::mat4 State::modelMatrix = glm::mat4(1);
 char State::keybEvent[512];
 
+// Input
+float State::leftAxisX = 0;
+float State::leftAxisY = 0;
+
 double State::lastMouseX = 0;
 double State::lastMouseY = 0;
 
-double State::xRoll = 0;
-double State::yRoll = 0;
+double State::mouseX = 0;
+double State::mouseY = 0;
 
 double State::mouseSensitivity = .1f;
 
-double State::deltaTime = 0;
-
 bool State::firstInput = true;
+/// ///////////////////////////
 
 void State::keyCallback(GLFWwindow* window, int key, int scancode, int action, int
 	mods)
 {
+	setAxis(key, action);
 	switch (action)
 	{
 	case GLFW_PRESS:
-		//printf("Tecla apretada %d\n", key);
 		keybEvent[key] = 1;
+		
 		break;
 	case GLFW_RELEASE:
-		//printf("Tecla levantada %d\n", key);
 		keybEvent[key] = 0;
 		break;
 	default:
 		break;
+	}
+}
+
+void State::setAxis(int key, int input) {
+	switch (key) {
+		case GLFW_KEY_W: leftAxisY = input;
+			break;
+		case GLFW_KEY_S: leftAxisY = -input;
+			break;
+		case GLFW_KEY_A: leftAxisX = -input;
+			break;
+		case GLFW_KEY_D: leftAxisX = input;
+			break;
 	}
 }
 
@@ -43,20 +59,18 @@ void State::cursor_position_callback(GLFWwindow* window, double xpos, double ypo
 		lastMouseY = ypos;
 		firstInput = false;
 	}
-	float inputX = (xpos - lastMouseX) * mouseSensitivity;
-	float inputY = (ypos - lastMouseY) * mouseSensitivity;
+	mouseX += (xpos - lastMouseX) * mouseSensitivity;
+	mouseY += (ypos - lastMouseY) * mouseSensitivity;
 
 	lastMouseX = xpos;
 	lastMouseY = ypos;
 
-	xRoll += inputX;
-	yRoll += inputY;
-
-	if (yRoll > 89.f)
-		yRoll = 89.f;
-	if (yRoll < -89.f)
-		yRoll = -89.f;
-	//mouseInput.x = fmodf(mouseInput.x, )
+	mouseX = fmodf(mouseX, 360.0f);
+	
+	if (mouseY > 89.f)
+		mouseY = 89.f;
+	if (mouseY < -89.f)
+		mouseY = -89.f;
 }
 
 static glm::vec3 QuaternionToVector(glm::quat quat, glm::vec3 vec) {

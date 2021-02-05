@@ -1,7 +1,7 @@
 #pragma once
-#include "Object3D.h"
+#include "Model.h"
 #include "State.h"
-class Cube : public Object3D {
+class Cube : public Model {
 public:
 	Cube();
 	Cube(const Cube& cube);
