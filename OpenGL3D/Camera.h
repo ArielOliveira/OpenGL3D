@@ -1,6 +1,7 @@
 #pragma once
 #include "Entity.h"
 #include "State.h"
+#include "Input.h"
 #include <GLFW/glfw3.h>
 
 class Camera : public Entity {

@@ -17,15 +17,24 @@ void Camera::move(float timeStep) {
 	glm::vec3 right = glm::normalize(glm::cross(lookAt, up));
 	glm::vec3 newUp = glm::normalize(glm::cross(lookAt, right));
 
-	rot.x = State::mouseX;
-	rot.y = State::mouseY;
-	
-	pos += (lookAt * State::leftAxisY + right * State::leftAxisX) * timeStep * speed;
+	rot.x += (Input::rightAxisX + Input::mouseX) * speed;
+	rot.y += (Input::rightAxisY + Input::mouseY) * speed;
 
-	if (State::keybEvent[GLFW_KEY_E])
+
+	if (rot.x >= 360.0f)
+		rot.x = 0;
+
+	if (rot.y > 89.f)
+		rot.y = 89.f;
+	if (rot.y < -89.f)
+		rot.y = -89.f;
+	
+	pos += (lookAt * Input::leftAxisY + right * Input::leftAxisX) * timeStep * speed;
+
+	/*if (Input::keybEvent[GLFW_KEY_E])
 		pos -= newUp * timeStep * speed;
-	if (State::keybEvent[GLFW_KEY_Q]) 
-		pos += newUp * timeStep * speed;
+	if (Input::keybEvent[GLFW_KEY_Q]) 
+		pos += newUp * timeStep * speed;*/
 	
 	glm::vec3 direction(0);
 

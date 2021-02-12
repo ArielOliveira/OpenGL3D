@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <sstream>
+#include <vector>
 
 const std::string meshPath = "../data/msh/";
 const std::string texturePath = "../data/textures/";

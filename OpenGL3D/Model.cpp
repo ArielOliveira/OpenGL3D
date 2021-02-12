@@ -99,18 +99,3 @@ int Model::getMaterialCount() { return materialList.size(); }
 void Model::step(float deltaTime) {
 	computeModelMtx();
 }
-
-
-/*	if ((vertices.size() / vertexCompCount) == (textCoords.size() / texCoordCompCount)) {
-			for (size_t i = 0; i < verticesCount; i++) {
-				glm::vec4 vertex(vertices[i*3], vertices[(i *3) + 1], vertices[(i * 3) + 2], 1);
-				glm::vec2 textCoord(textCoords[i*2], textCoords[(i*2) +1]);
-
-				///std::cout << i * 3 << " " << (i * 3) + 1 << " " << i * 3 + 2 << " " << i * 2 << " " << (i * 2) + 1 << std::endl;
-
-				mesh->addVertex(vertex_t(vertex, glm::vec4(1), textCoord));
-			}
-		} else {
-			std::cout << "Invalid data, vertices and texture coordinates doesn't match!" << std::endl;
-			exit(-1);
-		}*/

@@ -1,7 +1,20 @@
 #include "GLSLShader.h"
 
 GLSLShader::GLSLShader(const string& vertexPrg, const string& fragmentPrg) {
-	createShader(vertexPrg, fragmentPrg);
+	std::string vertexSource = parseShader(vertexPrg);
+	std::string fragmentSource = parseShader(fragmentPrg);
+
+	if (vertexSource == "") {
+		std::cout << "Could not load vertex shader file. Exiting" << std::endl;
+		exit(-1);
+	}
+
+	if (fragmentSource == "") {
+		std::cout << "Could not load fragment shader file. Exiting" << std::endl;
+		exit(-1);
+	}
+
+	createShader(vertexSource, fragmentSource);
 	use();
 	setupAttribs();
 }
@@ -12,10 +25,23 @@ GLSLShader::GLSLShader() {
 
 GLSLShader::~GLSLShader() {}
 
+std::string GLSLShader::parseShader(const std::string& filepath) {
+	std::fstream stream(filepath);
+
+	std::string line;
+	std::stringstream ss;
+
+	while (getline(stream, line)) {
+		ss << line << '\n';
+	}
+
+	return ss.str();
+}
+
 glm::uint32 GLSLShader::compileShader(const glm::uint32& type, const std::string& source) {
 	unsigned id = glCreateShader(type); // Cria um objeto shader e atribui seu valor ao id
 	const char* src = source.c_str();
-	glShaderSource(id, 1, &src, nullptr); // Carrega a string para ser código fonte do shader especificado
+	glShaderSource(id, 1, &src, nullptr); // Carrega a string para ser c?digo fonte do shader especificado
 	glCompileShader(id); // Compila o shader
 
 	int result;
@@ -28,7 +54,7 @@ glm::uint32 GLSLShader::compileShader(const glm::uint32& type, const std::string
 		std::cout << "O Shader " << (type == GL_VERTEX_SHADER ? "vertex" : "fragment") << " falhou ao compilar! " << std::endl;
 		std::cout << message << std::endl;
 		GLCall(glDeleteShader(id));
-		return 0;
+		return -1;
 	}
 	return id;
 }
@@ -37,6 +63,9 @@ glm::uint32 GLSLShader::createShader(const std::string& vertexShader, const std:
 	programID = glCreateProgram(); // Cria um objeto de programa
 	unsigned int vs = compileShader(GL_VERTEX_SHADER, vertexShader);
 	unsigned int fs = compileShader(GL_FRAGMENT_SHADER, fragmentShader);
+
+	if (vs == -1 || fs == -1)
+		exit(-1);
 
 	GLCall(glAttachShader(programID, vs)); // Liga o shader compilado ao objeto de programa
 	GLCall(glAttachShader(programID, fs));
