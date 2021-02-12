@@ -3,21 +3,18 @@ cmake_minimum_required(VERSION 3.12)
 set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=c++20")
 
-set(INCLUDE_DIR "./include/")
-set(SRC_DIR "./src/")
+set(ROOT "../..")
 
-set(GLFW_INCLUDE "./libs/glfw/include/GLFW/")
-set(GLEW_INCLUDE "./libs/glew/include/GL/")
-set(GLM_INCLUDE "./libs/glm/include/glm/")
+set(INCLUDE_DIR "${ROOT}/include/")
+set(SRC_DIR "${ROOT}/src/")
 
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ./lib/)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ./lib/)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ./bin/)
+set(GLFW_INCLUDE "${ROOT}/lib/glfw/include/GLFW/")
+set(GLEW_INCLUDE "${ROOT}/lib/glew/include/GL/")
+set(GLM_INCLUDE "${ROOT}/lib/glm/include/glm/")
 
-#set(CMAKE_PREFIX_PATH "./libs/glew/")
-#set(CMAKE_LIBRARY_PATH "./libs/glew/lib/")
-
-
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${ROOT}/lib/")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${ROOT}/bin/")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${ROOT}/bin/")
 
 project(OpenGL3DEngine)
 
@@ -27,25 +24,14 @@ include_directories(
     ${GLM_INCLUDE}
     ${INCLUDE_DIR}
 )
-file(GLOB OpenGL3DEngine_SRC CONFIGURE_DEPENDS "${INCLUDE_DIR}/*.h" "${SRC_DIR}/*.cpp")
+file(GLOB OpenGL3DEngine_SRC CONFIGURE_DEPENDS "${INCLUDE_DIR}/*.h" "${INCLUDE_DIR}/*.hpp" "${SRC_DIR}/*.cpp")
 
 add_executable(OpenGL3DEngine ${OpenGL3DEngine_SRC})
 
 add_definitions(-DGLEW_STATIC)
 
-#find_library(GLFW glfw3.lib ./libs/glfw/lib-vc2019/)
-#find_library(GLEWS glew32s.lib ./libs/glew/lib/)
-
-#target_link_libraries(OpenGL3DEngine PUBLIC OpenGL32 ${GLEW} ${GLFW})
-
-find_library(GLFW glfw3.lib ./libs/glfw/lib-vc2019/)
-target_link_libraries(OpenGL3DEngine ${GLFW})
-
+find_library(GLFW glfw3.lib "${ROOT}/lib/glfw/lib-vc2019/")
 find_package(OpenGL REQUIRED)
-target_link_libraries(OpenGL3DEngine OpenGL::GL)
+find_library(GLEW glew32s.lib "${ROOT}/lib/glew/lib/")
 
-find_library(GLEW glew32s.lib ./libs/glew/lib/)
-target_link_libraries(OpenGL3DEngine ${GLEW})
-
-
-
+target_link_libraries(OpenGL3DEngine ${GLEW} ${GLFW} OpenGL::GL)

@@ -1,4 +1,4 @@
-#include "Camera.h"
+#include "Camera.hpp"
 
 Camera::Camera(glm::vec3 position, glm::vec3 up, glm::vec3 lookAt, glm::vec3 clearColor, glm::mat4 projection) {
 	this->pos = position;

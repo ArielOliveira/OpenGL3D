@@ -1,4 +1,4 @@
-#include "GLSLShader.h"
+#include "GLSLShader.hpp"
 
 GLSLShader::GLSLShader(const string& vertexPrg, const string& fragmentPrg) {
 	std::string vertexSource = parseShader(vertexPrg);

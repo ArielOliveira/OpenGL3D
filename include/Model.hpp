@@ -1,10 +1,10 @@
 #pragma once
 #include <vector>
 
-#include "Entity.h"
-#include "Mesh.h"
-#include "Material.h"
-#include "FileLoader.h"
+#include "Entity.hpp"
+#include "Mesh.hpp"
+#include "Material.hpp"
+#include "FileLoader.hpp"
 
 using std::vector;
 

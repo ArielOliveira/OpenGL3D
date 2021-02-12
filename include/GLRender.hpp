@@ -1,11 +1,11 @@
 #pragma once
-#include <GL/glew.h>
-#include <glm/glm.hpp>
-#include <glm/ext.hpp>
+#include <glew.h>
+#include <glm.hpp>
+#include <ext.hpp>
 #include <map>
 
-#include "Model.h"
-#include "World.h"
+#include "Model.hpp"
+#include "World.hpp"
 
 using std::map;
 

@@ -1,6 +1,6 @@
 #pragma once
-#include "Model.h"
-#include "Camera.h"
+#include "Model.hpp"
+#include "Camera.hpp"
 
 class World {
 	private:

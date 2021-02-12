@@ -1,5 +1,5 @@
-#include "Triangle.h"
-#include "GLRender.h"
+#include "Triangle.hpp"
+#include "GLRender.hpp"
 
 Triangle::Triangle() {}
 

@@ -1,10 +1,10 @@
 #pragma once
 
-#include "OpenGLDebugger.h"
-#include "FileLoader.h"
+#include "OpenGLDebugger.hpp"
+#include "FileLoader.hpp"
 
-#include <GLM\glm.hpp>
-#include <GLM\ext.hpp>
+#include <glm.hpp>
+#include <ext.hpp>
 #include <map>
 #include <fstream>
 #include <string>

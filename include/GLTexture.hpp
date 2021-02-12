@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
-#include <glm/glm.hpp>
-#include <GL/glew.h>
+#include <glm.hpp>
+#include <glew.h>
 
 class GLTexture {
 	private:

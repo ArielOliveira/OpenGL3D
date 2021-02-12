@@ -1,7 +1,7 @@
 #pragma once
-#include "GLSLShader.h"
-#include "GLTexture.h"
-#include "State.h"
+#include "GLSLShader.hpp"
+#include "GLTexture.hpp"
+#include "State.hpp"
 
 class Material {
 	private:

@@ -1,4 +1,4 @@
-#include "GLRender.h"
+#include "GLRender.hpp"
 
 GLRender::GLRender() {
 

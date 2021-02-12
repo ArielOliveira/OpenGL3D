@@ -1,4 +1,4 @@
-#include "State.h"
+#include "State.hpp"
 
 GLSLShader* State::defaultShader = nullptr;
 glm::mat4 State::projectionMatrix = glm::mat4(1);

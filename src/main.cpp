@@ -1,20 +1,20 @@
-#include "OpenGLDebugger.h"
+#include "OpenGLDebugger.hpp"
 
-#include <GLFW/glfw3.h>
+#include <glfw3.h>
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <sstream>
 
-#include "Mesh.h"
-#include "GLSLShader.h"
-#include "GLRender.h"
-#include "Triangle.h"
-#include "Cube.h"
-#include "State.h"
-#include "Input.h"
-#include "World.h"
-#include "GLTexture.h"
+#include "Mesh.hpp"
+#include "GLSLShader.hpp"
+#include "GLRender.hpp"
+#include "Triangle.hpp"
+#include "Cube.hpp"
+#include "State.hpp"
+#include "Input.hpp"
+#include "World.hpp"
+#include "GLTexture.hpp"
 
 glm::uint32 Mesh::globalMeshID = 0;
 

@@ -1,4 +1,4 @@
-#include "Model.h"
+#include "Model.hpp"
 #include "pugixml.hpp"
 
 Model::Model() {}

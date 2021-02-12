@@ -1,4 +1,4 @@
-#include "Cube.h"
+#include "Cube.hpp"
 
 Cube::Cube() {
 	Material* material = new Material(new GLTexture((texturePath + "front.png").c_str()), nullptr);

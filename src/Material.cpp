@@ -1,4 +1,4 @@
-#include "Material.h"
+#include "Material.hpp"
 
 Material::Material(GLTexture* tex, GLSLShader* shader) {
 	this->texture = tex;

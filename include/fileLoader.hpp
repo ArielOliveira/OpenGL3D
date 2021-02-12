@@ -3,9 +3,9 @@
 #include <sstream>
 #include <vector>
 
-const std::string meshPath = "../data/msh/";
-const std::string texturePath = "../data/textures/";
-const std::string shaderPath = "../data/shaders/";
+const std::string meshPath = "../../data/msh/";
+const std::string texturePath = "../../data/textures/";
+const std::string shaderPath = "../../data/shaders/";
 
 template <typename T>
 class FileLoader {

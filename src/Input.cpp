@@ -1,4 +1,4 @@
-#include "Input.h"
+#include "Input.hpp"
 
 // Virtual Axis //////////////////////
 float Input::leftAxisX = 0;

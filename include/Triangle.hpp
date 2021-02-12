@@ -1,5 +1,5 @@
 #pragma once
-#include "Model.h"
+#include "Model.hpp"
 
 class Triangle : public Model {
 	public:

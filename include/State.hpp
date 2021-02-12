@@ -1,5 +1,5 @@
 #pragma once
-#include "GLSLShader.h"
+#include "GLSLShader.hpp"
 
 class State {
 public:

@@ -1,7 +1,7 @@
 #pragma once
-#include <glm/glm.hpp>
-#include <glm/ext.hpp>
-#include <glm/gtx/matrix_decompose.hpp>
+#include <glm.hpp>
+#include <ext.hpp>
+#include <gtx/matrix_decompose.hpp>
 
 class Entity {
 	protected:
