@@ -15,7 +15,7 @@ using std::map;
 using std::string;
 
 const unsigned VERTEX_ATTRIB_IDX = 0;
-const unsigned COLOR_ATTRIB_IDX = 1;
+const unsigned NORMAL_ATTRIB_IDX = 1;
 const unsigned TEXT_ATTRIB_IDX = 2;
 
 class GLSLShader {

@@ -6,13 +6,13 @@
 using std::vector;
 
 struct vertex_t {
-	glm::vec4 position;
-	glm::vec4 color;
+	glm::vec3 position;
+	glm::vec3 normal;
 	glm::vec2 texture;
 	
-	vertex_t(glm::vec4 position, glm::vec4 color, glm::vec2 texture) {
+	vertex_t(glm::vec3 position, glm::vec3 normal, glm::vec2 texture) {
 		this->position = position;
-		this->color = color;
+		this->normal = normal;
 		this->texture = texture;
 	}
 };

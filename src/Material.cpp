@@ -20,5 +20,7 @@ void Material::prepare(glm::mat4 modelMatrix, glm::mat4 viewMatrix, glm::mat4 pr
 
 	shader->use();
 	shader->setMatrix(State::defaultShader->getLocation("MVP"), MVP);
-	texture->bind();
+
+	if (texture)
+		texture->bind();
 }

@@ -91,9 +91,9 @@ void Input::update() {
 		float axisArray[] = { GLFW_GAMEPAD_AXIS_LEFT_X, GLFW_GAMEPAD_AXIS_LEFT_Y,
 							 GLFW_GAMEPAD_AXIS_RIGHT_X, GLFW_GAMEPAD_AXIS_RIGHT_Y };
 		setAxis(GLFW_JOYSTICK_1, axisArray, state);
+	} else {
+		setAxis();
 	}
-
-	setAxis();
 
 	mouseX = (currentMouseX - lastMouseX) * mouseSensitivity;
 	mouseY = (currentMouseY - lastMouseY) * mouseSensitivity;

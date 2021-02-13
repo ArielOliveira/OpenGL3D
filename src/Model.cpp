@@ -1,7 +1,11 @@
 #include "Model.hpp"
 #include "pugixml.hpp"
 
-Model::Model() {}
+Model::Model() {
+	pos = glm::vec3(0);
+	rot = glm::vec3(0);
+	size = glm::vec3(1);
+}
 
 Model::Model(const Model& object) : 
 	meshList(object.meshList),
@@ -49,12 +53,12 @@ void Model::load(const char* filename) {
 				auto itTx = textCoords.begin();
 				while (itVt != vertices.end()) {
 					float x = *itVt; itVt++; float y = *itVt; itVt++; float z = *itVt; itVt++;
-					glm::vec4 vertex(x, y, z, 1);
+					glm::vec3 vertex(x, y, z);
 
 					float s = *itTx; itTx++; float t = *itTx; itTx++;
 					glm::vec2 textCoord(s, t);
 
-					mesh->addVertex(vertex_t(vertex, glm::vec4(1), textCoord));
+					mesh->addVertex(vertex_t(vertex, glm::vec3(0), textCoord));
 				}
 			} else {
 				std::cout << "Invalid data: vertices and texture coordinates don't match!" << std::endl;

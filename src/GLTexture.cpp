@@ -1,4 +1,5 @@
 #include "GLTexture.hpp"
+#include "OpenGLDebugger.hpp"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -49,4 +50,4 @@ void GLTexture::load(const char* filename) {
 }
 uint32_t GLTexture::getId() const { return ID; }
 const glm::ivec2& GLTexture::getSize() const { return size; }
-void GLTexture::bind() const { glBindTexture(GL_TEXTURE_2D, ID); }
+void GLTexture::bind() const { GLCall(glBindTexture(GL_TEXTURE_2D, ID)); }

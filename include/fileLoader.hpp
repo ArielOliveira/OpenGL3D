@@ -1,7 +1,16 @@
 #pragma once
 #include <string>
+#include <iostream>
 #include <sstream>
 #include <vector>
+
+using std::cout;
+using std::endl;
+using std::string;
+
+#include <Importer.hpp>
+#include <scene.h>
+#include <postprocess.h>
 
 const std::string meshPath = "../../data/msh/";
 const std::string texturePath = "../../data/textures/";
@@ -10,12 +19,12 @@ const std::string shaderPath = "../../data/shaders/";
 template <typename T>
 class FileLoader {
 	public:
-		static inline std::string extractPath(std::string filename) {
-			while (filename.find('\\') != std::string::npos)
+		static inline string extractPath(string filename) {
+			while (filename.find('\\') != string::npos)
 				filename.replace(filename.find('\\'), 1, 1, '/');
 
 			size_t pos = filename.rfind('/');
-			if (pos == std::string::npos) return "";
+			if (pos == string::npos) return "";
 			filename = filename.substr(0, pos);
 			if (filename.size() > 0) filename += '/';
 			return filename;

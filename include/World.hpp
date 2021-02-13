@@ -8,7 +8,6 @@ class World {
 		std::vector<Camera*> cameras;
 
 		int activeCamera;
-
 	public:
 		World();
 

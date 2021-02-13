@@ -47,6 +47,9 @@ void GLRender::setupObj(Model* obj) {
 		GLCall(glVertexAttribPointer(VERTEX_ATTRIB_IDX, mesh->getVertexCount(), GL_FLOAT, GL_FALSE, sizeof(vertex_t), (void*)0));
 		GLCall(glEnableVertexAttribArray(VERTEX_ATTRIB_IDX));
 
+		GLCall(glVertexAttribPointer(NORMAL_ATTRIB_IDX, mesh->getVertexCount(), GL_FLOAT, GL_FALSE, sizeof(vertex_t), (void*)offsetof(vertex_t, normal)));
+		GLCall(glEnableVertexAttribArray(NORMAL_ATTRIB_IDX));
+
 		GLCall(glVertexAttribPointer(TEXT_ATTRIB_IDX, mesh->getTextCount(), GL_FLOAT, GL_FALSE, sizeof(vertex_t), (void*)offsetof(vertex_t, texture)));
 		GLCall(glEnableVertexAttribArray(TEXT_ATTRIB_IDX));
 	}

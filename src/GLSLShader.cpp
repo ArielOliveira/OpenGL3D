@@ -71,7 +71,7 @@ glm::uint32 GLSLShader::createShader(const std::string& vertexShader, const std:
 	GLCall(glAttachShader(programID, fs));
 
 	GLCall(glBindAttribLocation(programID, VERTEX_ATTRIB_IDX, "vertex"));
-	GLCall(glBindAttribLocation(programID, COLOR_ATTRIB_IDX, "vColor"));
+	GLCall(glBindAttribLocation(programID, NORMAL_ATTRIB_IDX, "vNormal"));
 	GLCall(glBindAttribLocation(programID, TEXT_ATTRIB_IDX, "vTextCoords"));
 
 	GLCall(glLinkProgram(programID));

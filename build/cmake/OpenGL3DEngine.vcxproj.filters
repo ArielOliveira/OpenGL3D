@@ -90,6 +90,9 @@
     <ClInclude Include="E:\OpenGL3D\include\World.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="E:\OpenGL3D\include\config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="E:\OpenGL3D\include\fileLoader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>

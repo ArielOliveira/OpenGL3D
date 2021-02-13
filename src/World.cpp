@@ -32,7 +32,6 @@ int World::getActiveCamera() { return activeCamera; }
 void World::update(float deltaTime) {
 	for (auto& object : objs)
 		object->step(deltaTime);
-
 	for (auto& camera : cameras)
 		camera->step(deltaTime);
 }
