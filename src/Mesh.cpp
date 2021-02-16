@@ -5,8 +5,6 @@ Mesh::Mesh() {
 
 	meshID = globalMeshID;
 
-	colorRGB = glm::vec3(1, 1, 1);
-
 	vVertList = new vector<vertex_t>();
 	vIdxList = new vector<glm::int32>();
 }
@@ -15,7 +13,6 @@ Mesh::Mesh(vector<vertex_t>* vertexList, vector<glm::int32>* indexList, int vert
 	vVertList(vertexList), vIdxList(indexList) {
 	globalMeshID++;
 	meshID = globalMeshID;
-	colorRGB = glm::vec3(1, 1, 1);
 
 	this->vertexCount = vertexCount;
 	this->textCount = textCount; 
@@ -44,6 +41,3 @@ void Mesh::addTriangleIdx(const glm::int32& v1, const glm::int32& v2, const glm:
 
 vector<vertex_t>* Mesh::getVertList() { return vVertList; }
 vector<glm::int32>* Mesh::getTriangleIdxList() { return vIdxList; }
-
-void Mesh::setColorRGB(float r, float g, float b) { colorRGB = glm::vec3(r, g, b); }
-glm::vec3 Mesh::getColorRGB() { return colorRGB; }

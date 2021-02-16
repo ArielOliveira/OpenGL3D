@@ -20,8 +20,6 @@ struct vertex_t {
 class Mesh {
 	private:
 		glm::uint32 meshID;
-		
-		glm::vec3 colorRGB;
 
 		vector<vertex_t>* vVertList;
 		vector<glm::int32>* vIdxList;
@@ -46,11 +44,7 @@ class Mesh {
 		const int getVertexCount() const;
 		const int getTextCount() const;
 		
-
 		vector<vertex_t>* getVertList();
 		vector<glm::int32>* getTriangleIdxList();
-
-		void setColorRGB(float r, float g, float b);
-		glm::vec3 getColorRGB();
 };
 

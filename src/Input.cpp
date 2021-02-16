@@ -30,22 +30,20 @@ bool Input::keyEventMap[512] = { false };
 /// Joystick input
 bool Input::gamepad[4] = { false };
 
-float Input::deadZone = .1f;
+float Input::deadZone = .05f;
 //////////////////////////////////////
 
 void Input::keyCallback(GLFWwindow* window, int key, int scancode, int action, int
-	mods)
-{
-	switch (action)
-	{
-	case GLFW_PRESS:
-		keyEventMap[key] = true;
-		break;
-	case GLFW_RELEASE:
-		keyEventMap[key] = false;
-		break;
-	default:
-		break;
+	mods) {
+	switch (action) {
+		case GLFW_PRESS:
+			keyEventMap[key] = true;
+			break;
+		case GLFW_RELEASE:
+			keyEventMap[key] = false;
+			break;
+		default:
+			break;
 	}
 }
 

@@ -92,6 +92,9 @@ void GLSLShader::use() const { glUseProgram(programID); }
 
 void GLSLShader::setupAttribs() {
 	GLCall(vShaderAttribs["MVP"] = glGetUniformLocation(programID, "MVP"));
+	GLCall(vShaderAttribs["vColor"] = glGetUniformLocation(programID, "vColor"));
+	GLCall(vShaderAttribs["lightColor"] = glGetUniformLocation(programID, "lightColor"));
+	GLCall(vShaderAttribs["objectColor"] = glGetUniformLocation(programID, "objectColor"));
 }
 
 glm::uint32 GLSLShader::getLocation(const string& name) { return vShaderAttribs[name]; }
