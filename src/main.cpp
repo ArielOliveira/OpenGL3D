@@ -125,20 +125,25 @@ int main(void) {
 		return -1;
 
 	State::defaultShader = new GLSLShader(shaderPath + "vertex.shader", shaderPath + "fragment.shader");
-	State::lightShader = new GLSLShader(shaderPath + "lightVertex.shader", shaderPath + "lightFragment.shader");
-
+	world = new World();
 	//Model cube((meshPath + "asian_town.msh").c_str());
 	//cube.setSize(glm::vec3(10.f, 10.f, 10.f));
 	//Cube cube;
 	//render->setupObj(&cube);
-	Cube light(Material(nullptr, glm::vec3(1), nullptr));
-	light.setPos(glm::vec3(1.0f, .0f, -4.f));
-	Cube cube(Material(nullptr, glm::vec3(1.f, .5f, .31f), State::lightShader));
-	world = new World();
+	//Cube light(Material(nullptr, glm::vec3(1), nullptr));
+	//light.setPos(glm::vec3(1.0f, .0f, -4.f));
+	Cube cube(Material(glm::vec3(1.f, .5f, .31f), 
+					   glm::vec3(1.f, .5f, .31f),
+					   glm::vec3(0),
+					   glm::vec3(0),
+					   0));
 	
 	//loadModel(meshPath + "stanford-bunny.obj");
 	world->addObject(&cube);
-	world->addObject(&light);
+	world->addLight(new Light());
+	
+	world->getLight(0)->setPos(glm::vec3(1.f, 2.f, -4.f));
+	//world->getLight(0)->setIntensity(.5f);
 
 	for (int i = 0; i < world->getNumObjects(); i++)
 		render->setupObj(world->getObject(i));

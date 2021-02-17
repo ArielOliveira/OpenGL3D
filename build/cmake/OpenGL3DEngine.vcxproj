@@ -324,6 +324,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="E:\OpenGL3D\include\GLSLShader.hpp" />
     <ClInclude Include="E:\OpenGL3D\include\GLTexture.hpp" />
     <ClInclude Include="E:\OpenGL3D\include\Input.hpp" />
+    <ClInclude Include="E:\OpenGL3D\include\Light.hpp" />
     <ClInclude Include="E:\OpenGL3D\include\Material.hpp" />
     <ClInclude Include="E:\OpenGL3D\include\Mesh.hpp" />
     <ClInclude Include="E:\OpenGL3D\include\Model.hpp" />
@@ -343,6 +344,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="E:\OpenGL3D\src\GLSLShader.cpp" />
     <ClCompile Include="E:\OpenGL3D\src\GLTexture.cpp" />
     <ClCompile Include="E:\OpenGL3D\src\Input.cpp" />
+    <ClCompile Include="E:\OpenGL3D\src\Light.cpp" />
     <ClCompile Include="E:\OpenGL3D\src\Material.cpp" />
     <ClCompile Include="E:\OpenGL3D\src\Mesh.cpp" />
     <ClCompile Include="E:\OpenGL3D\src\Model.cpp" />

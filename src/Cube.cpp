@@ -1,7 +1,7 @@
 #include "Cube.hpp"
 
 Cube::Cube() : Model() {
-	addMesh(makeCube(), new Material(nullptr, glm::vec3(1) ,nullptr));
+	addMesh(makeCube(), new Material());
 }
 
 Cube::Cube(const Cube& cube) : Model(cube) {}
@@ -46,24 +46,28 @@ Mesh* Cube::makeCube() {
 	mesh->addVertex(vertex_t(glm::vec3(.5f, .5f, .5f), glm::vec3(1.f, .0f, .0f), glm::vec2(1.f, 1.f)));
 	mesh->addVertex(vertex_t(glm::vec3(.5f, -.5f, .5f), glm::vec3(1.f, .0f, .0f), glm::vec2(.0f, 1.f)));
 
-	mesh->addTriangleIdx(11, 12, 13);
-	mesh->addTriangleIdx(13, 14, 11);
+
+	mesh->addTriangleIdx(12, 13, 14);
+	mesh->addTriangleIdx(14, 15, 12);
 
 	mesh->addVertex(vertex_t(glm::vec3(-.5f, .5f, -.5f), glm::vec3(.0f, 1.f, .0f), glm::vec2(.0f, .0f)));
 	mesh->addVertex(vertex_t(glm::vec3(.5f, .5f, -.5f), glm::vec3(.0f, 1.f, .0f), glm::vec2(1.f, .0f)));
 	mesh->addVertex(vertex_t(glm::vec3(.5f, .5f, .5f), glm::vec3(.0f, 1.f, .0f), glm::vec2(1.f, 1.f)));
 	mesh->addVertex(vertex_t(glm::vec3(-.5f, .5f, .5f), glm::vec3(.0f, 1.f, .0f), glm::vec2(.0f, 1.f)));
 
-	mesh->addTriangleIdx(15, 16, 17);
-	mesh->addTriangleIdx(17, 18, 15);
+		
+	
+	mesh->addTriangleIdx(16, 17, 18);
+	mesh->addTriangleIdx(18, 19, 16);
 
 	mesh->addVertex(vertex_t(glm::vec3(-.5f, -.5f, -.5f), glm::vec3(.0f, -1.f, .0f), glm::vec2(.0f, .0f)));
 	mesh->addVertex(vertex_t(glm::vec3(.5f, -.5f, -.5f), glm::vec3(.0f, -1.f, .0f), glm::vec2(1.f, .0f)));
 	mesh->addVertex(vertex_t(glm::vec3(.5f, -.5f, .5f), glm::vec3(.0f, -1.f, .0f), glm::vec2(1.f, 1.f)));
 	mesh->addVertex(vertex_t(glm::vec3(-.5f, -.5f, .5f), glm::vec3(.0f, -1.f, .0f), glm::vec2(.0f, 1.f)));
 
-	mesh->addTriangleIdx(19, 20, 21);
-	mesh->addTriangleIdx(21, 22, 19);
+	
+	mesh->addTriangleIdx(20, 21, 22);
+	mesh->addTriangleIdx(22, 23, 20);
 
 	mesh->setVertexCount(3);
 	mesh->setTextCount(2);
@@ -74,7 +78,7 @@ Mesh* Cube::makeCube() {
 void Cube::step(float deltaTime) {
 	//rot.x = fmodf(rot.x + glm::radians(32.0f) * deltaTime, glm::radians(360.0f));
 	rot.y = fmodf(rot.y + glm::radians(32.0f) * deltaTime, glm::radians(360.0f));
-	//rot.z = fmodf(rot.z + glm::radians(32.0f) * deltaTime, glm::radians(360.0f));
+	rot.z = fmodf(rot.z + glm::radians(32.0f) * deltaTime, glm::radians(360.0f));
 	
 	Model::step(deltaTime);
 }

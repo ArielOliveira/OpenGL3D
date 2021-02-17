@@ -22,6 +22,9 @@
     <ClCompile Include="E:\OpenGL3D\src\Input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="E:\OpenGL3D\src\Light.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="E:\OpenGL3D\src\Material.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -67,6 +70,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="E:\OpenGL3D\include\Input.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\OpenGL3D\include\Light.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="E:\OpenGL3D\include\Material.hpp">

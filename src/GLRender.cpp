@@ -20,9 +20,6 @@ void GLRender::setupObj(Model* obj) {
 	for (int i = 0; i < obj->getMeshCount(); i++) {
 		Mesh* mesh = obj->getMesh(i);
 		GLSLShader* shader = obj->getMaterial(i).getShader();
-		
-		if (!shader)
-			shader = State::defaultShader;
 
 		shader->use();
 

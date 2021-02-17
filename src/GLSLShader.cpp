@@ -70,7 +70,7 @@ glm::uint32 GLSLShader::createShader(const std::string& vertexShader, const std:
 	GLCall(glAttachShader(programID, vs)); // Liga o shader compilado ao objeto de programa
 	GLCall(glAttachShader(programID, fs));
 
-	GLCall(glBindAttribLocation(programID, VERTEX_ATTRIB_IDX, "vertex"));
+	GLCall(glBindAttribLocation(programID, VERTEX_ATTRIB_IDX, "vVertex"));
 	GLCall(glBindAttribLocation(programID, NORMAL_ATTRIB_IDX, "vNormal"));
 	GLCall(glBindAttribLocation(programID, TEXT_ATTRIB_IDX, "vTextCoords"));
 
@@ -91,10 +91,19 @@ const char* GLSLShader::getError() const { return "0"; }
 void GLSLShader::use() const { glUseProgram(programID); }
 
 void GLSLShader::setupAttribs() {
-	GLCall(vShaderAttribs["MVP"] = glGetUniformLocation(programID, "MVP"));
+	GLCall(vShaderAttribs["model"] = glGetUniformLocation(programID, "model"));
+	GLCall(vShaderAttribs["view"] = glGetUniformLocation(programID, "view"));
+	GLCall(vShaderAttribs["projection"] = glGetUniformLocation(programID, "projection"));
+	
 	GLCall(vShaderAttribs["vColor"] = glGetUniformLocation(programID, "vColor"));
-	GLCall(vShaderAttribs["lightColor"] = glGetUniformLocation(programID, "lightColor"));
-	GLCall(vShaderAttribs["objectColor"] = glGetUniformLocation(programID, "objectColor"));
+	GLCall(vShaderAttribs["vLightColor"] = glGetUniformLocation(programID, "vLightColor"));
+	GLCall(vShaderAttribs["vLightPosition"] = glGetUniformLocation(programID, "vLightPosition"));
+	GLCall(vShaderAttribs["vLightIntensity"] = glGetUniformLocation(programID, "vLightIntensity"));
+	
+	GLCall(vShaderAttribs["material.ambient"] = glGetUniformLocation(programID, "material.ambient"));
+	GLCall(vShaderAttribs["material.diffuse"] = glGetUniformLocation(programID, "material.diffuse"));
+	GLCall(vShaderAttribs["material.specular"] = glGetUniformLocation(programID, "material.specular"));
+	GLCall(vShaderAttribs["material.shineness"] = glGetUniformLocation(programID, "material.shineness"));
 }
 
 glm::uint32 GLSLShader::getLocation(const string& name) { return vShaderAttribs[name]; }
@@ -104,3 +113,4 @@ void GLSLShader::setFloat(const glm::uint32& loc, const float& val) { glUniform1
 void GLSLShader::setVec3(const glm::uint32& loc, const glm::vec3& vec) { glUniform3f(loc, vec.x, vec.y, vec.z); }
 void GLSLShader::setVec4(const glm::uint32& loc, const glm::vec4& vec) { glUniform4f(loc, vec.x, vec.y, vec.z, vec.w); }
 void GLSLShader::setMatrix(const glm::uint32& loc, const glm::mat4& matrix) { glUniformMatrix4fv(loc, 1, false, glm::value_ptr(matrix)); }
+

@@ -7,10 +7,17 @@ class Material {
 	private:
 		GLSLShader* shader;
 		GLTexture* texture;
-
+		
 		glm::vec3 color;
+		
+		glm::vec3 ambient;
+		glm::vec3 diffuse;
+		glm::vec3 specular;
+
+		float shineness;
 	public:
-		Material(GLTexture* tex = nullptr, glm::vec3 color = glm::vec3(1.f, 1.f, 1.f), GLSLShader* shader = nullptr);
+		Material();
+		Material(glm::vec3 color, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float shineness, GLTexture* tex = nullptr, GLSLShader* shader = nullptr);
 		
 		void setShader(GLSLShader* shader);
 		GLSLShader* getShader() const;
@@ -21,6 +28,9 @@ class Material {
 		void prepare(glm::mat4 modelMatrix, glm::mat4 viewMatrix, glm::mat4 projectionMatrix);
 		
 		void setColor(glm::vec3 color);
-		glm::vec3 getColor();		
+		glm::vec3 getColor();	
+
+		void setShineness(float shineness);
+		float getShineness();	
 };
 
