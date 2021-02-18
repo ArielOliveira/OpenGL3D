@@ -2,7 +2,8 @@
     "files.associations": {
         "vector": "cpp",
         "xiosbase": "cpp",
-        "xutility": "cpp"
+        "xutility": "cpp",
+        "tuple": "cpp"
     },
     "cmake.sourceDirectory": "${workspaceFolder}/build/cmake"
 }

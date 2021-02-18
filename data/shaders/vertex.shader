@@ -5,31 +5,24 @@ in vec3 vNormal;
 in vec2 vTextCoords;
 
 out vec2 fTextCoords;
-out vec4 fColor;
-out vec4 fLightColor;
-out vec3 fSurfaceNormal;
-out vec3 fLightDir;
-
+out vec3 fModelPos;
+out vec3 fNormal;
+out vec3 fCameraPos;
 
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
 
-uniform vec3 vColor;
-uniform vec3 vLightColor;
-uniform vec3 vLightPosition;
-
-uniform float vLightIntensity;
+uniform mat3 normalMatrix;
 
 void main() {
 	vec4 modelPos = model * vec4(vVertex, 1.0);
 	vec4 cameraPos = view * modelPos;
 
 	gl_Position = projection * cameraPos;
+	
 	fTextCoords = vTextCoords;
-	fColor = vec4(vColor, 1.0);
-	fLightColor = vec4(vLightColor, 1.0) * vLightIntensity;
-
-	fSurfaceNormal = normalize((model * vec4(vNormal, 0.0)).xyz);
-	fLightDir = normalize(vLightPosition - modelPos.xyz);
+	fModelPos = modelPos.xyz;
+	fNormal = normalMatrix * vNormal;
+	fCameraPos = (inverse(view) * vec4(0, 0 , 0, 1)).xyz;
 }

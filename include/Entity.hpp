@@ -2,6 +2,7 @@
 #include <glm.hpp>
 #include <ext.hpp>
 #include <gtx/matrix_decompose.hpp>
+#include "State.hpp"
 
 class Entity {
 	protected:
@@ -26,6 +27,8 @@ class Entity {
 
 		void computeModelMtx();
 		glm::mat4 getModelMtx();
+
+		glm::mat3 getNormalMtx();
 
 		virtual void step(float deltaTime) = 0;	
 };

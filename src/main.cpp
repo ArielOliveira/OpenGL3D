@@ -132,18 +132,19 @@ int main(void) {
 	//render->setupObj(&cube);
 	//Cube light(Material(nullptr, glm::vec3(1), nullptr));
 	//light.setPos(glm::vec3(1.0f, .0f, -4.f));
-	Cube cube(Material(glm::vec3(1.f, .5f, .31f), 
+	Cube cube(Material(glm::vec3(1.f, .5f, .31f),
 					   glm::vec3(1.f, .5f, .31f),
-					   glm::vec3(0),
-					   glm::vec3(0),
-					   0));
+					   glm::vec3(.5f, .5f, .5f),
+					   32.f));
 	
+	//Cube cube;
+
 	//loadModel(meshPath + "stanford-bunny.obj");
+	//loadModel(meshPath + "cube-3d-shape.obj");
 	world->addObject(&cube);
 	world->addLight(new Light());
 	
-	world->getLight(0)->setPos(glm::vec3(1.f, 2.f, -4.f));
-	//world->getLight(0)->setIntensity(.5f);
+	world->getLight(0)->setPos(glm::vec3(1.f, .0f, -4.f));
 
 	for (int i = 0; i < world->getNumObjects(); i++)
 		render->setupObj(world->getObject(i));

@@ -7,21 +7,42 @@ struct Material {
 	float shineness;
 };
 
-in vec4 fColor;
-in vec4 fLightColor;
-in vec3 fSurfaceNormal;
-in vec2 fTextCoords;
-in vec3 fLightDir;
+struct Light {
+	vec3 position;
 
+	vec3 ambient;
+	vec3 diffuse;
+	vec3 specular;
+};
+
+in vec2 fTextCoords;
+in vec3 fModelPos;
+in vec3 fNormal;
+in vec3 fCameraPos;
 
 out vec4 fragColor;
 
 uniform Material material;
+uniform Light light;
 uniform sampler2D texture_1;
 
 void main() {
-	float diffFactor = max(dot(fSurfaceNormal, fLightDir), 0.0);
-	vec3 diffuse = diffFactor * fLightColor.xyz;
-	vec4 result = vec4(material.ambient, 1.0) * vec4(diffuse, 1.0);
-	fragColor = result;
+	vec3 fSurfaceNormal = normalize(fNormal);
+	vec3 lightDir = normalize(light.position - fModelPos);
+
+	//ambient light
+	vec3 ambient = light.ambient * material.ambient;
+
+	// diffuse light
+	float diffFactor = max(dot(fSurfaceNormal, lightDir), 0.0);
+	vec3 diffuse = light.diffuse * (diffFactor * material.diffuse);
+
+	// specular light
+	vec3 viewDir = normalize(fCameraPos - fModelPos);
+	vec3 reflectDir = reflect(-lightDir, fSurfaceNormal);
+	float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shineness);
+	vec3 specular = light.specular * (spec * material.specular);
+
+	vec3 result = ambient + diffuse + specular;
+	fragColor = vec4(result, 1.0);
 }

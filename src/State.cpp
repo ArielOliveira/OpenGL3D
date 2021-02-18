@@ -5,7 +5,7 @@ glm::mat4 State::projectionMatrix = glm::mat4(1);
 glm::mat4 State::viewMatrix = glm::mat4(1);
 glm::mat4 State::modelMatrix = glm::mat4(1);
 
-static glm::vec3 QuaternionToVector(glm::quat quat, glm::vec3 vec) {
+glm::vec3 State::QuaternionToVector(glm::quat quat, glm::vec3 vec) {
 	float num = quat.x * 2.f;
 	float num2 = quat.y * 2.f;
 	float num3 = quat.z * 2.f;
@@ -24,3 +24,12 @@ static glm::vec3 QuaternionToVector(glm::quat quat, glm::vec3 vec) {
 	result.z = (num8 - num11) * vec.x + (num9 + num10) * vec.y + (1.f - (num4 + num5)) * vec.z;
 	return result;
 }
+
+glm::quat State::getRotation(glm::vec3 dir, float angle) {
+    glm::quat rotation = glm::quat((float)sin(angle/2)*dir.x,
+                                    (float)sin(angle/2)*dir.y,
+                                    (float)sin(angle/2)*dir.z,
+                                    (float)cos(angle/2));
+        
+    return rotation;
+    }

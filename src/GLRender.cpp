@@ -52,17 +52,20 @@ void GLRender::setupObj(Model* obj) {
 	}
 }
 
-void GLRender::drawObject(Mesh* mesh, Material* material) {
-	material->prepare(State::modelMatrix, State::viewMatrix, State::projectionMatrix);
-	GLCall(glBindVertexArray(vMeshIDs[mesh->getMeshID()].bufferID));
-	GLCall(glDrawElements(GL_TRIANGLES, mesh->getTriangleIdxList()->size(), GL_UNSIGNED_INT, nullptr));
+void GLRender::drawObject(Model* obj) {
+	for (int i = 0; i < obj->getMeshCount(); i++) {
+		Material material = obj->getMaterial(i);
+		Mesh* mesh = obj->getMesh(i);	
+		material.prepare(State::modelMatrix, State::viewMatrix, State::projectionMatrix, obj->getNormalMtx());
+		GLCall(glBindVertexArray(vMeshIDs[mesh->getMeshID()].bufferID));
+		GLCall(glDrawElements(GL_TRIANGLES, mesh->getTriangleIdxList()->size(), GL_UNSIGNED_INT, nullptr));
+	}
 }
 
 void GLRender::drawWorld(World* world) {
 	for (int i = 0; i < world->getNumObjects(); i++) {
 		Model* obj = world->getObject(i);
 		State::modelMatrix = obj->getModelMtx();
-		for (int i = 0; i < obj->getMeshCount(); i++)
-			drawObject(obj->getMesh(i), &obj->getMaterial(i));
+		drawObject(obj);
 	}
 }

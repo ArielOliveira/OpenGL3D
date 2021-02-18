@@ -45,6 +45,7 @@ public:
 	void setFloat(const glm::uint32& loc, const float& val);
 	void setVec3(const glm::uint32& loc, const glm::vec3& vec);
 	void setVec4(const glm::uint32& loc, const glm::vec4& vec);
-	void setMatrix(const glm::uint32& loc, const glm::mat4& matrix);
+	void setMat4x4(const glm::uint32& loc, const glm::mat4& matrix);
+	void setMat3x3(const glm::uint32& loc, const glm::mat3& matrix);
 };
 

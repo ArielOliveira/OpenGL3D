@@ -40,3 +40,5 @@ void Entity::computeModelMtx() {
 }
 
 glm::mat4 Entity::getModelMtx() { return modelMtx; }
+
+glm::mat3 Entity::getNormalMtx() { return glm::mat3(glm::transpose(glm::inverse(modelMtx))); }

@@ -94,16 +94,22 @@ void GLSLShader::setupAttribs() {
 	GLCall(vShaderAttribs["model"] = glGetUniformLocation(programID, "model"));
 	GLCall(vShaderAttribs["view"] = glGetUniformLocation(programID, "view"));
 	GLCall(vShaderAttribs["projection"] = glGetUniformLocation(programID, "projection"));
+	GLCall(vShaderAttribs["normalMatrix"] = glGetUniformLocation(programID, "normalMatrix"));
 	
-	GLCall(vShaderAttribs["vColor"] = glGetUniformLocation(programID, "vColor"));
-	GLCall(vShaderAttribs["vLightColor"] = glGetUniformLocation(programID, "vLightColor"));
 	GLCall(vShaderAttribs["vLightPosition"] = glGetUniformLocation(programID, "vLightPosition"));
-	GLCall(vShaderAttribs["vLightIntensity"] = glGetUniformLocation(programID, "vLightIntensity"));
+
+	GLCall(vShaderAttribs["fLightColor"] = glGetUniformLocation(programID, "fLightColor"));
+	GLCall(vShaderAttribs["fLightIntensity"] = glGetUniformLocation(programID, "fLightIntensity"));
 	
 	GLCall(vShaderAttribs["material.ambient"] = glGetUniformLocation(programID, "material.ambient"));
 	GLCall(vShaderAttribs["material.diffuse"] = glGetUniformLocation(programID, "material.diffuse"));
 	GLCall(vShaderAttribs["material.specular"] = glGetUniformLocation(programID, "material.specular"));
 	GLCall(vShaderAttribs["material.shineness"] = glGetUniformLocation(programID, "material.shineness"));
+
+	GLCall(vShaderAttribs["light.position"] = glGetUniformLocation(programID, "light.position"));
+	GLCall(vShaderAttribs["light.ambient"] = glGetUniformLocation(programID, "light.ambient"));
+	GLCall(vShaderAttribs["light.diffuse"] = glGetUniformLocation(programID, "light.diffuse"));
+	GLCall(vShaderAttribs["light.specular"] = glGetUniformLocation(programID, "light.specular"));
 }
 
 glm::uint32 GLSLShader::getLocation(const string& name) { return vShaderAttribs[name]; }
@@ -112,5 +118,6 @@ void GLSLShader::setInt(const glm::uint32& loc, const int& val) { glUniform1i(lo
 void GLSLShader::setFloat(const glm::uint32& loc, const float& val) { glUniform1f(loc, val); }
 void GLSLShader::setVec3(const glm::uint32& loc, const glm::vec3& vec) { glUniform3f(loc, vec.x, vec.y, vec.z); }
 void GLSLShader::setVec4(const glm::uint32& loc, const glm::vec4& vec) { glUniform4f(loc, vec.x, vec.y, vec.z, vec.w); }
-void GLSLShader::setMatrix(const glm::uint32& loc, const glm::mat4& matrix) { glUniformMatrix4fv(loc, 1, false, glm::value_ptr(matrix)); }
+void GLSLShader::setMat4x4(const glm::uint32& loc, const glm::mat4& matrix) { glUniformMatrix4fv(loc, 1, false, glm::value_ptr(matrix)); }
+void GLSLShader::setMat3x3(const glm::uint32& loc, const glm::mat3& matrix) { glUniformMatrix3fv(loc, 1, false, glm::value_ptr(matrix)); }
 

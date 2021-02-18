@@ -17,6 +17,7 @@ Cube::~Cube() {}
 Mesh* Cube::makeCube() {
 	Mesh* mesh = new Mesh();
 
+	//back face
 	mesh->addVertex(vertex_t(glm::vec3(-.5f, -.5f, -.5f), glm::vec3(.0f, .0f, -1.f), glm::vec2(.0f, .0f)));
 	mesh->addVertex(vertex_t(glm::vec3(.5f, -.5f, -.5f), glm::vec3(.0f, .0f, -1.f), glm::vec2(1.f, .0f)));
 	mesh->addVertex(vertex_t(glm::vec3(.5f, .5f, -.5f), glm::vec3(.0f, .0f, -1.f), glm::vec2(1.f, 1.f)));
@@ -25,14 +26,16 @@ Mesh* Cube::makeCube() {
 	mesh->addTriangleIdx(0, 1, 2);
 	mesh->addTriangleIdx(2, 3, 0);
 
+	// front face
 	mesh->addVertex(vertex_t(glm::vec3(-.5f, -.5f, .5f), glm::vec3(.0f, .0f, 1.f), glm::vec2(.0f, .0f)));
 	mesh->addVertex(vertex_t(glm::vec3(.5f, -.5f, .5f), glm::vec3(.0f, .0f, 1.f), glm::vec2(1.f, .0f)));
 	mesh->addVertex(vertex_t(glm::vec3(.5f, .5f, .5f), glm::vec3(.0f, .0f, 1.f), glm::vec2(1.f, 1.f)));
 	mesh->addVertex(vertex_t(glm::vec3(-.5f, .5f, .5f), glm::vec3(.0f, .0f, 1.f), glm::vec2(.0f, 1.f)));
-
+	
 	mesh->addTriangleIdx(4, 5, 6);
 	mesh->addTriangleIdx(6, 7, 4);
-
+	
+	// left face
 	mesh->addVertex(vertex_t(glm::vec3(-.5f, -.5f, -.5f), glm::vec3(-1.f, .0f, .0f), glm::vec2(.0f, .0f)));
 	mesh->addVertex(vertex_t(glm::vec3(-.5f, .5f, -.5f), glm::vec3(-1.f, .0f, .0f), glm::vec2(1.f, .0f)));
 	mesh->addVertex(vertex_t(glm::vec3(-.5f, .5f, .5f), glm::vec3(-1.f, .0f, .0f), glm::vec2(1.f, 1.f)));
@@ -41,6 +44,7 @@ Mesh* Cube::makeCube() {
 	mesh->addTriangleIdx(8, 9, 10);
 	mesh->addTriangleIdx(10, 11, 8);
 
+	// right face
 	mesh->addVertex(vertex_t(glm::vec3(.5f, -.5f, -.5f), glm::vec3(1.f, .0f, .0f), glm::vec2(.0f, .0f)));
 	mesh->addVertex(vertex_t(glm::vec3(.5f, .5f, -.5f), glm::vec3(1.f, .0f, .0f), glm::vec2(1.f, .0f)));
 	mesh->addVertex(vertex_t(glm::vec3(.5f, .5f, .5f), glm::vec3(1.f, .0f, .0f), glm::vec2(1.f, 1.f)));
@@ -50,6 +54,8 @@ Mesh* Cube::makeCube() {
 	mesh->addTriangleIdx(12, 13, 14);
 	mesh->addTriangleIdx(14, 15, 12);
 
+
+	// top face
 	mesh->addVertex(vertex_t(glm::vec3(-.5f, .5f, -.5f), glm::vec3(.0f, 1.f, .0f), glm::vec2(.0f, .0f)));
 	mesh->addVertex(vertex_t(glm::vec3(.5f, .5f, -.5f), glm::vec3(.0f, 1.f, .0f), glm::vec2(1.f, .0f)));
 	mesh->addVertex(vertex_t(glm::vec3(.5f, .5f, .5f), glm::vec3(.0f, 1.f, .0f), glm::vec2(1.f, 1.f)));
@@ -60,6 +66,7 @@ Mesh* Cube::makeCube() {
 	mesh->addTriangleIdx(16, 17, 18);
 	mesh->addTriangleIdx(18, 19, 16);
 
+	// bottom face
 	mesh->addVertex(vertex_t(glm::vec3(-.5f, -.5f, -.5f), glm::vec3(.0f, -1.f, .0f), glm::vec2(.0f, .0f)));
 	mesh->addVertex(vertex_t(glm::vec3(.5f, -.5f, -.5f), glm::vec3(.0f, -1.f, .0f), glm::vec2(1.f, .0f)));
 	mesh->addVertex(vertex_t(glm::vec3(.5f, -.5f, .5f), glm::vec3(.0f, -1.f, .0f), glm::vec2(1.f, 1.f)));
@@ -76,9 +83,6 @@ Mesh* Cube::makeCube() {
 }
 
 void Cube::step(float deltaTime) {
-	//rot.x = fmodf(rot.x + glm::radians(32.0f) * deltaTime, glm::radians(360.0f));
-	rot.y = fmodf(rot.y + glm::radians(32.0f) * deltaTime, glm::radians(360.0f));
-	rot.z = fmodf(rot.z + glm::radians(32.0f) * deltaTime, glm::radians(360.0f));
-	
+	//rot.z = fmodf(rot.z + glm::radians(32.0f) * deltaTime, glm::radians(360.0f));
 	Model::step(deltaTime);
 }

@@ -17,7 +17,7 @@ class Material {
 		float shineness;
 	public:
 		Material();
-		Material(glm::vec3 color, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float shineness, GLTexture* tex = nullptr, GLSLShader* shader = nullptr);
+		Material(glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float shineness, GLTexture* tex = nullptr, GLSLShader* shader = nullptr);
 		
 		void setShader(GLSLShader* shader);
 		GLSLShader* getShader() const;
@@ -25,10 +25,16 @@ class Material {
 		void setTexture(GLTexture* tex);
 		GLTexture* getTexture() const;
 
-		void prepare(glm::mat4 modelMatrix, glm::mat4 viewMatrix, glm::mat4 projectionMatrix);
+		void prepare(glm::mat4 modelMatrix, glm::mat4 viewMatrix, glm::mat4 projectionMatrix, glm::mat3 normalMatrix);
 		
-		void setColor(glm::vec3 color);
-		glm::vec3 getColor();	
+		void setAmbient(glm::vec3 color);
+		glm::vec3 getAmbient();
+
+		void setDiffuse(glm::vec3 color);
+		glm::vec3 getDiffuse();
+
+		void setSpecular(glm::vec3 color);
+		glm::vec3 getSpecular();
 
 		void setShineness(float shineness);
 		float getShineness();	
