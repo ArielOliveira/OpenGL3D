@@ -9,6 +9,17 @@ Mesh::Mesh() {
 	vIdxList = new vector<glm::int32>();
 }
 
+Mesh::Mesh(const Mesh& mesh) :
+	vertexCount(mesh.vertexCount),
+	textCount(mesh.textCount) {
+	globalMeshID++;
+
+	meshID = globalMeshID;
+
+	vVertList = new vector<vertex_t>(mesh.vVertList->begin(), mesh.vVertList->end());
+	vIdxList = new vector<glm::int32>(mesh.vIdxList->begin(), mesh.vIdxList->end());
+}
+
 Mesh::Mesh(vector<vertex_t>* vertexList, vector<glm::int32>* indexList, int vertexCount, int textCount) :
 	vVertList(vertexList), vIdxList(indexList) {
 	globalMeshID++;

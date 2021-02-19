@@ -1,9 +1,9 @@
 #version 330
 
 struct Material {
-	vec3 ambient;
-	vec3 diffuse;
-	vec3 specular;
+	sampler2D diffuse;
+	sampler2D specular;
+	sampler2D emissive;
 	float shineness;
 };
 
@@ -24,25 +24,31 @@ out vec4 fragColor;
 
 uniform Material material;
 uniform Light light;
-uniform sampler2D texture_1;
 
 void main() {
 	vec3 fSurfaceNormal = normalize(fNormal);
 	vec3 lightDir = normalize(light.position - fModelPos);
 
 	//ambient light
-	vec3 ambient = light.ambient * material.ambient;
+	vec3 ambient = light.ambient * texture(material.diffuse, fTextCoords).rgb;
 
 	// diffuse light
 	float diffFactor = max(dot(fSurfaceNormal, lightDir), 0.0);
-	vec3 diffuse = light.diffuse * (diffFactor * material.diffuse);
+	vec3 diffuse = light.diffuse * diffFactor * texture(material.diffuse, fTextCoords).rgb;
 
 	// specular light
 	vec3 viewDir = normalize(fCameraPos - fModelPos);
 	vec3 reflectDir = reflect(-lightDir, fSurfaceNormal);
 	float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shineness);
-	vec3 specular = light.specular * (spec * material.specular);
+	vec3 specularMap = texture(material.specular, fTextCoords).rgb;
+	vec3 specular = light.specular * spec * specularMap;
 
-	vec3 result = ambient + diffuse + specular;
+	// emissive light (self-glown)
+	vec3 emissive = vec3(0);
+	if (specularMap == vec3(0))
+		emissive = texture(material.emissive, fTextCoords).rgb;
+	
+
+	vec3 result = ambient + diffuse + specular + emissive;
 	fragColor = vec4(result, 1.0);
 }

@@ -104,6 +104,7 @@ void GLSLShader::setupAttribs() {
 	GLCall(vShaderAttribs["material.ambient"] = glGetUniformLocation(programID, "material.ambient"));
 	GLCall(vShaderAttribs["material.diffuse"] = glGetUniformLocation(programID, "material.diffuse"));
 	GLCall(vShaderAttribs["material.specular"] = glGetUniformLocation(programID, "material.specular"));
+	GLCall(vShaderAttribs["material.emissive"] = glGetUniformLocation(programID, "material.emissive"));
 	GLCall(vShaderAttribs["material.shineness"] = glGetUniformLocation(programID, "material.shineness"));
 
 	GLCall(vShaderAttribs["light.position"] = glGetUniformLocation(programID, "light.position"));

@@ -28,6 +28,8 @@ void GLRender::setupObj(Model* obj) {
 
 		glm::uint32 meshID = mesh->getMeshID();
 
+		std::cout << vertices->size() << " " << indices->size() << " " << meshID << std::endl;
+
 		GLCall(glGenVertexArrays(1, &vMeshIDs[meshID].bufferID));
 		GLCall(glGenBuffers(1, &vMeshIDs[meshID].vertexArrayID));
 		GLCall(glGenBuffers(1, &vMeshIDs[meshID].indexArrayID));
@@ -67,5 +69,10 @@ void GLRender::drawWorld(World* world) {
 		Model* obj = world->getObject(i);
 		State::modelMatrix = obj->getModelMtx();
 		drawObject(obj);
+	}
+	for (int i = 0; i < world->getNumLights(); i++) {
+		Light* light = world->getLight(i);
+		State::modelMatrix = light->getModelMtx();
+		drawObject(light);
 	}
 }

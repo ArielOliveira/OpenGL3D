@@ -30,6 +30,7 @@ class Mesh {
 		static glm::uint32 globalMeshID;
 
 		Mesh();
+		Mesh(const Mesh& mesh);
 		Mesh(vector<vertex_t>* vertexList, vector<glm::int32>* indexList, int vertexCount, int textCount);
 		~Mesh();
 

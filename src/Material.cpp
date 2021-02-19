@@ -1,46 +1,39 @@
 #include "Material.hpp"
 
 Material::Material() {
-	ambient = glm::vec3(1);
-	diffuse = glm::vec3(1);
-	specular = glm::vec3(1);
+	diffuseMap = nullptr;
+	specularMap = nullptr;
+	emissiveMap = nullptr;
+
+	ambientColor = glm::vec3(1);
 	shineness = 32.f;
 
-	texture = nullptr;
 	shader = State::defaultShader;
 }
 
-Material::Material(glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float shineness, GLTexture* tex, GLSLShader* shader) {
-	this->ambient = ambient; 
-	this->diffuse = diffuse;
-	this->specular = specular; 
+Material::Material(const glm::vec3& ambientColor, GLTexture* diffuseMap, GLTexture* specularMap, GLTexture* emissiveMap, const float& shineness, GLSLShader* shader) {
+	this->ambientColor = ambientColor;
+	this->diffuseMap = diffuseMap;
+	this->specularMap = specularMap; 
+	this->emissiveMap = emissiveMap;
 	this->shineness = shineness;
-
-	this->texture = tex;
-
-	if (!shader)
-		this->shader = State::defaultShader;
-	else
-		this->shader = shader;
+	this->shader = shader;
 }
 
 void Material::setShader(GLSLShader* shader) { this->shader = shader; }
 GLSLShader* Material::getShader() const { return shader; }
 
-void Material::setTexture(GLTexture* tex) { this->texture = tex; }
-GLTexture* Material::getTexture() const { return texture; }
+void Material::setDiffuseMap(GLTexture* diffuseMap) { this->diffuseMap = diffuseMap; }
+const GLTexture& Material::getDiffuseMap() const { return *diffuseMap; }
 
-void Material::setAmbient(glm::vec3 color) { ambient = color; }
-glm::vec3 Material::getAmbient() { return ambient; }
-
-void Material::setDiffuse(glm::vec3 color) { diffuse = color; }
-glm::vec3 Material::getDiffuse() { return diffuse; }
-
-void Material::setSpecular(glm::vec3 color) { specular = color; }
-glm::vec3 Material::getSpecular() { return specular; }
+void Material::setSpecularMap(GLTexture* specularMap) { this->specularMap = specularMap; }
+const GLTexture& Material::getSpecularMap() const { return *specularMap; }
 
 void Material::setShineness(float shineness) { this->shineness = shineness; }
 float Material::getShineness() { return shineness; }
+
+void Material::setEmissiveMap(GLTexture* emissiveMap) { this->emissiveMap = emissiveMap; }
+const GLTexture& Material::getEmissiveMap() const { return *emissiveMap; }
 
 void Material::prepare(glm::mat4 modelMatrix, glm::mat4 viewMatrix, glm::mat4 projectionMatrix, glm::mat3 normalMatrix) {
 	GLSLShader* shader = this->shader;
@@ -51,11 +44,24 @@ void Material::prepare(glm::mat4 modelMatrix, glm::mat4 viewMatrix, glm::mat4 pr
 	shader->setMat4x4(shader->getLocation("projection"), projectionMatrix);
 	shader->setMat3x3(shader->getLocation("normalMatrix"), normalMatrix);
 	
-	shader->setVec3(shader->getLocation("material.ambient"), ambient);
-	shader->setVec3(shader->getLocation("material.diffuse"), diffuse);
-	shader->setVec3(shader->getLocation("material.specular"), specular);
+	shader->setVec3(shader->getLocation("material.ambient"), ambientColor);
+	shader->setInt(shader->getLocation("material.diffuse"), 0);
+	shader->setInt(shader->getLocation("material.specular"), 1);
+	shader->setInt(shader->getLocation("material.emissive"), 2);
 	shader->setFloat(shader->getLocation("material.shineness"), shineness);
 
-	if (texture)
-		texture->bind();
+	if (diffuseMap) {
+		glActiveTexture(GL_TEXTURE0);
+		diffuseMap->bind();
+	}
+
+	if (specularMap) {
+		glActiveTexture(GL_TEXTURE1);
+		specularMap->bind();
+	}
+
+	if (emissiveMap) {
+		glActiveTexture(GL_TEXTURE2);
+		emissiveMap->bind();
+	}
 }

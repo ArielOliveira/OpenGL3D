@@ -24,5 +24,5 @@ void main() {
 	fTextCoords = vTextCoords;
 	fModelPos = modelPos.xyz;
 	fNormal = normalMatrix * vNormal;
-	fCameraPos = (inverse(view) * vec4(0, 0 , 0, 1)).xyz;
+	fCameraPos = (inverse(view) * vec4(0, 0 , 0, 1)).xyz - modelPos.xyz;
 }

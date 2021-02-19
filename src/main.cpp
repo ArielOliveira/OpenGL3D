@@ -128,26 +128,24 @@ int main(void) {
 	world = new World();
 	//Model cube((meshPath + "asian_town.msh").c_str());
 	//cube.setSize(glm::vec3(10.f, 10.f, 10.f));
-	//Cube cube;
-	//render->setupObj(&cube);
-	//Cube light(Material(nullptr, glm::vec3(1), nullptr));
-	//light.setPos(glm::vec3(1.0f, .0f, -4.f));
-	Cube cube(Material(glm::vec3(1.f, .5f, .31f),
-					   glm::vec3(1.f, .5f, .31f),
-					   glm::vec3(.5f, .5f, .5f),
-					   32.f));
 	
-	//Cube cube;
+	Cube cube(Material(glm::vec3(1), new GLTexture((texturePath + "crate_diffuse.png").c_str(), 0),
+									 new GLTexture((texturePath + "crate_specular.png").c_str(), 1),
+									 new GLTexture((texturePath + "matrix.jpg").c_str(), 2),
+									 32.f));
 
 	//loadModel(meshPath + "stanford-bunny.obj");
 	//loadModel(meshPath + "cube-3d-shape.obj");
 	world->addObject(&cube);
 	world->addLight(new Light());
 	
-	world->getLight(0)->setPos(glm::vec3(1.f, .0f, -4.f));
+	world->getLight(0)->setPos(glm::vec3(1.f, 1.f, -4.0f));
 
 	for (int i = 0; i < world->getNumObjects(); i++)
 		render->setupObj(world->getObject(i));
+
+	for (int i = 0; i < world->getNumLights(); i++)
+		render->setupObj(world->getLight(i));
 
 	world->addCamera(new Camera(glm::vec3(.0f, 1.f, 3.f),  // position
 		glm::vec3(.0f, 1.f, .0f), // up 

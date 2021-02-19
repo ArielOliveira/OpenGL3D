@@ -29,7 +29,8 @@ bool Input::keyEventMap[512] = { false };
 
 /// Joystick input
 bool Input::gamepad[4] = { false };
-
+float Input::leftJoySensitivity = .8f;
+float Input::rightJoySensitivity = .8f;
 float Input::deadZone = .05f;
 //////////////////////////////////////
 
@@ -53,10 +54,10 @@ void Input::setAxis() {
 }
 
 void Input::setAxis(int joyid, float axisArray[4], GLFWgamepadstate state) {
-	leftAxisX = abs(state.axes[0]) > deadZone ? state.axes[0] : .0f;
-	leftAxisY = abs(state.axes[1]) > deadZone ? -state.axes[1] : .0f;
-	rightAxisX = abs(state.axes[2]) > deadZone ? state.axes[2] : .0f;
-	rightAxisY = abs(state.axes[3]) > deadZone ? state.axes[3] : .0f;
+	leftAxisX = (abs(state.axes[0]) > deadZone ? state.axes[0] : .0f) * leftJoySensitivity;
+	leftAxisY = (abs(state.axes[1]) > deadZone ? -state.axes[1] : .0f) * leftJoySensitivity;
+	rightAxisX = (abs(state.axes[2]) > deadZone ? state.axes[2] : .0f) * rightJoySensitivity;
+	rightAxisY = (abs(state.axes[3]) > deadZone ? state.axes[3] : .0f) * rightJoySensitivity;
 }
 
 void Input::cursor_position_callback(GLFWwindow* window, double xpos, double ypos)

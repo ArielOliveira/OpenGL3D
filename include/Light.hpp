@@ -1,15 +1,26 @@
 #pragma once
 
-#include "Model.hpp"
+#include "Cube.hpp"
 
-class Light : public Entity {
+class Light : public Model {
     private:
-        Mesh* mesh;
-        Material* material;
+        glm::vec3 ambient;
+        glm::vec3 diffuse;
+        glm::vec3 specular;
+        
     public:
         Light();
         Light(const Light& light);
-        Light(const Mesh& mesh, const Material& material);
+        Light(const Model& model);
+
+        void setAmbient(const glm::vec3& color);
+        const glm::vec3& getAmbient() const;
+
+        void setDiffuse(const glm::vec3& color);
+        const glm::vec3& getDiffuse() const;
+
+        void setSpecular(const glm::vec3& color);
+        const glm::vec3& getSpecular() const;
 
         void step(float deltaTime);
 };

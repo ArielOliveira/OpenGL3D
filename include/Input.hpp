@@ -38,6 +38,9 @@ public:
 	/// Joystick input
 	static bool gamepad[4];
 
+	static float leftJoySensitivity;
+	static float rightJoySensitivity;
+
 	static float deadZone;
 	////////////////////////////////////////////
 

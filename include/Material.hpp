@@ -6,18 +6,16 @@
 class Material {
 	private:
 		GLSLShader* shader;
-		GLTexture* texture;
+		GLTexture* diffuseMap;
+		GLTexture* specularMap;
+		GLTexture* emissiveMap;
 		
-		glm::vec3 color;
+		glm::vec3 ambientColor;
 		
-		glm::vec3 ambient;
-		glm::vec3 diffuse;
-		glm::vec3 specular;
-
 		float shineness;
 	public:
 		Material();
-		Material(glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float shineness, GLTexture* tex = nullptr, GLSLShader* shader = nullptr);
+		Material(const glm::vec3& ambientColor, GLTexture* diffuseMap, GLTexture* specularMap, GLTexture* emissiveMap, const float& shineness, GLSLShader* shader = State::defaultShader);
 		
 		void setShader(GLSLShader* shader);
 		GLSLShader* getShader() const;
@@ -26,15 +24,16 @@ class Material {
 		GLTexture* getTexture() const;
 
 		void prepare(glm::mat4 modelMatrix, glm::mat4 viewMatrix, glm::mat4 projectionMatrix, glm::mat3 normalMatrix);
-		
-		void setAmbient(glm::vec3 color);
-		glm::vec3 getAmbient();
 
-		void setDiffuse(glm::vec3 color);
-		glm::vec3 getDiffuse();
+		void setDiffuseMap(GLTexture* diffuseMap);
+		const GLTexture& getDiffuseMap() const;
 
-		void setSpecular(glm::vec3 color);
-		glm::vec3 getSpecular();
+		void setSpecularMap(GLTexture* specularMap);
+		const GLTexture& getSpecularMap() const;
+
+		void setEmissiveMap(GLTexture* emissiveMap);
+		const GLTexture& getEmissiveMap() const;
+
 
 		void setShineness(float shineness);
 		float getShineness();	
