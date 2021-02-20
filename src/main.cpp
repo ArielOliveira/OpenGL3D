@@ -123,23 +123,27 @@ int main(void) {
 
 	if (!render->init())
 		return -1;
-
-	State::defaultShader = new GLSLShader(shaderPath + "vertex.shader", shaderPath + "fragment.shader");
+	GLSLShader* shader = new GLSLShader(shaderPath + "vertex.shader", shaderPath + "fragment.shader");
+	GLTexture* texture = new GLTexture(State::whiteMap, glm::vec2(1));
+	State::initialize(shader, texture);
 	world = new World();
 	//Model cube((meshPath + "asian_town.msh").c_str());
 	//cube.setSize(glm::vec3(10.f, 10.f, 10.f));
 	
-	Cube cube(Material(glm::vec3(1), new GLTexture((texturePath + "crate_diffuse.png").c_str(), 0),
-									 new GLTexture((texturePath + "crate_specular.png").c_str(), 1),
-									 new GLTexture((texturePath + "matrix.jpg").c_str(), 2),
-									 32.f));
 
 	//loadModel(meshPath + "stanford-bunny.obj");
 	//loadModel(meshPath + "cube-3d-shape.obj");
-	world->addObject(&cube);
-	world->addLight(new Light());
+
+	Cube cube(Material(new GLTexture((texturePath + "crate_diffuse.png").c_str(), 0),
+					   new GLTexture((texturePath + "crate_specular.png").c_str(), 1),
+					   new GLTexture((texturePath + "matrix.jpg").c_str(), 2),
+					   32.f));
 	
+	//Cube cube;
+	Light* light = new Light();
+	world->addLight(light);
 	world->getLight(0)->setPos(glm::vec3(1.f, 1.f, -4.0f));
+	world->addObject(&cube);
 
 	for (int i = 0; i < world->getNumObjects(); i++)
 		render->setupObj(world->getObject(i));

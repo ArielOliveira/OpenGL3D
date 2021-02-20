@@ -1,8 +1,9 @@
 #pragma once
 #include "Entity.hpp"
-#include "State.hpp"
 #include "Input.hpp"
+
 #include <glfw3.h>
+
 
 class Camera : public Entity {
 	private:

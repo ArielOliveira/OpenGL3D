@@ -3,22 +3,17 @@
 
 Light::Light() : Model() {
     Cube cube;
-    
-    unsigned char map[] = { 255, 255, 255 };
-    GLTexture texture(map, glm::vec2(1));
-   
+
     addMesh(
-        new Mesh(*cube.getMesh(0)), 
+        cube.getMesh(0), 
         new Material(
-            glm::vec3(.2f),
-            new GLTexture(texture),
-            new GLTexture(texture),
-            new GLTexture(texture),
-            128.f
-        )
+            State::defaultTexture,
+            State::blackTexture,
+            State::defaultTexture,
+            0.f)
     );
 
-    ambient = glm::vec3(.5f);
+    ambient = glm::vec3(.2f);
     diffuse = glm::vec3(.5f);
     specular = glm::vec3(1.f);
 

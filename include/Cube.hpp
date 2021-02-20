@@ -1,6 +1,5 @@
 #pragma once
 #include "Model.hpp"
-#include "State.hpp"
 class Cube : public Model {
 	private:
 		Mesh* makeCube();

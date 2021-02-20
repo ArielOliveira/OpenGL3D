@@ -4,7 +4,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-GLTexture::GLTexture(unsigned char* texture, const glm::vec2 size) {
+GLTexture::GLTexture(const unsigned char* texture, const glm::vec2 size) {
 	this->size = size;
 	
 	if (texture)
@@ -39,8 +39,7 @@ GLTexture::GLTexture() :
 
 GLTexture::~GLTexture() {}
 
-void GLTexture::load(unsigned char* texture) {
-
+void GLTexture::load(const unsigned char* texture) {
 	GLenum format;
 	switch (channels) {
 	case 1: format = GL_LUMINANCE;

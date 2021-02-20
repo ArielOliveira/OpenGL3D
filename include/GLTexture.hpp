@@ -11,12 +11,12 @@ class GLTexture {
 		int channels;
 
 	public:
-		GLTexture(unsigned char* texture, const glm::vec2 size);
+		GLTexture(const unsigned char* texture, const glm::vec2 size);
 		GLTexture(const char* filename, int index);
 		GLTexture();
 		~GLTexture();
 
-		void load(unsigned char* texture);
+		void load(const unsigned char* texture);
 		
 		uint32_t getId() const;
 		

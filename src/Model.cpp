@@ -34,7 +34,7 @@ void Model::load(const char* filename) {
 			std::string textureName = bufferNode.child("material").child("texture").text().as_string();
 			
 			GLTexture* texture = new GLTexture((texturePath + textureName).c_str(), 0);
-			Material* material = new Material(glm::vec3(1), texture, texture, nullptr, 32.f, State::defaultShader);
+			Material* material = new Material(texture, nullptr, nullptr, 32.f, State::defaultShader);
 
 			std::vector<glm::int32> indices = FileLoader<glm::int32>::splitString(std::string(bufferNode.child("indices").text().as_string()), ',');
 			std::vector<float> vertices = FileLoader<float>::splitString(std::string(bufferNode.child("coords").text().as_string()), ',');

@@ -1,18 +1,16 @@
 #include "Material.hpp"
 
 Material::Material() {
-	diffuseMap = nullptr;
-	specularMap = nullptr;
-	emissiveMap = nullptr;
+	diffuseMap = State::defaultTexture;
+	specularMap = State::blackTexture;
+	emissiveMap = State::blackTexture;
 
-	ambientColor = glm::vec3(1);
 	shineness = 32.f;
 
 	shader = State::defaultShader;
 }
 
-Material::Material(const glm::vec3& ambientColor, GLTexture* diffuseMap, GLTexture* specularMap, GLTexture* emissiveMap, const float& shineness, GLSLShader* shader) {
-	this->ambientColor = ambientColor;
+Material::Material(GLTexture* diffuseMap, GLTexture* specularMap, GLTexture* emissiveMap, const float& shineness, GLSLShader* shader) {
 	this->diffuseMap = diffuseMap;
 	this->specularMap = specularMap; 
 	this->emissiveMap = emissiveMap;
@@ -35,33 +33,28 @@ float Material::getShineness() { return shineness; }
 void Material::setEmissiveMap(GLTexture* emissiveMap) { this->emissiveMap = emissiveMap; }
 const GLTexture& Material::getEmissiveMap() const { return *emissiveMap; }
 
-void Material::prepare(glm::mat4 modelMatrix, glm::mat4 viewMatrix, glm::mat4 projectionMatrix, glm::mat3 normalMatrix) {
+void Material::prepare(glm::mat4 modelMatrix, glm::mat4 viewMatrix, glm::mat4 projectionMatrix, glm::mat3 normalMatrix, double time) {
 	GLSLShader* shader = this->shader;
 	
 	shader->use();
+
 	shader->setMat4x4(shader->getLocation("model"), modelMatrix);
 	shader->setMat4x4(shader->getLocation("view"), viewMatrix);
 	shader->setMat4x4(shader->getLocation("projection"), projectionMatrix);
 	shader->setMat3x3(shader->getLocation("normalMatrix"), normalMatrix);
-	
-	shader->setVec3(shader->getLocation("material.ambient"), ambientColor);
+
 	shader->setInt(shader->getLocation("material.diffuse"), 0);
 	shader->setInt(shader->getLocation("material.specular"), 1);
 	shader->setInt(shader->getLocation("material.emissive"), 2);
+	
 	shader->setFloat(shader->getLocation("material.shineness"), shineness);
 
-	if (diffuseMap) {
-		glActiveTexture(GL_TEXTURE0);
-		diffuseMap->bind();
-	}
+	glActiveTexture(GL_TEXTURE0);
+	diffuseMap->bind();
+	
+	glActiveTexture(GL_TEXTURE1);
+	specularMap->bind();
 
-	if (specularMap) {
-		glActiveTexture(GL_TEXTURE1);
-		specularMap->bind();
-	}
-
-	if (emissiveMap) {
-		glActiveTexture(GL_TEXTURE2);
-		emissiveMap->bind();
-	}
+	glActiveTexture(GL_TEXTURE2);
+	emissiveMap->bind();
 }

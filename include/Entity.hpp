@@ -1,8 +1,8 @@
 #pragma once
+#include "State.hpp"
+
 #include <glm.hpp>
 #include <ext.hpp>
-#include <gtx/matrix_decompose.hpp>
-#include "State.hpp"
 
 class Entity {
 	protected:

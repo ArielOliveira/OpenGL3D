@@ -10,20 +10,15 @@ class Material {
 		GLTexture* specularMap;
 		GLTexture* emissiveMap;
 		
-		glm::vec3 ambientColor;
-		
 		float shineness;
 	public:
 		Material();
-		Material(const glm::vec3& ambientColor, GLTexture* diffuseMap, GLTexture* specularMap, GLTexture* emissiveMap, const float& shineness, GLSLShader* shader = State::defaultShader);
+		Material(GLTexture* diffuseMap, GLTexture* specularMap, GLTexture* emissiveMap, const float& shineness, GLSLShader* shader = State::defaultShader);
 		
 		void setShader(GLSLShader* shader);
 		GLSLShader* getShader() const;
 
-		void setTexture(GLTexture* tex);
-		GLTexture* getTexture() const;
-
-		void prepare(glm::mat4 modelMatrix, glm::mat4 viewMatrix, glm::mat4 projectionMatrix, glm::mat3 normalMatrix);
+		void prepare(glm::mat4 modelMatrix, glm::mat4 viewMatrix, glm::mat4 projectionMatrix, glm::mat3 normalMatrix, double time);
 
 		void setDiffuseMap(GLTexture* diffuseMap);
 		const GLTexture& getDiffuseMap() const;

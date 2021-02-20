@@ -47,7 +47,6 @@ void main() {
 	vec3 emissive = vec3(0);
 	if (specularMap == vec3(0))
 		emissive = texture(material.emissive, fTextCoords).rgb;
-	
 
 	vec3 result = ambient + diffuse + specular + emissive;
 	fragColor = vec4(result, 1.0);

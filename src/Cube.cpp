@@ -50,18 +50,14 @@ Mesh* Cube::makeCube() {
 	mesh->addVertex(vertex_t(glm::vec3(.5f, .5f, .5f), glm::vec3(1.f, .0f, .0f), glm::vec2(1.f, 1.f)));
 	mesh->addVertex(vertex_t(glm::vec3(.5f, -.5f, .5f), glm::vec3(1.f, .0f, .0f), glm::vec2(.0f, 1.f)));
 
-
 	mesh->addTriangleIdx(12, 13, 14);
 	mesh->addTriangleIdx(14, 15, 12);
-
 
 	// top face
 	mesh->addVertex(vertex_t(glm::vec3(-.5f, .5f, -.5f), glm::vec3(.0f, 1.f, .0f), glm::vec2(.0f, .0f)));
 	mesh->addVertex(vertex_t(glm::vec3(.5f, .5f, -.5f), glm::vec3(.0f, 1.f, .0f), glm::vec2(1.f, .0f)));
 	mesh->addVertex(vertex_t(glm::vec3(.5f, .5f, .5f), glm::vec3(.0f, 1.f, .0f), glm::vec2(1.f, 1.f)));
 	mesh->addVertex(vertex_t(glm::vec3(-.5f, .5f, .5f), glm::vec3(.0f, 1.f, .0f), glm::vec2(.0f, 1.f)));
-
-		
 	
 	mesh->addTriangleIdx(16, 17, 18);
 	mesh->addTriangleIdx(18, 19, 16);
@@ -71,7 +67,6 @@ Mesh* Cube::makeCube() {
 	mesh->addVertex(vertex_t(glm::vec3(.5f, -.5f, -.5f), glm::vec3(.0f, -1.f, .0f), glm::vec2(1.f, .0f)));
 	mesh->addVertex(vertex_t(glm::vec3(.5f, -.5f, .5f), glm::vec3(.0f, -1.f, .0f), glm::vec2(1.f, 1.f)));
 	mesh->addVertex(vertex_t(glm::vec3(-.5f, -.5f, .5f), glm::vec3(.0f, -1.f, .0f), glm::vec2(.0f, 1.f)));
-
 	
 	mesh->addTriangleIdx(20, 21, 22);
 	mesh->addTriangleIdx(22, 23, 20);
@@ -84,5 +79,6 @@ Mesh* Cube::makeCube() {
 
 void Cube::step(float deltaTime) {
 	//rot.z = fmodf(rot.z + glm::radians(32.0f) * deltaTime, glm::radians(360.0f));
+	
 	Model::step(deltaTime);
 }

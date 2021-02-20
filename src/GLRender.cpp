@@ -28,8 +28,6 @@ void GLRender::setupObj(Model* obj) {
 
 		glm::uint32 meshID = mesh->getMeshID();
 
-		std::cout << vertices->size() << " " << indices->size() << " " << meshID << std::endl;
-
 		GLCall(glGenVertexArrays(1, &vMeshIDs[meshID].bufferID));
 		GLCall(glGenBuffers(1, &vMeshIDs[meshID].vertexArrayID));
 		GLCall(glGenBuffers(1, &vMeshIDs[meshID].indexArrayID));
@@ -58,21 +56,22 @@ void GLRender::drawObject(Model* obj) {
 	for (int i = 0; i < obj->getMeshCount(); i++) {
 		Material material = obj->getMaterial(i);
 		Mesh* mesh = obj->getMesh(i);	
-		material.prepare(State::modelMatrix, State::viewMatrix, State::projectionMatrix, obj->getNormalMtx());
+		material.prepare(State::modelMatrix, State::viewMatrix, State::projectionMatrix, obj->getNormalMtx(), glfwGetTime());
 		GLCall(glBindVertexArray(vMeshIDs[mesh->getMeshID()].bufferID));
 		GLCall(glDrawElements(GL_TRIANGLES, mesh->getTriangleIdxList()->size(), GL_UNSIGNED_INT, nullptr));
 	}
 }
 
 void GLRender::drawWorld(World* world) {
-	for (int i = 0; i < world->getNumObjects(); i++) {
-		Model* obj = world->getObject(i);
-		State::modelMatrix = obj->getModelMtx();
-		drawObject(obj);
-	}
 	for (int i = 0; i < world->getNumLights(); i++) {
 		Light* light = world->getLight(i);
 		State::modelMatrix = light->getModelMtx();
 		drawObject(light);
+	}
+
+	for (int i = 0; i < world->getNumObjects(); i++) {
+		Model* obj = world->getObject(i);
+		State::modelMatrix = obj->getModelMtx();
+		drawObject(obj);
 	}
 }
