@@ -6,9 +6,9 @@
 
 class Entity {
 	protected:
-		glm::vec3 pos;
-		glm::vec3 size;
-		glm::vec3 rot;
+		glm::vec4 pos;
+		glm::vec4 size;
+		glm::vec4 rot;
 
 		glm::mat4 modelMtx;
 	public:
@@ -16,14 +16,14 @@ class Entity {
 		Entity(const Entity& entity);
 		virtual ~Entity();
 
-		void setPos(glm::vec3 pos);
-		glm::vec3 getPos();
+		void setPos(glm::vec4 pos);
+		glm::vec4 getPos();
 
-		void setRot(glm::vec3 rot);
-		glm::vec3 getRot();
+		void setRot(glm::vec4 rot);
+		glm::vec4 getRot();
 
-		void setSize(glm::vec3 size);
-		glm::vec3 getSize();
+		void setSize(glm::vec4 size);
+		glm::vec4 getSize();
 
 		void computeModelMtx();
 		glm::mat4 getModelMtx();

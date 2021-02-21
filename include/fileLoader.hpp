@@ -52,7 +52,7 @@ std::vector<T> FileLoader<T>::splitString(const std::string& str, char delim) {
 }
 
 template <typename T>
-static T FileLoader<T>::numberFromString(const std::string& str)
+T FileLoader<T>::numberFromString(const std::string& str)
 {
 	T number;
 	std::istringstream stream(str);

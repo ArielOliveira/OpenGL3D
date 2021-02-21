@@ -1,11 +1,8 @@
 #include "Model.hpp"
 #include "pugixml.hpp"
 
-Model::Model() {
-	pos = glm::vec3(0);
-	rot = glm::vec3(0);
-	size = glm::vec3(1);
-}
+Model::Model() : Entity() 
+	{}
 
 Model::Model(const Model& object) : 
 	meshList(object.meshList),
@@ -45,7 +42,7 @@ void Model::load(const char* filename) {
 			
 			Mesh* mesh = new Mesh();
 			
-			mesh->setVertexCount(vertexCompCount);
+			mesh->setVertexCount(4);
 			mesh->setTextCount(texCoordCompCount);
 
 			if ((vertices.size() / vertexCompCount) == (textCoords.size() / texCoordCompCount)) {
@@ -53,12 +50,11 @@ void Model::load(const char* filename) {
 				auto itTx = textCoords.begin();
 				while (itVt != vertices.end()) {
 					float x = *itVt; itVt++; float y = *itVt; itVt++; float z = *itVt; itVt++;
-					glm::vec3 vertex(x, y, z);
+					glm::vec4 vertex(x, y, z, 1);
 
-					float s = *itTx; itTx++; float t = *itTx; itTx++;
-					glm::vec2 textCoord(s, t);
+					float u = *itTx; itTx++; float v = *itTx; itTx++;
 
-					mesh->addVertex(vertex_t(vertex, glm::vec3(0), textCoord));
+					mesh->addVertex(vertex_t{vertex, glm::vec4(0), glm::vec2(u, v)});
 				}
 			} else {
 				std::cout << "Invalid data: vertices and texture coordinates don't match!" << std::endl;
@@ -78,9 +74,9 @@ void Model::load(const char* filename) {
 		exit(-1);
 	}
 
-	pos = glm::vec3(0);
-	rot = glm::vec3(0);
-	size = glm::vec3(1);
+	pos = glm::vec4(0, 0, 0, 1);
+	rot = glm::vec4(0, 0, 0, 1);
+	size = glm::vec4(1);
 
 	computeModelMtx();
 }
@@ -97,8 +93,8 @@ Mesh* Model::getMesh(const int& pos) { return meshList[pos]; }
 const Material& Model::getMaterial(size_t pos) const { return *materialList[pos]; }
 Material& Model::getMaterial(size_t pos) { return *materialList[pos]; }
 
-int Model::getMeshCount() { return meshList.size(); }
-int Model::getMaterialCount() { return materialList.size(); }
+size_t Model::getMeshCount() { return meshList.size(); }
+size_t Model::getMaterialCount() { return materialList.size(); }
 
 void Model::step(float deltaTime) {
 	computeModelMtx();

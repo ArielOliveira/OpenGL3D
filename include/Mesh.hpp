@@ -6,15 +6,9 @@
 using std::vector;
 
 struct vertex_t {
-	glm::vec3 position;
-	glm::vec3 normal;
+	glm::vec4 position;
+	glm::vec4 normal;
 	glm::vec2 texture;
-	
-	vertex_t(glm::vec3 position, glm::vec3 normal, glm::vec2 texture) {
-		this->position = position;
-		this->normal = normal;
-		this->texture = texture;
-	}
 };
 
 class Mesh {

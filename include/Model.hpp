@@ -26,8 +26,8 @@ class Model : public Entity {
 		const Material& getMaterial(size_t index) const;
 		Material& getMaterial(size_t index);
 		
-		int getMeshCount();
-		int getMaterialCount();
+		size_t getMeshCount();
+		size_t getMaterialCount();
 		
 		Mesh* getMesh(const int& pos);
 

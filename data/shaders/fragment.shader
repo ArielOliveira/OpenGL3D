@@ -8,17 +8,21 @@ struct Material {
 };
 
 struct Light {
-	vec3 position;
+	vec4 position;
 
-	vec3 ambient;
-	vec3 diffuse;
-	vec3 specular;
+	vec4 ambient;
+	vec4 diffuse;
+	vec4 specular;
+
+	float constant;
+	float linear;
+	float quadratic;
 };
 
 in vec2 fTextCoords;
-in vec3 fModelPos;
-in vec3 fNormal;
-in vec3 fCameraPos;
+in vec4 fModelPos;
+in vec4 fNormal;
+in vec4 fCameraPos;
 
 out vec4 fragColor;
 
@@ -26,28 +30,37 @@ uniform Material material;
 uniform Light light;
 
 void main() {
-	vec3 fSurfaceNormal = normalize(fNormal);
-	vec3 lightDir = normalize(light.position - fModelPos);
+	vec4 fSurfaceNormal = normalize(fNormal);
+	vec4 lightDir;
+	float attenuation = 1;
+	float lightDistance = 1;
+	if (light.position.w == 0) {
+		lightDir = normalize(-light.position);
+	} else {
+		lightDir = normalize(light.position - fModelPos);
+		lightDistance = length(light.position - fModelPos);
+		attenuation = attenuation / (light.constant + (light.linear * lightDistance) + (light.quadratic * lightDistance));
+	}
 
 	//ambient light
-	vec3 ambient = light.ambient * texture(material.diffuse, fTextCoords).rgb;
+	vec4 ambient = light.ambient * texture(material.diffuse, fTextCoords);
 
 	// diffuse light
 	float diffFactor = max(dot(fSurfaceNormal, lightDir), 0.0);
-	vec3 diffuse = light.diffuse * diffFactor * texture(material.diffuse, fTextCoords).rgb;
+	vec4 diffuse = light.diffuse * diffFactor * texture(material.diffuse, fTextCoords);
 
 	// specular light
-	vec3 viewDir = normalize(fCameraPos - fModelPos);
-	vec3 reflectDir = reflect(-lightDir, fSurfaceNormal);
+	vec4 viewDir = normalize(fCameraPos - fModelPos);
+	vec4 reflectDir = reflect(-lightDir, fSurfaceNormal);
 	float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shineness);
-	vec3 specularMap = texture(material.specular, fTextCoords).rgb;
-	vec3 specular = light.specular * spec * specularMap;
+	vec4 specularMap = texture(material.specular, fTextCoords);
+	vec4 specular = light.specular * spec * specularMap;
 
 	// emissive light (self-glown)
-	vec3 emissive = vec3(0);
-	if (specularMap == vec3(0))
-		emissive = texture(material.emissive, fTextCoords).rgb;
+	vec4 emissive = vec4(0);
+	if (specularMap == vec4(0))
+		emissive = texture(material.emissive, fTextCoords);
 
-	vec3 result = ambient + diffuse + specular + emissive;
-	fragColor = vec4(result, 1.0);
+	vec4 result = ((ambient + diffuse + specular) * attenuation) + emissive;
+	fragColor = result;
 }

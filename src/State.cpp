@@ -46,6 +46,8 @@ bool State::initialize(GLSLShader* _defaultShader, GLTexture* _defaultTexture) {
 		std::cerr << "Invalid texture assigning" << std::endl;
 		return false;
 	}
+
+	return true;
 }
 
 glm::vec3 State::QuaternionToVector(glm::quat quat, glm::vec3 vec) {

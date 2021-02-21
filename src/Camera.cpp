@@ -1,12 +1,12 @@
 #include "Camera.hpp"
 
-Camera::Camera(glm::vec3 position, glm::vec3 up, glm::vec3 lookAt, glm::vec3 clearColor, glm::mat4 projection) {
+Camera::Camera(glm::vec4 position, glm::vec3 up, glm::vec3 lookAt, glm::vec3 clearColor, glm::mat4 projection) {
 	this->pos = position;
 	this->up = up;
 	this->lookAt = lookAt;
 	this->clearColor = clearColor;
 	this->projection = projection;
-	rot = glm::vec3(0);
+	rot = glm::vec4(0);
 }
 
 Camera::~Camera() {
@@ -29,7 +29,12 @@ void Camera::move(float timeStep) {
 	if (rot.y < -89.f)
 		rot.y = -89.f;
 	
-	pos += (lookAt * Input::leftAxisY + right * Input::leftAxisX) * timeStep * speed;
+	
+	glm::vec3 targetPos = (lookAt * Input::leftAxisY + right * Input::leftAxisX) * timeStep * speed;
+
+	pos.x += targetPos.x;
+	pos.y += targetPos.y;
+	pos.z += targetPos.z;
 
 	/*if (Input::keybEvent[GLFW_KEY_E])
 		pos -= newUp * timeStep * speed;
@@ -45,7 +50,8 @@ void Camera::move(float timeStep) {
 }
 
 void Camera::prepare() {
-	modelMtx = glm::lookAt(pos, pos + lookAt, up);
+	glm::vec3 position = glm::vec3(pos.x, pos.y, pos.z);
+	modelMtx = glm::lookAt(position, position + lookAt, up);
 
 	State::viewMatrix = modelMtx;
 	State::projectionMatrix = projection;

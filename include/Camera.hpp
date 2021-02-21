@@ -15,7 +15,7 @@ class Camera : public Entity {
 		const float speed = 2.f;
 
 	public:
-		Camera(glm::vec3 position, glm::vec3 up, glm::vec3 lookAt, glm::vec3 clearColor, glm::mat4 projection);
+		Camera(glm::vec4 position, glm::vec3 up, glm::vec3 lookAt, glm::vec3 clearColor, glm::mat4 projection);
 
 		~Camera();
 		

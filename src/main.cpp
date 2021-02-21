@@ -15,6 +15,7 @@
 #include "Input.hpp"
 #include "World.hpp"
 #include "GLTexture.hpp"
+#include "PointLight.hpp"
 
 glm::uint32 Mesh::globalMeshID = 0;
 
@@ -24,19 +25,21 @@ World* world;
 Mesh* processMesh(aiMesh *mesh, const aiScene *scene) {
     Mesh* myMesh = new Mesh();
 	
-	myMesh->setVertexCount(3);
+	myMesh->setVertexCount(4);
 	myMesh->setTextCount(2);
 
     for(unsigned int i = 0; i < mesh->mNumVertices; i++) {
-        glm::vec3 position;
+        glm::vec4 position;
 		position.x = mesh->mVertices[i].x;
 		position.y = mesh->mVertices[i].y;
 		position.z = mesh->mVertices[i].z;
+		position.w = 1;
         
-		glm::vec3 normal;
+		glm::vec4 normal;
 		normal.x = mesh->mNormals[i].x;
 		normal.y = mesh->mNormals[i].y;
 		normal.z = mesh->mNormals[i].z;
+		normal.w = 0;
 		
 		glm::vec2 texture(0);
 		if (mesh->mTextureCoords[0]) {
@@ -44,7 +47,7 @@ Mesh* processMesh(aiMesh *mesh, const aiScene *scene) {
 			texture.y = mesh->mTextureCoords[0][i].y;
 		}
 
-		myMesh->addVertex(vertex_t(position, normal, texture));
+		myMesh->addVertex(vertex_t{position, normal, texture});
     }
     if (mesh->mFaces->mNumIndices == 3) {
 		for(unsigned int i = 0; i < mesh->mNumFaces; i++) {
@@ -138,12 +141,15 @@ int main(void) {
 					   new GLTexture((texturePath + "crate_specular.png").c_str(), 1),
 					   new GLTexture((texturePath + "matrix.jpg").c_str(), 2),
 					   32.f));
-	
-	//Cube cube;
-	Light* light = new Light();
+	cube.setPos(glm::vec4(-2.f, .0f, .0f, 1.f));
+	Cube anotherCube(cube);
+	anotherCube.setPos(glm::vec4(2.f, .0f, .0f, 1.f));
+	PointLight* light = new PointLight();
 	world->addLight(light);
-	world->getLight(0)->setPos(glm::vec3(1.f, 1.f, -4.0f));
+	world->getLight(0)->setPos(glm::vec4(.0f, 2.f, 0.0f, 1));
+	//world->getLight(0)->setPos(glm::vec4(-.2f, -1.f, -0.3f, 0));
 	world->addObject(&cube);
+	world->addObject(&anotherCube);
 
 	for (int i = 0; i < world->getNumObjects(); i++)
 		render->setupObj(world->getObject(i));
@@ -151,7 +157,7 @@ int main(void) {
 	for (int i = 0; i < world->getNumLights(); i++)
 		render->setupObj(world->getLight(i));
 
-	world->addCamera(new Camera(glm::vec3(.0f, 1.f, 3.f),  // position
+	world->addCamera(new Camera(glm::vec4(.0f, 1.f, 3.f, 1),  // position
 		glm::vec3(.0f, 1.f, .0f), // up 
 		glm::vec3(.0f, 0.f, 1.f), // lookAt
 		glm::vec3(.0f, .0f, .1f), // clearColor
