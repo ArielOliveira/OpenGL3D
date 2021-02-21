@@ -22,15 +22,13 @@ Light::Light() : Model() {
     specular = glm::vec4(1, 1, 1, 1);
 
     pos = glm::vec4(.0f, -1.f, .0f, .0f);
-
-    step(0);
 }
 
 Light::Light(const Light& light) : Model(light),
     ambient(light.ambient),
     diffuse(light.diffuse),
     specular(light.specular)
-    { step(0); }
+    {}
 
 Light::Light(const glm::vec4& ambient, const glm::vec4& diffuse, const glm::vec4& specular) : Light() {
     this->ambient = ambient;

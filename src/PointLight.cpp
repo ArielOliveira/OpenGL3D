@@ -21,8 +21,6 @@ PointLight::PointLight() : Light() {
     );
 
     pos = glm::vec4(0, 0, 0, 1);
-
-    step(0);
 }
 
 PointLight::PointLight(const PointLight& light) : Light(light),

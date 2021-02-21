@@ -2,7 +2,7 @@
 #include "Light.hpp"
 
 class PointLight : public Light {
-    private:
+    protected:
         float constant;
         float linear;
         float quadratic;
@@ -22,5 +22,5 @@ class PointLight : public Light {
         void setQuadratic(const float& quadratic);
         float getQuadratic() const;
 
-        void step(float deltaTime);
+        virtual void step(float deltaTime);
 };

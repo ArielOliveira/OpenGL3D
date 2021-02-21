@@ -32,6 +32,8 @@ Mesh::Mesh(vector<vertex_t>* vertexList, vector<glm::int32>* indexList, int vert
 Mesh::~Mesh() {
 	delete vVertList;
 	delete vIdxList;
+
+	globalMeshID--;
 }
 
 void Mesh::setVertexCount(const int& count) { this->vertexCount = count; }

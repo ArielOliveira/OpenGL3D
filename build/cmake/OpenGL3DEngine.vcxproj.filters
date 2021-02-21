@@ -37,6 +37,9 @@
     <ClCompile Include="E:\OpenGL3D\src\PointLight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="E:\OpenGL3D\src\SpotLight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="E:\OpenGL3D\src\State.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -91,6 +94,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="E:\OpenGL3D\include\PointLight.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\OpenGL3D\include\SpotLight.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="E:\OpenGL3D\include\State.hpp">

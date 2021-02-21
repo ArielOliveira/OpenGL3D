@@ -2,10 +2,10 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "E:/bin/Release/OpenGL3DEngine.exe"
+			"path" : "E:/bin/RelWithDebInfo/OpenGL3DEngine.exe"
 		},
 		{
-			"path" : "E:/bin/Release/OpenGL3DEngine.pdb"
+			"path" : "E:/bin/RelWithDebInfo/OpenGL3DEngine.pdb"
 		}
 	],
 	"backtrace" : 1,
@@ -59,7 +59,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG"
+					"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG"
 				},
 				{
 					"fragment" : "-std:c++latest"
@@ -106,8 +106,6 @@
 			},
 			"sourceIndexes" : 
 			[
-				20,
-				21,
 				22,
 				23,
 				24,
@@ -121,7 +119,10 @@
 				32,
 				33,
 				34,
-				35
+				35,
+				36,
+				37,
+				38
 			]
 		}
 	],
@@ -137,11 +138,11 @@
 		"commandFragments" : 
 		[
 			{
-				"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG",
+				"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG",
 				"role" : "flags"
 			},
 			{
-				"fragment" : "/machine:x64 /INCREMENTAL:NO /subsystem:console",
+				"fragment" : "/machine:x64 /debug /INCREMENTAL /subsystem:console",
 				"role" : "flags"
 			},
 			{
@@ -203,15 +204,15 @@
 				16,
 				17,
 				18,
-				19
+				19,
+				20,
+				21
 			]
 		},
 		{
 			"name" : "Source Files",
 			"sourceIndexes" : 
 			[
-				20,
-				21,
 				22,
 				23,
 				24,
@@ -225,7 +226,10 @@
 				32,
 				33,
 				34,
-				35
+				35,
+				36,
+				37,
+				38
 			]
 		}
 	],
@@ -289,6 +293,16 @@
 		{
 			"backtrace" : 1,
 			"path" : "E:/OpenGL3D/include/OpenGLDebugger.hpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "E:/OpenGL3D/include/PointLight.hpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "E:/OpenGL3D/include/SpotLight.hpp",
 			"sourceGroupIndex" : 0
 		},
 		{
@@ -395,6 +409,12 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "E:/OpenGL3D/src/Model.cpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "E:/OpenGL3D/src/PointLight.cpp",
 			"sourceGroupIndex" : 1
 		},
 		{

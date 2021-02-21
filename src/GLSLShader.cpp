@@ -107,6 +107,7 @@ void GLSLShader::setupAttribs() {
 	GLCall(vShaderAttribs["material.shineness"] = glGetUniformLocation(programID, "material.shineness"));
 
 	GLCall(vShaderAttribs["light.position"] = glGetUniformLocation(programID, "light.position"));
+	GLCall(vShaderAttribs["light.direction"] = glGetUniformLocation(programID, "light.direction"));
 	GLCall(vShaderAttribs["light.ambient"] = glGetUniformLocation(programID, "light.ambient"));
 	GLCall(vShaderAttribs["light.diffuse"] = glGetUniformLocation(programID, "light.diffuse"));
 	GLCall(vShaderAttribs["light.specular"] = glGetUniformLocation(programID, "light.specular"));
@@ -114,6 +115,8 @@ void GLSLShader::setupAttribs() {
 	GLCall(vShaderAttribs["light.constant"] = glGetUniformLocation(programID, "light.constant"));
 	GLCall(vShaderAttribs["light.linear"] = glGetUniformLocation(programID, "light.linear"));
 	GLCall(vShaderAttribs["light.quadratic"] = glGetUniformLocation(programID, "light.quadratic"));
+	GLCall(vShaderAttribs["light.innerRadius"] = glGetUniformLocation(programID, "light.innerRadius"));
+	GLCall(vShaderAttribs["light.outterRadius"] = glGetUniformLocation(programID, "light.outterRadius"));
 }
 
 glm::uint32 GLSLShader::getLocation(const string& name) { return vShaderAttribs[name]; }

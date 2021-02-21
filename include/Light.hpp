@@ -3,7 +3,7 @@
 #include "Cube.hpp"
 
 class Light : public Model {
-    private:
+    protected:
         glm::vec4 ambient;
         glm::vec4 diffuse;
         glm::vec4 specular;
@@ -22,5 +22,5 @@ class Light : public Model {
         void setSpecular(const glm::vec4& color);
         const glm::vec4& getSpecular() const;
 
-        void step(float deltaTime);
+        virtual void step(float deltaTime);
 };

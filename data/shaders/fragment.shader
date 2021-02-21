@@ -9,6 +9,7 @@ struct Material {
 
 struct Light {
 	vec4 position;
+	vec4 direction;
 
 	vec4 ambient;
 	vec4 diffuse;
@@ -17,6 +18,9 @@ struct Light {
 	float constant;
 	float linear;
 	float quadratic;
+
+	float innerRadius;
+	float outterRadius;
 };
 
 in vec2 fTextCoords;
@@ -34,13 +38,18 @@ void main() {
 	vec4 lightDir;
 	float attenuation = 1;
 	float lightDistance = 1;
-	if (light.position.w == 0) {
-		lightDir = normalize(-light.position);
-	} else {
+	//if (light.position.w == 0) {
+		//lightDir = normalize(-light.position);
+	//} else {
 		lightDir = normalize(light.position - fModelPos);
 		lightDistance = length(light.position - fModelPos);
-		attenuation = attenuation / (light.constant + (light.linear * lightDistance) + (light.quadratic * lightDistance));
-	}
+		attenuation = 1 / (light.constant + (light.linear * lightDistance) + (light.quadratic * (lightDistance * lightDistance)));
+	//}
+
+	// spotLight
+	float spotCircle = dot(lightDir, normalize(-light.direction));
+	float epsilon = light.innerRadius - light.outterRadius;
+	float lit = clamp((spotCircle - light.outterRadius) / epsilon, 0.0, 1.0);
 
 	//ambient light
 	vec4 ambient = light.ambient * texture(material.diffuse, fTextCoords);
@@ -61,6 +70,6 @@ void main() {
 	if (specularMap == vec4(0))
 		emissive = texture(material.emissive, fTextCoords);
 
-	vec4 result = ((ambient + diffuse + specular) * attenuation) + emissive;
+	vec4 result = (((ambient + diffuse + specular) * attenuation) + emissive) * lit;
 	fragColor = result;
 }
