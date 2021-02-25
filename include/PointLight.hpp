@@ -2,6 +2,8 @@
 #include "Light.hpp"
 
 class PointLight : public Light {
+    private:
+        static int globalID;
     protected:
         float constant;
         float linear;
@@ -12,6 +14,8 @@ class PointLight : public Light {
         PointLight(const PointLight& light);
         PointLight(const float& constant, const float& linear, const float& quadratic,
                    const glm::vec4& ambient, const::glm::vec4& diffuse, const glm::vec4& specular);
+
+        ~PointLight();
 
         void setConstant(const float& constant);
         float getConstant() const;

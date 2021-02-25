@@ -16,6 +16,7 @@
 #include "World.hpp"
 #include "GLTexture.hpp"
 #include "SpotLight.hpp"
+#include "DirectionalLight.hpp"
 
 glm::uint32 Mesh::globalMeshID = 0;
 
@@ -145,9 +146,16 @@ int main(void) {
 	Cube anotherCube(cube);
 	anotherCube.setPos(glm::vec4(2.f, .0f, .0f, 1.f));
 
-	SpotLight* light = new SpotLight();
-	light->setPos(glm::vec4(0, 0, 0, 1));
+	DirectionalLight* light = new DirectionalLight();
+	PointLight* pointLight = new PointLight();
+	//PointLight* pointLight2 = new PointLight(*pointLight);
+	//PointLight* pointLight3 = new PointLight(*pointLight);
+	//pointLight2->setPos(glm::vec4(-4.f, .0f, .0f, 1.f));
+	//pointLight3->setPos(glm::vec4(2.0f, .0f, -2.f, 1.f));
 	world->addLight(light);
+	world->addLight(pointLight);
+	//world->addLight(pointLight2);
+	//world->addLight(pointLight3);
 	//world->getLight(0)->setPos(glm::vec4(-.2f, -1.f, -0.3f, 0));
 	world->addObject(&cube);
 	world->addObject(&anotherCube);
@@ -173,11 +181,7 @@ int main(void) {
 
 		//limpiar buffer de color
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		Light* light = world->getLight(0);
 		Camera* camera = world->getCamera(world->getActiveCamera());
-		
-		light->setPos(camera->getPos());
-		light->setRot(camera->getRot());
 
 		world->update(deltaTime);
 		render->drawWorld(world);

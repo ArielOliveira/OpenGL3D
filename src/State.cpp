@@ -1,6 +1,5 @@
 #include "State.hpp"
 
-
 bool State::hasInitialized = false;
 
 const unsigned char State::whiteMap[] = { 255, 255, 255};

@@ -18,6 +18,7 @@ file(GLOB NEW_GLOB LIST_DIRECTORIES true "E:/OpenGL3D/build/cmake/../../include/
 set(OLD_GLOB
   "E:/OpenGL3D/build/cmake/../../include//Camera.hpp"
   "E:/OpenGL3D/build/cmake/../../include//Cube.hpp"
+  "E:/OpenGL3D/build/cmake/../../include//DirectionalLight.hpp"
   "E:/OpenGL3D/build/cmake/../../include//Entity.hpp"
   "E:/OpenGL3D/build/cmake/../../include//GLRender.hpp"
   "E:/OpenGL3D/build/cmake/../../include//GLSLShader.hpp"
@@ -25,6 +26,7 @@ set(OLD_GLOB
   "E:/OpenGL3D/build/cmake/../../include//Input.hpp"
   "E:/OpenGL3D/build/cmake/../../include//Light.hpp"
   "E:/OpenGL3D/build/cmake/../../include//Material.hpp"
+  "E:/OpenGL3D/build/cmake/../../include//Math.hpp"
   "E:/OpenGL3D/build/cmake/../../include//Mesh.hpp"
   "E:/OpenGL3D/build/cmake/../../include//Model.hpp"
   "E:/OpenGL3D/build/cmake/../../include//OpenGLDebugger.hpp"
@@ -47,6 +49,7 @@ file(GLOB NEW_GLOB LIST_DIRECTORIES true "E:/OpenGL3D/build/cmake/../../src//*.c
 set(OLD_GLOB
   "E:/OpenGL3D/build/cmake/../../src//Camera.cpp"
   "E:/OpenGL3D/build/cmake/../../src//Cube.cpp"
+  "E:/OpenGL3D/build/cmake/../../src//DirectionalLight.cpp"
   "E:/OpenGL3D/build/cmake/../../src//Entity.cpp"
   "E:/OpenGL3D/build/cmake/../../src//GLRender.cpp"
   "E:/OpenGL3D/build/cmake/../../src//GLSLShader.cpp"
@@ -57,6 +60,7 @@ set(OLD_GLOB
   "E:/OpenGL3D/build/cmake/../../src//Mesh.cpp"
   "E:/OpenGL3D/build/cmake/../../src//Model.cpp"
   "E:/OpenGL3D/build/cmake/../../src//PointLight.cpp"
+  "E:/OpenGL3D/build/cmake/../../src//SpotLight.cpp"
   "E:/OpenGL3D/build/cmake/../../src//State.cpp"
   "E:/OpenGL3D/build/cmake/../../src//Triangle.cpp"
   "E:/OpenGL3D/build/cmake/../../src//World.cpp"

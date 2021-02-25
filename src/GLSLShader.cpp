@@ -95,28 +95,11 @@ void GLSLShader::setupAttribs() {
 	GLCall(vShaderAttribs["view"] = glGetUniformLocation(programID, "view"));
 	GLCall(vShaderAttribs["projection"] = glGetUniformLocation(programID, "projection"));
 	GLCall(vShaderAttribs["normalMatrix"] = glGetUniformLocation(programID, "normalMatrix"));
-	
-	GLCall(vShaderAttribs["vLightPosition"] = glGetUniformLocation(programID, "vLightPosition"));
-
-	GLCall(vShaderAttribs["fLightColor"] = glGetUniformLocation(programID, "fLightColor"));
-	GLCall(vShaderAttribs["fLightIntensity"] = glGetUniformLocation(programID, "fLightIntensity"));
-	
+		
 	GLCall(vShaderAttribs["material.diffuse"] = glGetUniformLocation(programID, "material.diffuse"));
 	GLCall(vShaderAttribs["material.specular"] = glGetUniformLocation(programID, "material.specular"));
 	GLCall(vShaderAttribs["material.emissive"] = glGetUniformLocation(programID, "material.emissive"));
 	GLCall(vShaderAttribs["material.shineness"] = glGetUniformLocation(programID, "material.shineness"));
-
-	GLCall(vShaderAttribs["light.position"] = glGetUniformLocation(programID, "light.position"));
-	GLCall(vShaderAttribs["light.direction"] = glGetUniformLocation(programID, "light.direction"));
-	GLCall(vShaderAttribs["light.ambient"] = glGetUniformLocation(programID, "light.ambient"));
-	GLCall(vShaderAttribs["light.diffuse"] = glGetUniformLocation(programID, "light.diffuse"));
-	GLCall(vShaderAttribs["light.specular"] = glGetUniformLocation(programID, "light.specular"));
-
-	GLCall(vShaderAttribs["light.constant"] = glGetUniformLocation(programID, "light.constant"));
-	GLCall(vShaderAttribs["light.linear"] = glGetUniformLocation(programID, "light.linear"));
-	GLCall(vShaderAttribs["light.quadratic"] = glGetUniformLocation(programID, "light.quadratic"));
-	GLCall(vShaderAttribs["light.innerRadius"] = glGetUniformLocation(programID, "light.innerRadius"));
-	GLCall(vShaderAttribs["light.outterRadius"] = glGetUniformLocation(programID, "light.outterRadius"));
 }
 
 glm::uint32 GLSLShader::getLocation(const string& name) { return vShaderAttribs[name]; }

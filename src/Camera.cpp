@@ -1,9 +1,10 @@
 #include "Camera.hpp"
 
-Camera::Camera(glm::vec4 position, glm::vec3 up, glm::vec3 lookAt, glm::vec3 clearColor, glm::mat4 projection) {
+Camera::Camera(glm::vec4 position, glm::vec3 up, glm::vec3 forward, glm::vec3 clearColor, glm::mat4 projection, glm::vec3 upView) {
 	this->pos = position;
 	this->up = up;
-	this->lookAt = lookAt;
+	this->upView = upView;
+	this->forward = forward;
 	this->clearColor = clearColor;
 	this->projection = projection;
 	rot = glm::vec4(0);
@@ -14,8 +15,7 @@ Camera::~Camera() {
 }
 
 void Camera::move(float timeStep) {
-	glm::vec3 right = glm::normalize(glm::cross(lookAt, up));
-	glm::vec3 newUp = glm::normalize(glm::cross(lookAt, right));
+	//glm::vec3 newUp = glm::normalize(glm::cross(forward, right));
 
 	rot.x += (Input::rightAxisX + Input::mouseX) * speed;
 	rot.y += (Input::rightAxisY + Input::mouseY) * speed;
@@ -30,7 +30,7 @@ void Camera::move(float timeStep) {
 		rot.y = -89.f;
 	
 	
-	glm::vec3 targetPos = (lookAt * Input::leftAxisY + right * Input::leftAxisX) * timeStep * speed;
+	glm::vec3 targetPos = (forward * Input::leftAxisY + right * Input::leftAxisX) * timeStep * speed;
 
 	pos.x += targetPos.x;
 	pos.y += targetPos.y;
@@ -40,25 +40,26 @@ void Camera::move(float timeStep) {
 		pos -= newUp * timeStep * speed;
 	if (Input::keybEvent[GLFW_KEY_Q]) 
 		pos += newUp * timeStep * speed;*/
-	
-	glm::vec3 direction(0);
-
-	direction.x = cos(glm::radians(rot.x)) * cos(glm::radians(rot.y));
-	direction.y = -sin(glm::radians(rot.y));
-	direction.z = sin(glm::radians(rot.x)) * cos(glm::radians(rot.y));
-	lookAt = glm::normalize(direction);
 }
 
 void Camera::prepare() {
 	glm::vec3 position = glm::vec3(pos.x, pos.y, pos.z);
-	modelMtx = glm::lookAt(position, position + lookAt, up);
+	modelMtx = glm::lookAt(position, position + forward, upView);
 
 	State::viewMatrix = modelMtx;
 	State::projectionMatrix = projection;
 	glClearColor(clearColor.x, clearColor.y, clearColor.z, 1);
 }
 
+void Camera::setUpView(const glm::vec3 upView) { this->upView = upView; }
+const glm::vec3& Camera::getUpView() const { return upView; }
+
 void Camera::step(float timeStep) {
+	right = glm::normalize(glm::cross(forward, upView));
+	up = glm::normalize(glm::cross(forward, right));
+
+	forward = normalize(Math::eulerToDirection(rot));
+
 	move(timeStep);
 	prepare();
 	glClearColor(clearColor.x, clearColor.y, clearColor.z, 1);

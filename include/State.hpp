@@ -15,6 +15,8 @@ class State {
 	public:
 		static const unsigned char whiteMap[];
 		static const unsigned char blackMap[];
+		
+		static const unsigned char lightTypes[];
 
 		static GLSLShader* defaultShader;
 		static GLTexture* defaultTexture;

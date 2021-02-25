@@ -7,11 +7,15 @@ class Light : public Model {
         glm::vec4 ambient;
         glm::vec4 diffuse;
         glm::vec4 specular;
-        
+
+        std::string uniformName;
+
+        int id;
     public:
         Light();
         Light(const Light& light);
         Light(const glm::vec4& ambient, const glm::vec4& diffuse, const glm::vec4& specular);
+        virtual ~Light();
 
         void setAmbient(const glm::vec4& color);
         const glm::vec4& getAmbient() const;

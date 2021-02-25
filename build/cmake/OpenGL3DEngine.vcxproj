@@ -319,6 +319,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   <ItemGroup>
     <ClInclude Include="E:\OpenGL3D\include\Camera.hpp" />
     <ClInclude Include="E:\OpenGL3D\include\Cube.hpp" />
+    <ClInclude Include="E:\OpenGL3D\include\DirectionalLight.hpp" />
     <ClInclude Include="E:\OpenGL3D\include\Entity.hpp" />
     <ClInclude Include="E:\OpenGL3D\include\GLRender.hpp" />
     <ClInclude Include="E:\OpenGL3D\include\GLSLShader.hpp" />
@@ -326,6 +327,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="E:\OpenGL3D\include\Input.hpp" />
     <ClInclude Include="E:\OpenGL3D\include\Light.hpp" />
     <ClInclude Include="E:\OpenGL3D\include\Material.hpp" />
+    <ClInclude Include="E:\OpenGL3D\include\Math.hpp" />
     <ClInclude Include="E:\OpenGL3D\include\Mesh.hpp" />
     <ClInclude Include="E:\OpenGL3D\include\Model.hpp" />
     <ClInclude Include="E:\OpenGL3D\include\OpenGLDebugger.hpp" />
@@ -341,6 +343,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="E:\OpenGL3D\include\stb_image.h" />
     <ClCompile Include="E:\OpenGL3D\src\Camera.cpp" />
     <ClCompile Include="E:\OpenGL3D\src\Cube.cpp" />
+    <ClCompile Include="E:\OpenGL3D\src\DirectionalLight.cpp" />
     <ClCompile Include="E:\OpenGL3D\src\Entity.cpp" />
     <ClCompile Include="E:\OpenGL3D\src\GLRender.cpp" />
     <ClCompile Include="E:\OpenGL3D\src\GLSLShader.cpp" />

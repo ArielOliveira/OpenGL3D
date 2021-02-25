@@ -23,6 +23,6 @@ void main() {
 	
 	fTextCoords = vTextCoords;
 	fModelPos = modelPos;
-	fNormal = vec4(normalMatrix * vNormal.xyz, 0);
+	fNormal = normalize(vec4(normalMatrix * vNormal.xyz, 0));
 	fCameraPos = (inverse(view) * vec4(0, 0 , 0, 1)) - modelPos;
 }

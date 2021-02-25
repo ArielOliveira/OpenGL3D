@@ -3,18 +3,18 @@
 
 class SpotLight : public PointLight {
     private:
-        glm::vec4 direction;
         float innerRadius;
         float outterRadius;
+
     public:
         SpotLight();
         SpotLight(const SpotLight& light);
-        SpotLight(const glm::vec4 direction, const float& innerRadius, const float& outterRadius,
+        SpotLight(const glm::vec3 forward, const float& innerRadius, const float& outterRadius,
                   const float& constant, const float& linear, const float& quadratic,
                   const glm::vec4& ambient, const::glm::vec4& diffuse, const glm::vec4& specular);
         
-        void setDirection(const glm::vec4 direction);
-        const glm::vec4& getDirection() const;
+        void setDirection(const glm::vec3 forward);
+        const glm::vec3& getDirection() const;
 
         void setInnerRadius(const float& innerRadius);
         float getInnerRadius() const;

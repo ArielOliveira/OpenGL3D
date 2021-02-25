@@ -2,26 +2,11 @@
 #include <glfw3.h>
 
 Light::Light() : Model() {
-    Mesh* mesh = new Mesh();
-    mesh->addVertex(vertex_t{glm::vec4(0), glm::vec4(0), glm::vec2(0)});
-    mesh->addTriangleIdx(0, 1, 2);
-    mesh->setVertexCount(4);
-    mesh->setTextCount(2);
-    
-    addMesh(
-        mesh, 
-        new Material(
-            State::defaultTexture,
-            State::blackTexture,
-            State::defaultTexture,
-            0.f)
-    );
-
     ambient = glm::vec4(.2f, .2f, .2f, 1);
     diffuse = glm::vec4(.5f, .5f, .5f, 1);
     specular = glm::vec4(1, 1, 1, 1);
 
-    pos = glm::vec4(.0f, -1.f, .0f, .0f);
+    //pos = glm::vec4(.0f, 0.f, .0f, 1.f);
 }
 
 Light::Light(const Light& light) : Model(light),
@@ -35,6 +20,8 @@ Light::Light(const glm::vec4& ambient, const glm::vec4& diffuse, const glm::vec4
     this->diffuse = diffuse;
     this->specular = specular;
 }
+
+Light::~Light() {}
 
 void Light::setAmbient(const glm::vec4& color) { this->ambient = color; }
 const glm::vec4& Light::getAmbient() const { return ambient;}
@@ -51,8 +38,14 @@ void Light::step(float deltaTime) {
     GLSLShader* shader = materialList[0]->getShader();
 
     shader->use();
-    shader->setVec4(shader->getLocation("light.position"), pos);
-    shader->setVec4(shader->getLocation("light.ambient"), ambient);
-    shader->setVec4(shader->getLocation("light.diffuse"), diffuse);
-    shader->setVec4(shader->getLocation("light.specular"), specular);
+
+    std::cout << uniformName << std::endl;
+
+    int amb = glGetUniformLocation(shader->getID(), (uniformName + ".ambient").c_str());
+    int diff = glGetUniformLocation(shader->getID(), (uniformName + ".diffuse").c_str());
+    int spec = glGetUniformLocation(shader->getID(), (uniformName + ".specular").c_str());
+
+    shader->setVec4(amb, ambient);
+    shader->setVec4(diff, diffuse);
+    shader->setVec4(spec, specular);
 }
