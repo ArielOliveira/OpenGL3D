@@ -2,12 +2,19 @@
 
 #include "SpotLight.hpp"
 
-SpotLight::SpotLight() : PointLight() {
+int SpotLight::globalID = 0;
+
+SpotLight::SpotLight() : Light() {
+    id = globalID;
+    globalID++;
+    uniformName = "sLights[" + std::to_string(id) + "]";
+
+    constant = 1;
+    linear = .09f;
+    quadratic = .032f;
+
     innerRadius = 12.5f;
     outterRadius = 17.5f;
-
-    pos = glm::vec4(0, 0, 0, 1);
-    forward = glm::vec3(0, 0, -1);
     
     Mesh* mesh = new Mesh();
     mesh->addVertex(vertex_t{glm::vec4(0), glm::vec4(0), glm::vec2(0)});
@@ -18,15 +25,22 @@ SpotLight::SpotLight() : PointLight() {
     addMesh(
         mesh, 
         new Material(
-            State::defaultTexture,
             State::blackTexture,
-            State::defaultTexture,
+            State::blackTexture,
+            State::blackTexture,
             0.f)
     );
 }
 
-SpotLight::SpotLight(const SpotLight& light) : PointLight(light) {
-    forward = light.forward;
+SpotLight::SpotLight(const SpotLight& light) : Light(light) {
+    id = globalID;
+    globalID++;
+    uniformName = "sLights[" + std::to_string(id) + "]";
+
+    constant = light.constant;
+    linear = light.linear;
+    quadratic = light.quadratic;
+
     innerRadius = light.innerRadius;
     outterRadius = light.outterRadius;
 }
@@ -34,7 +48,15 @@ SpotLight::SpotLight(const SpotLight& light) : PointLight(light) {
 SpotLight::SpotLight(const glm::vec3 forward, const float& innerRadius, const float& outterRadius,
     const float& constant, const float& linear, const float& quadratic,
     const glm::vec4& ambient, const::glm::vec4& diffuse, const glm::vec4& specular) :
-    PointLight(constant, linear, quadratic, ambient, diffuse, specular) {
+    Light(ambient, diffuse, specular) {
+        id = globalID;
+        globalID++;
+        uniformName = "sLights[" + std::to_string(id) + "]";
+
+        this->constant = constant;
+        this->linear = linear;
+        this->quadratic = quadratic;
+
         this->forward = forward;
         this->innerRadius = innerRadius;
     }
@@ -46,11 +68,28 @@ void SpotLight::setOutterRadius(const float& outterRadius) { this->outterRadius 
 float SpotLight::getOutterRadius() const { return outterRadius; }
         
 void SpotLight::step(float deltaTime)  {
-    PointLight::step(deltaTime);
+    Light::step(deltaTime);
 
     GLSLShader* shader = materialList[0]->getShader();
 
-    //shader->setVec4(shader->getLocation("light.direction"), glm::vec4(forward, 0));
-    //shader->setFloat(shader->getLocation("light.innerRadius"), cos(glm::radians(innerRadius)));
-    //shader->setFloat(shader->getLocation("light.outterRadius"), cos(glm::radians(outterRadius)));
+    int dir = glGetUniformLocation(shader->getID(), (uniformName + ".direction").c_str());
+    int p = glGetUniformLocation(shader->getID(), (uniformName + ".position").c_str());
+
+    int c = glGetUniformLocation(shader->getID(), (uniformName + ".constant").c_str());
+    int l = glGetUniformLocation(shader->getID(), (uniformName + ".linear").c_str());
+    int q = glGetUniformLocation(shader->getID(), (uniformName + ".quadratic").c_str());
+
+    int inner = glGetUniformLocation(shader->getID(), (uniformName + ".innerRadius").c_str());
+    int outter = glGetUniformLocation(shader->getID(), (uniformName + ".outterRadius").c_str());
+
+    shader->setVec4(dir, glm::vec4(forward, 0));
+    
+    shader->setVec4(p, pos);
+    shader->setFloat(c, constant);
+    shader->setFloat(l, linear);
+    shader->setFloat(q, quadratic);
+
+    shader->setFloat(inner, cos(glm::radians(innerRadius)));
+    shader->setFloat(outter, cos(glm::radians(outterRadius)));
+
 }

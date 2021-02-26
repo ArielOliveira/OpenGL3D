@@ -15,7 +15,7 @@ Light::Light(const Light& light) : Model(light),
     specular(light.specular)
     {}
 
-Light::Light(const glm::vec4& ambient, const glm::vec4& diffuse, const glm::vec4& specular) : Light() {
+Light::Light(const glm::vec4& ambient, const glm::vec4& diffuse, const glm::vec4& specular) : Model() {
     this->ambient = ambient;
     this->diffuse = diffuse;
     this->specular = specular;
@@ -38,8 +38,6 @@ void Light::step(float deltaTime) {
     GLSLShader* shader = materialList[0]->getShader();
 
     shader->use();
-
-    std::cout << uniformName << std::endl;
 
     int amb = glGetUniformLocation(shader->getID(), (uniformName + ".ambient").c_str());
     int diff = glGetUniformLocation(shader->getID(), (uniformName + ".diffuse").c_str());

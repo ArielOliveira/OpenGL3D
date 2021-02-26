@@ -131,12 +131,6 @@ int main(void) {
 	GLTexture* texture = new GLTexture(State::whiteMap, glm::vec2(1));
 	State::initialize(shader, texture);
 	world = new World();
-	//Model cube((meshPath + "asian_town.msh").c_str());
-	//cube.setSize(glm::vec3(10.f, 10.f, 10.f));
-	
-
-	//loadModel(meshPath + "stanford-bunny.obj");
-	//loadModel(meshPath + "cube-3d-shape.obj");
 
 	Cube cube(Material(new GLTexture((texturePath + "crate_diffuse.png").c_str(), 0),
 					   new GLTexture((texturePath + "crate_specular.png").c_str(), 1),
@@ -148,15 +142,19 @@ int main(void) {
 
 	DirectionalLight* light = new DirectionalLight();
 	PointLight* pointLight = new PointLight();
-	//PointLight* pointLight2 = new PointLight(*pointLight);
-	//PointLight* pointLight3 = new PointLight(*pointLight);
-	//pointLight2->setPos(glm::vec4(-4.f, .0f, .0f, 1.f));
-	//pointLight3->setPos(glm::vec4(2.0f, .0f, -2.f, 1.f));
+	PointLight* pointLight2 = new PointLight(*pointLight);
+	PointLight* pointLight3 = new PointLight(*pointLight);
+	SpotLight* spotLight = new SpotLight();
+	
+	pointLight2->setPos(glm::vec4(-4.f, .0f, .0f, 1.f));
+	pointLight3->setPos(glm::vec4(2.0f, .0f, -2.f, 1.f));
+
 	world->addLight(light);
 	world->addLight(pointLight);
-	//world->addLight(pointLight2);
-	//world->addLight(pointLight3);
-	//world->getLight(0)->setPos(glm::vec4(-.2f, -1.f, -0.3f, 0));
+	world->addLight(pointLight2);
+	world->addLight(pointLight3);
+	world->addLight(spotLight);
+
 	world->addObject(&cube);
 	world->addObject(&anotherCube);
 
@@ -169,7 +167,7 @@ int main(void) {
 	world->addCamera(new Camera(glm::vec4(.0f, 1.f, 3.f, 1),  // position
 		glm::vec3(.0f, 1.f, .0f), // up 
 		glm::vec3(.0f, 0.f, 1.f), // lookAt
-		glm::vec3(.0f, .0f, .1f), // clearColor
+		glm::vec3(light->getAmbient().x, light->getAmbient().y, light->getAmbient().z), // clearColor
 		glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f))); // projection
 	world->setActiveCamera(0);
 
@@ -182,6 +180,9 @@ int main(void) {
 		//limpiar buffer de color
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		Camera* camera = world->getCamera(world->getActiveCamera());
+
+		spotLight->setPos(camera->getPos());
+		spotLight->setRot(camera->getRot());
 
 		world->update(deltaTime);
 		render->drawWorld(world);

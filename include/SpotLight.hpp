@@ -1,8 +1,14 @@
 #pragma once
 #include "PointLight.hpp"
 
-class SpotLight : public PointLight {
-    private:
+class SpotLight : public Light {
+     private:
+        static int globalID;
+        
+        float constant;
+        float linear;
+        float quadratic;
+
         float innerRadius;
         float outterRadius;
 

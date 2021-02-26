@@ -24,8 +24,6 @@ PointLight::PointLight() : Light() {
     constant = 1;
     linear = .09f;
     quadratic = .032f;
-
-    pos = glm::vec4(0, 0, 0, 1);
 }
 
 PointLight::PointLight(const PointLight& light) : Light(light),
@@ -68,11 +66,12 @@ void PointLight::step(float deltaTime) {
     Light::step(deltaTime);
 
     GLSLShader* shader = materialList[0]->getShader();
-
+    int p = glGetUniformLocation(shader->getID(), (uniformName + ".position").c_str());
     int c = glGetUniformLocation(shader->getID(), (uniformName + ".constant").c_str());
     int l = glGetUniformLocation(shader->getID(), (uniformName + ".linear").c_str());
     int q = glGetUniformLocation(shader->getID(), (uniformName + ".quadratic").c_str());
 
+    shader->setVec4(p, pos);
     shader->setFloat(c, constant);
     shader->setFloat(l, linear);
     shader->setFloat(q, quadratic);

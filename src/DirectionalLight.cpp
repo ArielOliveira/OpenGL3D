@@ -5,9 +5,8 @@ int DirectionalLight::globalID = 0;
 DirectionalLight::DirectionalLight() : Light() {
     id = globalID;
     globalID++;
-
     uniformName = "dLights[" + std::to_string(id) + "]";
-    //std::cout << "dLights[" << id << "]" << std:::endl;
+
     Mesh* mesh = new Mesh();
     mesh->addVertex(vertex_t{glm::vec4(0), glm::vec4(0), glm::vec2(0)});
     mesh->addTriangleIdx(0, 1, 2);
@@ -22,7 +21,6 @@ DirectionalLight::DirectionalLight() : Light() {
             State::blackTexture,
             0.f)
     );
-
     forward = glm::vec4(-.2f, -1.f, -.3f, .0f);
 }
 

@@ -76,4 +76,4 @@ glm::quat State::getRotation(glm::vec3 dir, float angle) {
                                     (float)cos(angle/2));
         
     return rotation;
-    }
+}
