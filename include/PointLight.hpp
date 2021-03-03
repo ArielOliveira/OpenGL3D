@@ -3,8 +3,6 @@
 
 class PointLight : public Light {
     private:
-        static int globalID;
-    protected:
         float constant;
         float linear;
         float quadratic;

@@ -4,10 +4,6 @@
 #define MAX_POINT_LIGHT 20
 #define MAX_SPOT_LIGHT 20
 
-#define D_LIGHTS 1
-#define P_LIGHTS 3
-#define S_LIGHTS 1
-
 struct Material {
 	sampler2D diffuse;
 	sampler2D specular;
@@ -52,6 +48,10 @@ vec4 getSpec(vec4 lSpec, vec4 mSpec,  vec4 lDir, vec4 mNormal, vec4 viewDir, flo
 vec4 computeDirLights(Light light, vec4 viewDir, vec4 ambientMap, vec4 diffuseMap, vec4 specularMap);
 vec4 computePointLights(Light light, vec4 viewDir, vec4 ambientMap, vec4 diffuseMap, vec4 specularMap);
 vec4 computeSpotLights(Light light, vec4 viewDir, vec4 ambientMap, vec4 diffuseMap, vec4 specularMap);
+
+uniform int D_LIGHTS;
+uniform int P_LIGHTS;
+uniform int S_LIGHTS;
 
 uniform Light dLights[MAX_DIRECTIONAL_LIGHT];
 uniform Light pLights[MAX_POINT_LIGHT];

@@ -2,13 +2,10 @@
 
 #include "PointLight.hpp"
 
-int PointLight::globalID = 0;
-
 PointLight::PointLight() : Light() {
-    Mesh* mesh = new Mesh();
     Cube cube;
-    id = globalID;
-    globalID++;
+    id = State::pLightsCount;
+    State::pLightsCount++;
     uniformName = "pLights[" + std::to_string(id) + "]";
     
     addMesh(
@@ -20,7 +17,6 @@ PointLight::PointLight() : Light() {
             0.f)
     );
 
-
     constant = 1;
     linear = .09f;
     quadratic = .032f;
@@ -30,8 +26,8 @@ PointLight::PointLight(const PointLight& light) : Light(light),
     constant(light.constant),
     linear(light.linear),
     quadratic(light.quadratic) {
-        id = globalID;
-        globalID++;
+        id = State::pLightsCount;
+        State::pLightsCount++;
         uniformName = "pLights[" + std::to_string(id) + "]";
 
         pos = light.pos;
@@ -40,8 +36,8 @@ PointLight::PointLight(const PointLight& light) : Light(light),
 PointLight::PointLight(const float& constant, const float& linear, const float& quadratic,
                        const glm::vec4& ambient, const::glm::vec4& diffuse, const glm::vec4& specular) : 
     Light(ambient, diffuse, specular) {
-    id = globalID;
-    globalID++;
+    id = State::pLightsCount;
+    State::pLightsCount++;
     uniformName = "pLights[" + std::to_string(id) + "]";
 
     this->constant = constant;
@@ -50,7 +46,7 @@ PointLight::PointLight(const float& constant, const float& linear, const float& 
 }
 
 PointLight::~PointLight() {
-    globalID--;
+    State::pLightsCount--;
 }
 
 void PointLight::setConstant(const float& constant) { this->constant = constant; }
@@ -71,8 +67,12 @@ void PointLight::step(float deltaTime) {
     int l = glGetUniformLocation(shader->getID(), (uniformName + ".linear").c_str());
     int q = glGetUniformLocation(shader->getID(), (uniformName + ".quadratic").c_str());
 
+    int pointCount = glGetUniformLocation(shader->getID(), "P_LIGHTS");
+
     shader->setVec4(p, pos);
     shader->setFloat(c, constant);
     shader->setFloat(l, linear);
     shader->setFloat(q, quadratic);
+
+    shader->setInt(pointCount, State::pLightsCount);
 }

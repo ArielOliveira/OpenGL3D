@@ -2,11 +2,9 @@
 
 #include "SpotLight.hpp"
 
-int SpotLight::globalID = 0;
-
 SpotLight::SpotLight() : Light() {
-    id = globalID;
-    globalID++;
+    id = State::sLightsCount;
+    State::sLightsCount++;
     uniformName = "sLights[" + std::to_string(id) + "]";
 
     constant = 1;
@@ -33,8 +31,8 @@ SpotLight::SpotLight() : Light() {
 }
 
 SpotLight::SpotLight(const SpotLight& light) : Light(light) {
-    id = globalID;
-    globalID++;
+    id = State::sLightsCount;
+    State::sLightsCount++;
     uniformName = "sLights[" + std::to_string(id) + "]";
 
     constant = light.constant;
@@ -49,8 +47,8 @@ SpotLight::SpotLight(const glm::vec3 forward, const float& innerRadius, const fl
     const float& constant, const float& linear, const float& quadratic,
     const glm::vec4& ambient, const::glm::vec4& diffuse, const glm::vec4& specular) :
     Light(ambient, diffuse, specular) {
-        id = globalID;
-        globalID++;
+        id = State::sLightsCount;
+        State::sLightsCount++;
         uniformName = "sLights[" + std::to_string(id) + "]";
 
         this->constant = constant;
@@ -60,6 +58,10 @@ SpotLight::SpotLight(const glm::vec3 forward, const float& innerRadius, const fl
         this->forward = forward;
         this->innerRadius = innerRadius;
     }
+
+SpotLight::~SpotLight() {
+    State::sLightsCount--;
+}
 
 void SpotLight::setInnerRadius(const float& innerRadius) { this->innerRadius = innerRadius; }
 float SpotLight::getInnerRadius() const { return innerRadius; }
@@ -82,6 +84,8 @@ void SpotLight::step(float deltaTime)  {
     int inner = glGetUniformLocation(shader->getID(), (uniformName + ".innerRadius").c_str());
     int outter = glGetUniformLocation(shader->getID(), (uniformName + ".outterRadius").c_str());
 
+    int spotCount = glGetUniformLocation(shader->getID(), "S_LIGHTS");
+
     shader->setVec4(dir, glm::vec4(forward, 0));
     
     shader->setVec4(p, pos);
@@ -91,5 +95,7 @@ void SpotLight::step(float deltaTime)  {
 
     shader->setFloat(inner, cos(glm::radians(innerRadius)));
     shader->setFloat(outter, cos(glm::radians(outterRadius)));
+    
+    shader->setInt(spotCount, State::sLightsCount);
 
 }

@@ -3,8 +3,6 @@
 
 class SpotLight : public Light {
      private:
-        static int globalID;
-        
         float constant;
         float linear;
         float quadratic;
@@ -18,6 +16,8 @@ class SpotLight : public Light {
         SpotLight(const glm::vec3 forward, const float& innerRadius, const float& outterRadius,
                   const float& constant, const float& linear, const float& quadratic,
                   const glm::vec4& ambient, const::glm::vec4& diffuse, const glm::vec4& specular);
+
+        ~SpotLight();
         
         void setDirection(const glm::vec3 forward);
         const glm::vec3& getDirection() const;

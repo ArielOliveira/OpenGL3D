@@ -5,6 +5,10 @@ bool State::hasInitialized = false;
 unsigned char State::whiteMap[] = { 255, 255, 255};
 unsigned char State::blackMap[] = { 0, 0, 0};
 
+int State::dLightsCount = 0;
+int State::pLightsCount = 0;
+int State::sLightsCount = 0;
+
 GLSLShader* State::defaultShader = nullptr;
 GLTexture* State::defaultTexture = nullptr;
 GLTexture* State::blackTexture = nullptr;
@@ -12,10 +16,6 @@ GLTexture* State::blackTexture = nullptr;
 glm::mat4 State::projectionMatrix = glm::mat4(1);
 glm::mat4 State::viewMatrix = glm::mat4(1);
 glm::mat4 State::modelMatrix = glm::mat4(1);
-
-map<string, Mesh*> State::meshHash;
-map<int, GLTexture*> State::textureHash;
-map<string, GLSLShader*> State::shaderHash;
 
 bool State::initialize(GLSLShader* _defaultShader, GLTexture* _defaultTexture) {
 	if (hasInitialized == true) {

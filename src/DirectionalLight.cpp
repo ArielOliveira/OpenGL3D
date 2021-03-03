@@ -1,10 +1,8 @@
 #include "DirectionalLight.hpp"
 
-int DirectionalLight::globalID = 0;
-
 DirectionalLight::DirectionalLight() : Light() {
-    id = globalID;
-    globalID++;
+    id = State::dLightsCount;
+    State::dLightsCount++;
     uniformName = "dLights[" + std::to_string(id) + "]";
 
     Mesh* mesh = new Mesh();
@@ -26,20 +24,20 @@ DirectionalLight::DirectionalLight() : Light() {
 
 DirectionalLight::DirectionalLight(const DirectionalLight& dirLight) : 
     Light(dirLight) {
-        id = globalID;
-        globalID++;
+        id = State::dLightsCount;
+        State::dLightsCount++;
         uniformName = "dLights[" + std::to_string(id) + "]";
     }
 
 DirectionalLight::DirectionalLight(const glm::vec4& _direction, const glm::vec4& ambient, const glm::vec4& diffuse, const glm::vec4& specular) : 
     Light(ambient, diffuse, specular) {
-        id = globalID;
-        globalID++;
+        id = State::dLightsCount;
+        State::dLightsCount++;
          uniformName = "dLights[" + std::to_string(id) + "]";
     }
 
 DirectionalLight::~DirectionalLight() {
-    globalID--;
+    State::dLightsCount--;
 }
 
 void DirectionalLight::step(float deltaTime) {
@@ -48,6 +46,10 @@ void DirectionalLight::step(float deltaTime) {
     GLSLShader* shader = materialList[0]->getShader();
     int dir = glGetUniformLocation(shader->getID(), (uniformName + ".direction").c_str());
 
+    int dirCount = glGetUniformLocation(shader->getID(), "D_LIGHTS");
+
     shader->setVec4(dir, glm::vec4(forward, 0));
+
+    shader->setInt(dirCount, State::dLightsCount);
 }
 

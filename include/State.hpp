@@ -15,6 +15,10 @@ class State {
 	public:
 		static unsigned char whiteMap[];
 		static unsigned char blackMap[];
+
+		static int dLightsCount;
+		static int pLightsCount;
+		static int sLightsCount;
 		
 		static const unsigned char lightTypes[];
 
@@ -25,10 +29,6 @@ class State {
 		static glm::mat4 projectionMatrix;
 		static glm::mat4 viewMatrix;
 		static glm::mat4 modelMatrix;
-
-		static map<string, Mesh*> meshHash;
-		static map<int, GLTexture*> textureHash;
-		static map<string, GLSLShader*> shaderHash;
 
 		static bool initialize(GLSLShader* _defaultShader, GLTexture* _defaultTexture);
 };
