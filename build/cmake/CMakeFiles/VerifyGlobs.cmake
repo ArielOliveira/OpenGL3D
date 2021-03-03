@@ -16,6 +16,7 @@ endif()
 # OpenGL3DEngine_SRC at CMakeLists.txt:30 (file)
 file(GLOB NEW_GLOB LIST_DIRECTORIES true "E:/OpenGL3D/build/cmake/../../include//*.hpp")
 set(OLD_GLOB
+  "E:/OpenGL3D/build/cmake/../../include//AssetManager.hpp"
   "E:/OpenGL3D/build/cmake/../../include//Camera.hpp"
   "E:/OpenGL3D/build/cmake/../../include//Cube.hpp"
   "E:/OpenGL3D/build/cmake/../../include//DirectionalLight.hpp"
@@ -47,6 +48,7 @@ endif()
 # OpenGL3DEngine_SRC at CMakeLists.txt:30 (file)
 file(GLOB NEW_GLOB LIST_DIRECTORIES true "E:/OpenGL3D/build/cmake/../../src//*.cpp")
 set(OLD_GLOB
+  "E:/OpenGL3D/build/cmake/../../src//AssetManager.cpp"
   "E:/OpenGL3D/build/cmake/../../src//Camera.cpp"
   "E:/OpenGL3D/build/cmake/../../src//Cube.cpp"
   "E:/OpenGL3D/build/cmake/../../src//DirectionalLight.cpp"

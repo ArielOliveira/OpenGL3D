@@ -10,6 +10,11 @@ Model::Model(const Model& object) :
 	Entity(object) 
 	{}
 
+Model::Model(const vector<Mesh*>& _meshList, const vector<Material*>& _materialList) :
+	meshList(_meshList),
+	materialList(_materialList)
+	{}
+
 Model::Model(const char* filename) {
 	load(filename);
 }
@@ -30,7 +35,7 @@ void Model::load(const char* filename) {
 		do {
 			std::string textureName = bufferNode.child("material").child("texture").text().as_string();
 			
-			GLTexture* texture = new GLTexture((texturePath + textureName).c_str(), 0);
+			GLTexture* texture = new GLTexture((texturePath + textureName));
 			Material* material = new Material(texture, nullptr, nullptr, 32.f, State::defaultShader);
 
 			std::vector<glm::int32> indices = FileLoader<glm::int32>::splitString(std::string(bufferNode.child("indices").text().as_string()), ',');

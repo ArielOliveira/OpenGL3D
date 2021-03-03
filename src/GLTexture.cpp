@@ -4,21 +4,26 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-GLTexture::GLTexture(const unsigned char* texture, const glm::vec2 size) {
+GLTexture::GLTexture(unsigned char* UVCoords, const glm::vec2& size, int atlasSize, int channels) {
 	this->size = size;
+	this->atlasSize = atlasSize;
+	this->channels = channels;
 	
-	if (texture)
-		load(texture);
+	if (UVCoords)
+		load(UVCoords);
 	else {
 		std::cout << "Empty texture, exiting." << std::endl; 
 		exit(-1);
 	}
+
+	this->UVCoords = UVCoords;
 }
 
-GLTexture::GLTexture(const char* filename, int index) {
+GLTexture::GLTexture(std::string filename) {
 	stbi_set_flip_vertically_on_load(true);
+	atlasSize = 1;
 
-	unsigned char* texture = stbi_load(filename, &size.x, &size.y, &channels, 0);
+	unsigned char* texture = stbi_load(filename.c_str(), &size.x, &size.y, &channels, 0);
 	
 	if (!texture) {
 		std::cout << "Couldn't find texture file: " << filename << std::endl;
@@ -26,15 +31,14 @@ GLTexture::GLTexture(const char* filename, int index) {
 	}
 
 	load(texture);
-	this->index = index;
 
 	stbi_image_free(texture);
 }
 
 GLTexture::GLTexture() :
 	ID(0),
-	index(0),
-	size(0)
+	size(0),
+	atlasSize(1)
 	{}
 
 GLTexture::~GLTexture() {}
@@ -68,10 +72,10 @@ void GLTexture::load(const unsigned char* texture) {
 	glGenerateMipmap(GL_TEXTURE_2D);
 }
 
+const unsigned char& GLTexture::getUVCoords() const { return *UVCoords;}
+
 uint32_t GLTexture::getId() const { return ID; }
 
-void GLTexture::setIdx(const int& index) { this->index = index; }
-int GLTexture::getIdx() const { return index; } 
-
+int GLTexture::getAtlasSize() const { return atlasSize; }
 const glm::ivec2& GLTexture::getSize() const { return size; }
 void GLTexture::bind() const { GLCall(glBindTexture(GL_TEXTURE_2D, ID)); }

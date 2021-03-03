@@ -16,6 +16,7 @@ class Model : public Entity {
 	public:
 		Model();
 		Model(const Model& object);
+		Model(const vector<Mesh*>& _meshList, const vector<Material*>& _materialList);
 		Model(const char* filename);
 		~Model();
 

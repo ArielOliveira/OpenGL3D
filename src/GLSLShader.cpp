@@ -100,6 +100,9 @@ void GLSLShader::setupAttribs() {
 	GLCall(vShaderAttribs["material.specular"] = glGetUniformLocation(programID, "material.specular"));
 	GLCall(vShaderAttribs["material.emissive"] = glGetUniformLocation(programID, "material.emissive"));
 	GLCall(vShaderAttribs["material.shineness"] = glGetUniformLocation(programID, "material.shineness"));
+	GLCall(vShaderAttribs["material.diffuseQuotient"] = glGetUniformLocation(programID, "material.diffuseQuotient"));
+	GLCall(vShaderAttribs["material.specularQuotient"] = glGetUniformLocation(programID, "material.specularQuotient"));
+	GLCall(vShaderAttribs["material.emissiveQuotient"] = glGetUniformLocation(programID, "material.emissiveQuotient"));
 }
 
 glm::uint32 GLSLShader::getLocation(const string& name) { return vShaderAttribs[name]; }

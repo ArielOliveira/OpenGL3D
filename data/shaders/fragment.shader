@@ -12,6 +12,11 @@ struct Material {
 	sampler2D diffuse;
 	sampler2D specular;
 	sampler2D emissive;
+
+	int diffuseQuotient;
+	int specularQuotient;
+	int emissiveQuotient;
+
 	float shineness;
 };
 
@@ -55,8 +60,9 @@ uniform Light sLights[MAX_SPOT_LIGHT];
 void main() {
 	vec4 viewDir = normalize(fCameraPos - fModelPos);
 	
-	vec4 diffuseMap = texture(material.diffuse, fTextCoords);
-	vec4 specularMap = texture(material.specular, fTextCoords);
+	vec4 diffuseMap = texture(material.diffuse, fTextCoords) / material.diffuseQuotient;
+	vec4 specularMap = texture(material.specular, fTextCoords) / material.specularQuotient;
+	
 	specularMap.w = 0;
 	
 	// emissive light (self-glown)

@@ -5,6 +5,10 @@ Material::Material() {
 	specularMap = State::blackTexture;
 	emissiveMap = State::blackTexture;
 
+	glm::ivec2 diffuseOffset;
+	glm::ivec2 specularOffset;
+	glm::ivec2 emissiveOffset;
+
 	shineness = 32.f;
 
 	shader = State::defaultShader;
@@ -46,6 +50,10 @@ void Material::prepare(glm::mat4 modelMatrix, glm::mat4 viewMatrix, glm::mat4 pr
 	shader->setInt(shader->getLocation("material.diffuse"), 0);
 	shader->setInt(shader->getLocation("material.specular"), 1);
 	shader->setInt(shader->getLocation("material.emissive"), 2);
+
+	shader->setInt(shader->getLocation("material.diffuseQuotient"), diffuseMap->getAtlasSize());
+	shader->setInt(shader->getLocation("material.specularQuotient"), specularMap->getAtlasSize());
+	shader->setInt(shader->getLocation("material.emissiveQuotient"), emissiveMap->getAtlasSize());
 	
 	shader->setFloat(shader->getLocation("material.shineness"), shineness);
 

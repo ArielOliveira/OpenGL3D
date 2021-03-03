@@ -13,8 +13,8 @@ class State {
 	private:
 		static bool hasInitialized;
 	public:
-		static const unsigned char whiteMap[];
-		static const unsigned char blackMap[];
+		static unsigned char whiteMap[];
+		static unsigned char blackMap[];
 		
 		static const unsigned char lightTypes[];
 
@@ -26,14 +26,10 @@ class State {
 		static glm::mat4 viewMatrix;
 		static glm::mat4 modelMatrix;
 
-		static map<string, Mesh*>* meshHash;
-		static map<string, GLTexture*>* textureHash;
-		static map<string, GLSLShader*>* shaderHash;
+		static map<string, Mesh*> meshHash;
+		static map<int, GLTexture*> textureHash;
+		static map<string, GLSLShader*> shaderHash;
 
 		static bool initialize(GLSLShader* _defaultShader, GLTexture* _defaultTexture);
-
-		static glm::vec3 QuaternionToVector(glm::quat quat, glm::vec3 vec);
-
-		static glm::quat getRotation(glm::vec3 dir, float angle);
 };
 

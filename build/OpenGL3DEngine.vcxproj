@@ -317,6 +317,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="E:\OpenGL3D\include\AssetManager.hpp" />
     <ClInclude Include="E:\OpenGL3D\include\Camera.hpp" />
     <ClInclude Include="E:\OpenGL3D\include\Cube.hpp" />
     <ClInclude Include="E:\OpenGL3D\include\DirectionalLight.hpp" />
@@ -341,6 +342,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="E:\OpenGL3D\include\pugiconfig.hpp" />
     <ClInclude Include="E:\OpenGL3D\include\pugixml.hpp" />
     <ClInclude Include="E:\OpenGL3D\include\stb_image.h" />
+    <ClCompile Include="E:\OpenGL3D\src\AssetManager.cpp" />
     <ClCompile Include="E:\OpenGL3D\src\Camera.cpp" />
     <ClCompile Include="E:\OpenGL3D\src\Cube.cpp" />
     <ClCompile Include="E:\OpenGL3D\src\DirectionalLight.cpp" />

@@ -17,15 +17,108 @@
 #include "GLTexture.hpp"
 #include "SpotLight.hpp"
 #include "DirectionalLight.hpp"
+#include "AssetManager.hpp"
+
+struct MeshPair {
+	Mesh* mesh;
+	Material* material;
+};
 
 glm::uint32 Mesh::globalMeshID = 0;
 
 std::string directory;
 World* world;
 
-Mesh* processMesh(aiMesh *mesh, const aiScene *scene) {
-    Mesh* myMesh = new Mesh();
+GLTexture* loadTextures(aiMaterial* material, aiTextureType type, string typeName) {
+	//unsigned char* textureAtlas = 0;
+	//glm::ivec2 atlasSize(0);
+	int atlasSizeDivision = material->GetTextureCount(type);
+	//int atlasChannels;
+
+	//vector<std::string> textureNames;
+
+	if (atlasSizeDivision == 0)
+		return nullptr;
+
+	if (atlasSizeDivision > 1) {
+		std::cout << "Can't deal with multiple textures of the same type" << std::endl;
+		exit(-1);
+	}
+
+	aiString name;
+	glm::ivec2 size;
+	int channels;
+	GLTexture* glTexture = nullptr;
+
+	material->GetTexture(type, 0, &name);
+
+	auto it = AssetManager::loadedTextures.find(name.C_Str());
+	unsigned char* texture;
 	
+	if (it != AssetManager::loadedTextures.end()) {
+		return State::textureHash[it->second];
+	} else {
+		texture = AssetManager::textureFromFile(name.C_Str(), texturePath, size, channels);
+		glTexture = new GLTexture(texture, size, 1, channels);
+		AssetManager::loadedTextures[name.C_Str()] = glTexture->getId();
+		State::textureHash[glTexture->getId()] = glTexture;
+		return glTexture;
+	}
+
+
+	/*for (int i = 0; i < atlasSizeDivision; i++) {
+		glm::ivec2 oldAtlasSize = atlasSize;
+
+		aiString name;
+		glm::ivec2 size;
+		int channels;
+
+		material->GetTexture(type, i, &name);
+
+		auto it = AssetManager::loadedTextures->find(name.C_Str());
+		unsigned char* texture;
+		if (it != AssetManager::loadedTextures->end()) {
+				
+		}
+		
+		texture = AssetManager::textureFromFile(name.C_Str(), texturePath, size, channels);
+
+		textureNames.push_back(name.C_Str());
+		
+		atlasSize.x += size.x;
+		atlasSize.y += size.y;
+		atlasChannels = channels;
+
+		unsigned char* newTextureAtlas = new unsigned char[atlasSize.x*atlasSize.y];
+
+		int oldSize = oldAtlasSize.x*oldAtlasSize.y;
+		int newSize = atlasSize.x*atlasSize.y;
+		int count = 0;
+
+		for (int j = 0; j < oldSize; j++)
+			newTextureAtlas[j] = textureAtlas[j];
+
+		for (int k = oldSize; k < newSize; k++) 
+			newTextureAtlas[k] = texture[count++];
+
+		delete textureAtlas;
+
+		AssetManager::freeSTBI(texture);
+		textureAtlas = newTextureAtlas;
+
+		if ((atlasSizeDivision > 1) && ((atlasSizeDivision % 2) != 0))
+			std::cout << "Incomplete atlas" << std::endl;
+	}*/
+	
+	//State::textureHash[]
+
+	//return new GLTexture(textureAtlas, atlasSize, atlasSizeDivision);
+}
+
+MeshPair processMesh(aiMesh *mesh, const aiScene *scene) {
+    Mesh* myMesh = new Mesh();
+	Material* material = new Material();
+
 	myMesh->setVertexCount(4);
 	myMesh->setTextCount(2);
 
@@ -60,22 +153,34 @@ Mesh* processMesh(aiMesh *mesh, const aiScene *scene) {
 		exit(-1);
 	}
 
-    // process material
+	 // process material
     if(mesh->mMaterialIndex >= 0) {
-        
+        aiMaterial* mat = scene->mMaterials[mesh->mMaterialIndex];
+
+		GLTexture* diffuse = loadTextures(mat, aiTextureType_DIFFUSE, "texture_diffuse");
+		if (diffuse)
+			material->setDiffuseMap(diffuse);
+
+		GLTexture* specular = loadTextures(mat, aiTextureType_SPECULAR, "texture_specular");
+		if (specular)
+			material->setSpecularMap(specular);
     }
-	
-    return myMesh;
+
+    return {myMesh, material};
 }  
 
 void processNode(aiNode *node, const aiScene *scene) {
-	Model model;
+	Model* model = new Model();
     // process all the node's meshes (if any)
+	std::cout << node->mNumChildren << std::endl;
     for(unsigned int i = 0; i < node->mNumMeshes; i++) {
         aiMesh* mesh = scene->mMeshes[node->mMeshes[i]]; 
-		model.addMesh(processMesh(mesh, scene), new Material());
+		MeshPair pair = processMesh(mesh, scene);
+		model->addMesh(pair.mesh, pair.material);
     }
-	world->addObject(new Model(model));			
+	model->setSize(glm::vec4(10, 10, 10, 1));
+	model->setPos(glm::vec4(10, 0, -5, 1));
+	world->addObject(model);			
     // then do the same for each of its children
     for(unsigned int i = 0; i < node->mNumChildren; i++) {
         processNode(node->mChildren[i], scene);
@@ -128,17 +233,20 @@ int main(void) {
 	if (!render->init())
 		return -1;
 	GLSLShader* shader = new GLSLShader(shaderPath + "vertex.shader", shaderPath + "fragment.shader");
-	GLTexture* texture = new GLTexture(State::whiteMap, glm::vec2(1));
+	GLTexture* texture = new GLTexture(State::whiteMap, glm::vec2(1), 1);
 	State::initialize(shader, texture);
 	world = new World();
 
-	Cube cube(Material(new GLTexture((texturePath + "crate_diffuse.png").c_str(), 0),
-					   new GLTexture((texturePath + "crate_specular.png").c_str(), 1),
-					   new GLTexture((texturePath + "matrix.jpg").c_str(), 2),
+	Cube cube(Material(new GLTexture((texturePath + "crate_diffuse.png").c_str()),
+					   new GLTexture((texturePath + "crate_specular.png").c_str()),
+					   new GLTexture((texturePath + "matrix.jpg").c_str()),
 					   32.f));
 	cube.setPos(glm::vec4(-2.f, .0f, .0f, 1.f));
 	Cube anotherCube(cube);
 	anotherCube.setPos(glm::vec4(2.f, .0f, .0f, 1.f));
+
+	loadModel(meshPath + "backpack.obj");
+	
 
 	DirectionalLight* light = new DirectionalLight();
 	PointLight* pointLight = new PointLight();
@@ -155,8 +263,20 @@ int main(void) {
 	world->addLight(pointLight3);
 	world->addLight(spotLight);
 
-	world->addObject(&cube);
-	world->addObject(&anotherCube);
+	//world->addObject(&cube);
+	//world->addObject(&anotherCube);
+
+	//////////////////////////////////////////////
+		/*glm::ivec2 size;
+		int channels;
+		
+		unsigned char* test = AssetManager::textureFromFile("matrix.jpg", texturePath, size, channels);
+
+		std::cout << size.x << " " << size.y << " " << channels << std::endl;
+
+		AssetManager::freeSTBI(test);*/
+
+	/////////////////////////////////////////////
 
 	for (int i = 0; i < world->getNumObjects(); i++)
 		render->setupObj(world->getObject(i));
