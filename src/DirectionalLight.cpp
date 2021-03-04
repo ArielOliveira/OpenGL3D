@@ -19,7 +19,7 @@ DirectionalLight::DirectionalLight() : Light() {
             State::blackTexture,
             0.f)
     );
-    forward = glm::vec4(-.2f, -1.f, -.3f, .0f);
+    forward = glm::vec3(-.2f, -1.f, -.3f);
 }
 
 DirectionalLight::DirectionalLight(const DirectionalLight& dirLight) : 

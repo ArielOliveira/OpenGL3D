@@ -45,7 +45,7 @@ vec4 getAmbient(vec4 lAmbient, vec4 mAmbient);
 vec4 getDiff(vec4 lDiff, vec4 mDiff,  vec4 lDir, vec4 mNormal);
 vec4 getSpec(vec4 lSpec, vec4 mSpec,  vec4 lDir, vec4 mNormal, vec4 viewDir, float mShine);
 
-vec4 computeDirLights(Light light, vec4 viewDir, vec4 ambientMap, vec4 diffuseMap, vec4 specularMap);
+vec4 computeDirLights(Light light, vec4 viewDir, vec4 diffuseMap, vec4 specularMap);
 vec4 computePointLights(Light light, vec4 viewDir, vec4 ambientMap, vec4 diffuseMap, vec4 specularMap);
 vec4 computeSpotLights(Light light, vec4 viewDir, vec4 ambientMap, vec4 diffuseMap, vec4 specularMap);
 
@@ -70,10 +70,10 @@ void main() {
 	if (specularMap == vec4(0))
 		emissive = texture(material.emissive, fTextCoords);
 
-	vec4 result = vec4(0);
+	vec4 result = emissive;
 
 	for (int i = 0; i < D_LIGHTS; i++)
-		result += computeDirLights(dLights[i], viewDir, diffuseMap, diffuseMap, specularMap);
+		result += computeDirLights(dLights[i], viewDir, diffuseMap, specularMap);
 	
 	for (int j = 0; j < P_LIGHTS; j++)
 		result += computePointLights(pLights[j], viewDir, diffuseMap, diffuseMap, specularMap);
@@ -103,8 +103,8 @@ vec4 getSpec(vec4 lSpec, vec4 mSpec, vec4 lDir, vec4 mNormal, vec4 viewDir, floa
 	return (lSpec * spec * mSpec);
 }
 
-vec4 computeDirLights(Light light, vec4 viewDir, vec4 ambientMap, vec4 diffuseMap, vec4 specularMap) {
-	vec4 ambient = getAmbient(light.ambient, ambientMap);
+vec4 computeDirLights(Light light, vec4 viewDir, vec4 diffuseMap, vec4 specularMap) {
+	vec4 ambient = getAmbient(light.ambient, diffuseMap);
 	vec4 diffuse = getDiff(light.diffuse, diffuseMap, light.direction, fNormal);
 	vec4 specular = getSpec(light.specular, specularMap, light.direction, fNormal, viewDir, material.shineness);
 

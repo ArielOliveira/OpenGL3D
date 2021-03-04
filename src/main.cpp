@@ -18,6 +18,7 @@
 #include "SpotLight.hpp"
 #include "DirectionalLight.hpp"
 #include "AssetManager.hpp"
+#include "Plane.hpp"
 
 glm::uint32 Mesh::globalMeshID = 0;
 
@@ -61,14 +62,16 @@ int main(void) {
 	State::initialize(shader, texture);
 
 	world = new World();
-
+	Plane* plane = new Plane();
+	plane->setSize(glm::vec4(10, 1, 10, 1));
+	world->addObject(plane);
 	world->addObject(AssetManager::loadModel(meshPath + "backpack.obj"));
 	
 	DirectionalLight* light = new DirectionalLight();
 	SpotLight* spotLight = new SpotLight();
 
 	world->addLight(light);
-	world->addLight(spotLight);
+	//world->addLight(spotLight);
 
 	for (int i = 0; i < world->getNumObjects(); i++)
 		render->setupObj(world->getObject(i));
@@ -79,7 +82,7 @@ int main(void) {
 	world->addCamera(new Camera(glm::vec4(.0f, 1.f, 3.f, 1),  // position
 		glm::vec3(.0f, 1.f, .0f), // up 
 		glm::vec3(.0f, 0.f, 1.f), // lookAt
-		glm::vec3(light->getAmbient().x, light->getAmbient().y, light->getAmbient().z), // clearColor
+		glm::vec3(0, 0, 0), // clearColor
 		glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f))); // projection
 	world->setActiveCamera(0);
 

@@ -19,8 +19,6 @@ class State {
 		static int dLightsCount;
 		static int pLightsCount;
 		static int sLightsCount;
-		
-		static const unsigned char lightTypes[];
 
 		static GLSLShader* defaultShader;
 		static GLTexture* defaultTexture;

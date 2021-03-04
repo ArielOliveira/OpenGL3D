@@ -332,6 +332,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="E:\OpenGL3D\include\Mesh.hpp" />
     <ClInclude Include="E:\OpenGL3D\include\Model.hpp" />
     <ClInclude Include="E:\OpenGL3D\include\OpenGLDebugger.hpp" />
+    <ClInclude Include="E:\OpenGL3D\include\Plane.hpp" />
     <ClInclude Include="E:\OpenGL3D\include\PointLight.hpp" />
     <ClInclude Include="E:\OpenGL3D\include\SpotLight.hpp" />
     <ClInclude Include="E:\OpenGL3D\include\State.hpp" />
@@ -355,6 +356,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="E:\OpenGL3D\src\Material.cpp" />
     <ClCompile Include="E:\OpenGL3D\src\Mesh.cpp" />
     <ClCompile Include="E:\OpenGL3D\src\Model.cpp" />
+    <ClCompile Include="E:\OpenGL3D\src\Plane.cpp" />
     <ClCompile Include="E:\OpenGL3D\src\PointLight.cpp" />
     <ClCompile Include="E:\OpenGL3D\src\SpotLight.cpp" />
     <ClCompile Include="E:\OpenGL3D\src\State.cpp" />

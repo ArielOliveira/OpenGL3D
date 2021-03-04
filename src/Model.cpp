@@ -59,7 +59,7 @@ void Model::load(const char* filename) {
 
 					float u = *itTx; itTx++; float v = *itTx; itTx++;
 
-					mesh->addVertex(vertex_t{vertex, glm::vec4(0), glm::vec2(u, v)});
+					mesh->addVertex({vertex, glm::vec4(0), glm::vec2(u, v)});
 				}
 			} else {
 				std::cout << "Invalid data: vertices and texture coordinates don't match!" << std::endl;

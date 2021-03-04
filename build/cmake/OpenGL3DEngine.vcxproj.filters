@@ -40,6 +40,9 @@
     <ClCompile Include="E:\OpenGL3D\src\Model.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="E:\OpenGL3D\src\Plane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="E:\OpenGL3D\src\PointLight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -106,6 +109,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="E:\OpenGL3D\include\OpenGLDebugger.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\OpenGL3D\include\Plane.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="E:\OpenGL3D\include\PointLight.hpp">

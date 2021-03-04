@@ -5,8 +5,6 @@ Light::Light() : Model() {
     ambient = glm::vec4(.2f, .2f, .2f, 1);
     diffuse = glm::vec4(.5f, .5f, .5f, 1);
     specular = glm::vec4(1, 1, 1, 1);
-
-    //pos = glm::vec4(.0f, 0.f, .0f, 1.f);
 }
 
 Light::Light(const Light& light) : Model(light),

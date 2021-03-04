@@ -23,12 +23,7 @@ void AssetManager::freeSTBI(unsigned char* texture) { if (texture) stbi_image_fr
 
 
 GLTexture* AssetManager::loadTextures(aiMaterial* material, aiTextureType type, string typeName) {
-	//unsigned char* textureAtlas = 0;
-	//glm::ivec2 atlasSize(0);
 	int atlasSizeDivision = material->GetTextureCount(type);
-	//int atlasChannels;
-
-	//vector<std::string> textureNames;
 
 	if (atlasSizeDivision == 0)
 		return nullptr;
@@ -59,55 +54,6 @@ GLTexture* AssetManager::loadTextures(aiMaterial* material, aiTextureType type, 
 
 		return glTexture;
 	}
-
-
-	/*for (int i = 0; i < atlasSizeDivision; i++) {
-		glm::ivec2 oldAtlasSize = atlasSize;
-
-		aiString name;
-		glm::ivec2 size;
-		int channels;
-
-		material->GetTexture(type, i, &name);
-
-		auto it = AssetManager::loadedTextures->find(name.C_Str());
-		unsigned char* texture;
-		if (it != AssetManager::loadedTextures->end()) {
-				
-		}
-		
-		texture = AssetManager::textureFromFile(name.C_Str(), texturePath, size, channels);
-
-		textureNames.push_back(name.C_Str());
-		
-		atlasSize.x += size.x;
-		atlasSize.y += size.y;
-		atlasChannels = channels;
-
-		unsigned char* newTextureAtlas = new unsigned char[atlasSize.x*atlasSize.y];
-
-		int oldSize = oldAtlasSize.x*oldAtlasSize.y;
-		int newSize = atlasSize.x*atlasSize.y;
-		int count = 0;
-
-		for (int j = 0; j < oldSize; j++)
-			newTextureAtlas[j] = textureAtlas[j];
-
-		for (int k = oldSize; k < newSize; k++) 
-			newTextureAtlas[k] = texture[count++];
-
-		delete textureAtlas;
-
-		AssetManager::freeSTBI(texture);
-		textureAtlas = newTextureAtlas;
-
-		if ((atlasSizeDivision > 1) && ((atlasSizeDivision % 2) != 0))
-			std::cout << "Incomplete atlas" << std::endl;
-	}*/
-	
-	//State::textureHash[]
-
-	//return new GLTexture(textureAtlas, atlasSize, atlasSizeDivision);
 }
 
 MeshPair AssetManager::processMesh(aiMesh *mesh, const aiScene *scene) {
@@ -167,7 +113,6 @@ MeshPair AssetManager::processMesh(aiMesh *mesh, const aiScene *scene) {
 
 void AssetManager::processNode(aiNode *node, const aiScene *scene, Model* model) {
     // process all the node's meshes (if any)
-	std::cout << node->mNumChildren << std::endl;
     for(unsigned int i = 0; i < node->mNumMeshes; i++) {
         aiMesh* mesh = scene->mMeshes[node->mMeshes[i]]; 
 		MeshPair pair = processMesh(mesh, scene);

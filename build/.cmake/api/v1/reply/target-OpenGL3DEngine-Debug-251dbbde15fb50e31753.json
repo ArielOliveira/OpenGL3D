@@ -2,10 +2,10 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "E:/bin/MinSizeRel/OpenGL3DEngine.exe"
+			"path" : "E:/bin/Debug/OpenGL3DEngine.exe"
 		},
 		{
-			"path" : "E:/bin/MinSizeRel/OpenGL3DEngine.pdb"
+			"path" : "E:/bin/Debug/OpenGL3DEngine.pdb"
 		}
 	],
 	"backtrace" : 1,
@@ -59,7 +59,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O1 /Ob1 /DNDEBUG"
+					"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1"
 				},
 				{
 					"fragment" : "-std:c++latest"
@@ -106,7 +106,6 @@
 			},
 			"sourceIndexes" : 
 			[
-				25,
 				26,
 				27,
 				28,
@@ -125,7 +124,9 @@
 				41,
 				42,
 				43,
-				44
+				44,
+				45,
+				46
 			]
 		}
 	],
@@ -141,11 +142,11 @@
 		"commandFragments" : 
 		[
 			{
-				"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O1 /Ob1 /DNDEBUG",
+				"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1",
 				"role" : "flags"
 			},
 			{
-				"fragment" : "/machine:x64 /INCREMENTAL:NO /subsystem:console",
+				"fragment" : "/machine:x64 /debug /INCREMENTAL /subsystem:console",
 				"role" : "flags"
 			},
 			{
@@ -212,14 +213,14 @@
 				21,
 				22,
 				23,
-				24
+				24,
+				25
 			]
 		},
 		{
 			"name" : "Source Files",
 			"sourceIndexes" : 
 			[
-				25,
 				26,
 				27,
 				28,
@@ -238,7 +239,9 @@
 				41,
 				42,
 				43,
-				44
+				44,
+				45,
+				46
 			]
 		}
 	],
@@ -317,6 +320,11 @@
 		{
 			"backtrace" : 1,
 			"path" : "E:/OpenGL3D/include/OpenGLDebugger.hpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "E:/OpenGL3D/include/Plane.hpp",
 			"sourceGroupIndex" : 0
 		},
 		{
@@ -445,6 +453,12 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "E:/OpenGL3D/src/Model.cpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "E:/OpenGL3D/src/Plane.cpp",
 			"sourceGroupIndex" : 1
 		},
 		{
