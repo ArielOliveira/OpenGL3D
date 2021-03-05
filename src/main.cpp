@@ -58,14 +58,39 @@ int main(void) {
 		return -1;
 
 	GLSLShader* shader = new GLSLShader(shaderPath + "vertex.shader", shaderPath + "fragment.shader");
-	GLTexture* texture = new GLTexture(State::whiteMap, glm::vec2(1), 1);
-	State::initialize(shader, texture);
+	Material* mat = new Material(new GLTexture(State::whiteMap, glm::vec2(1), 1),
+								 new GLTexture(State::opaqueMap, glm::vec2(1), 1),
+								 new GLTexture(State::blackMap, glm::vec2(1), 1),
+									 16.f);
+	State::initialize(shader, mat);
 
 	world = new World();
-	Plane* plane = new Plane();
-	plane->setSize(glm::vec4(10, 1, 10, 1));
-	world->addObject(plane);
-	world->addObject(AssetManager::loadModel(meshPath + "backpack.obj"));
+	Plane* ground = new Plane();
+	Plane* glass = new Plane(2, Material(new GLTexture(texturePath + "window.png"),
+										 new GLTexture(texturePath + "window.png"),
+										 new GLTexture(State::transparentMap, glm::vec2(1), 1),
+										 16.f));
+	
+	Plane* grass = new Plane(2, Material(new GLTexture(texturePath + "grass.png"),
+										 new GLTexture(State::transparentMap, glm::vec2(1), 1),
+										 new GLTexture(State::transparentMap, glm::vec2(1), 1),
+										 16.f));
+	
+	ground->setSize(glm::vec4(10, 1, 10, 1));
+	ground->setPos(glm::vec4(-5, 0, -5, 1));
+	grass->setRot(glm::vec4(-90, 0, 0, 1));
+	
+	glass->setRot(glm::vec4(-90, 0, 0, 1));
+	glass->setPos(glm::vec4(0, 0, 2, 1));
+
+	world->addObject(ground);
+	//world->addObject(grass);
+	world->addObject(glass);
+
+	
+	world->addObject(new Plane(*glass));
+	world->getObject(2)->setPos(glm::vec4(0, 0, -2, 1));
+	//world->addObject(AssetManager::loadModel(meshPath + "backpack.obj"));
 	
 	DirectionalLight* light = new DirectionalLight();
 	SpotLight* spotLight = new SpotLight();

@@ -10,11 +10,7 @@ PointLight::PointLight() : Light() {
     
     addMesh(
         cube.getMesh(0), 
-        new Material(
-            State::defaultTexture,
-            State::blackTexture,
-            State::defaultTexture,
-            0.f)
+        State::defaultLightMaterial
     );
 
     constant = 1;

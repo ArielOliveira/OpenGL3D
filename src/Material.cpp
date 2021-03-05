@@ -1,9 +1,9 @@
 #include "Material.hpp"
 
 Material::Material() {
-	diffuseMap = State::defaultTexture;
-	specularMap = State::blackTexture;
-	emissiveMap = State::blackTexture;
+	diffuseMap = State::defaultMaterial->diffuseMap;
+	specularMap = State::defaultMaterial->specularMap;
+	emissiveMap = State::defaultMaterial->emissiveMap;
 
 	glm::ivec2 diffuseOffset;
 	glm::ivec2 specularOffset;

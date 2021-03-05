@@ -58,10 +58,10 @@ uniform Light pLights[MAX_POINT_LIGHT];
 uniform Light sLights[MAX_SPOT_LIGHT];
 
 void main() {
-	vec4 viewDir = normalize(fCameraPos - fModelPos);
-	
 	vec4 diffuseMap = texture(material.diffuse, fTextCoords) / material.diffuseQuotient;
 	vec4 specularMap = texture(material.specular, fTextCoords) / material.specularQuotient;
+
+	vec4 viewDir = normalize(fCameraPos - fModelPos);
 	
 	specularMap.w = 0;
 	

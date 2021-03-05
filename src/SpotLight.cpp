@@ -22,11 +22,7 @@ SpotLight::SpotLight() : Light() {
     
     addMesh(
         mesh, 
-        new Material(
-            State::blackTexture,
-            State::blackTexture,
-            State::blackTexture,
-            0.f)
+        State::blackMaterial
     );
 }
 

@@ -7,7 +7,7 @@ Plane::Plane() : Model() {
 
 Plane::Plane(int vertexCount, const Material& material) : Model() {
     this->vertexCount = vertexCount;
-    addMesh(generate(), new Material());
+    addMesh(generate(), new Material(material));
 }
 
 Plane::Plane(const Plane& plane) :

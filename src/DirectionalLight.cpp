@@ -13,11 +13,7 @@ DirectionalLight::DirectionalLight() : Light() {
     
     addMesh(
         mesh, 
-        new Material(
-            State::blackTexture,
-            State::blackTexture,
-            State::blackTexture,
-            0.f)
+        State::blackMaterial
     );
     forward = glm::vec3(-.2f, -1.f, -.3f);
 }
