@@ -5,16 +5,6 @@ DirectionalLight::DirectionalLight() : Light() {
     State::dLightsCount++;
     uniformName = "dLights[" + std::to_string(id) + "]";
 
-    Mesh* mesh = new Mesh();
-    mesh->addVertex(vertex_t{glm::vec4(0), glm::vec4(0), glm::vec2(0)});
-    mesh->addTriangleIdx(0, 1, 2);
-    mesh->setVertexCount(4);
-    mesh->setTextCount(2);
-    
-    addMesh(
-        mesh, 
-        State::blackMaterial
-    );
     forward = glm::vec3(-.2f, -1.f, -.3f);
 }
 
@@ -39,7 +29,7 @@ DirectionalLight::~DirectionalLight() {
 void DirectionalLight::step(float deltaTime) {
     Light::step(deltaTime);
 
-    GLSLShader* shader = materialList[0]->getShader();
+    GLSLShader* shader = getComponent<Material>()->getShader();
     int dir = glGetUniformLocation(shader->getID(), (uniformName + ".direction").c_str());
 
     int dirCount = glGetUniformLocation(shader->getID(), "D_LIGHTS");

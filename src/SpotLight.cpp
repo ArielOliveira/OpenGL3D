@@ -13,17 +13,6 @@ SpotLight::SpotLight() : Light() {
 
     innerRadius = 12.5f;
     outterRadius = 17.5f;
-    
-    Mesh* mesh = new Mesh();
-    mesh->addVertex(vertex_t{glm::vec4(0), glm::vec4(0), glm::vec2(0)});
-    mesh->addTriangleIdx(0, 1, 2);
-    mesh->setVertexCount(4);
-    mesh->setTextCount(2);
-    
-    addMesh(
-        mesh, 
-        State::blackMaterial
-    );
 }
 
 SpotLight::SpotLight(const SpotLight& light) : Light(light) {
@@ -68,7 +57,7 @@ float SpotLight::getOutterRadius() const { return outterRadius; }
 void SpotLight::step(float deltaTime)  {
     Light::step(deltaTime);
 
-    GLSLShader* shader = materialList[0]->getShader();
+    GLSLShader* shader = getComponent<Material>()->getShader();
 
     int dir = glGetUniformLocation(shader->getID(), (uniformName + ".direction").c_str());
     int p = glGetUniformLocation(shader->getID(), (uniformName + ".position").c_str());
@@ -93,5 +82,4 @@ void SpotLight::step(float deltaTime)  {
     shader->setFloat(outter, cos(glm::radians(outterRadius)));
     
     shader->setInt(spotCount, State::sLightsCount);
-
 }

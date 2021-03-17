@@ -1,6 +1,6 @@
 #pragma once
-#include "Model.hpp"
-class Cube : public Model {
+#include "Object.hpp"
+class Cube : public Object {
 	private:
 		Mesh* makeCube();
 	public:

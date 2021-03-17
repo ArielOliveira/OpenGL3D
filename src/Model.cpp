@@ -1,25 +1,44 @@
 #include "Model.hpp"
 #include "pugixml.hpp"
 
-Model::Model() : Entity() 
+Model::Model() :
+	hasTransparency(false)
 	{}
 
 Model::Model(const Model& object) : 
 	meshList(object.meshList),
 	materialList(object.materialList),
-	Entity(object) 
+	hasTransparency(object.hasTransparency)
 	{}
 
-Model::Model(const vector<Mesh*>& _meshList, const vector<Material*>& _materialList) :
+Model::Model(const vector<Mesh*>& _meshList, const vector<Material*>& _materialList, bool _hasTransparency) :
 	meshList(_meshList),
-	materialList(_materialList)
+	materialList(_materialList),
+	hasTransparency(_hasTransparency)
 	{}
 
-Model::Model(const char* filename) {
-	load(filename);
+//Model::Model(const char* filename) {
+//	load(filename);
+//}
+
+Model::~Model() {}
+
+void Model::addMesh(Mesh* mesh, Material* material) { 
+	meshList.push_back(mesh); 
+	materialList.push_back(material);
 }
 
-void Model::load(const char* filename) {
+Mesh* Model::getMesh(const int& pos) { return meshList[pos]; }
+
+const Material& Model::getMaterial(size_t pos) const { return *materialList[pos]; }
+Material& Model::getMaterial(size_t pos) { return *materialList[pos]; }
+
+size_t Model::getMeshCount() { return meshList.size(); }
+size_t Model::getMaterialCount() { return materialList.size(); }
+
+bool Model::isTransparent() { return hasTransparency; }
+
+/*void Model::load(const char* filename) {
 	std::string path = FileLoader<void*>::extractPath(filename);
 
 	if (path == "")
@@ -78,29 +97,4 @@ void Model::load(const char* filename) {
 		std::cout << "Xml failed to load, exiting." << std::endl;
 		exit(-1);
 	}
-
-	pos = glm::vec4(0, 0, 0, 1);
-	rot = glm::vec4(0, 0, 0, 1);
-	size = glm::vec4(1);
-
-	computeModelMtx();
-}
-
-Model::~Model() {}
-
-void Model::addMesh(Mesh* mesh, Material* material) { 
-	meshList.push_back(mesh); 
-	materialList.push_back(material);
-}
-
-Mesh* Model::getMesh(const int& pos) { return meshList[pos]; }
-
-const Material& Model::getMaterial(size_t pos) const { return *materialList[pos]; }
-Material& Model::getMaterial(size_t pos) { return *materialList[pos]; }
-
-size_t Model::getMeshCount() { return meshList.size(); }
-size_t Model::getMaterialCount() { return materialList.size(); }
-
-void Model::step(float deltaTime) {
-	computeModelMtx();
-}
+}*/

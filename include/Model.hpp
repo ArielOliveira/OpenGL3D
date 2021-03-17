@@ -8,19 +8,21 @@
 
 using std::vector;
 
-class Model : public Entity {
+class Model {
 	protected:
 		vector<Mesh*> meshList;
 		vector<Material*> materialList;
 
+		bool hasTransparency;
 	public:
 		Model();
 		Model(const Model& object);
-		Model(const vector<Mesh*>& _meshList, const vector<Material*>& _materialList);
-		Model(const char* filename);
+		Model(const vector<Mesh*>& _meshList, const vector<Material*>& _materialList, bool hasTrasnparency);
+		//Model(const char* filename);
+
 		~Model();
 
-		void load(const char* filename);
+		//void load(const char* filename);
 
 		void addMesh(Mesh* mesh, Material* material);
 
@@ -32,6 +34,6 @@ class Model : public Entity {
 		
 		Mesh* getMesh(const int& pos);
 
-		virtual void step(float deltaTime);
+		bool isTransparent();
 };
 

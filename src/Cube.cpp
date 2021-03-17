@@ -1,15 +1,17 @@
 #include "Cube.hpp"
 
-Cube::Cube() : Model() {
-	addMesh(makeCube(), new Material());
+Cube::Cube() : Object() {
+	addComponent<Mesh>(makeCube());
+	addComponent<Material>(State::defaultMaterial);
 }
 
-Cube::Cube(const Cube& cube) : Model(cube) {}
+Cube::Cube(const Cube& cube) : Object(cube) {}
 
-Cube::Cube(const char* filename) : Model(filename) {}
+Cube::Cube(const char* filename) : Object() {}
 
-Cube::Cube(const Material& material) : Model() {
-	addMesh(makeCube(), new Material(material));
+Cube::Cube(const Material& material) : Object() {
+	addComponent<Mesh>(makeCube());
+	addComponent<Material>(State::defaultMaterial);
 }
 
 Cube::~Cube() {}
@@ -80,5 +82,5 @@ Mesh* Cube::makeCube() {
 void Cube::step(float deltaTime) {
 	//rot.z = fmodf(rot.z + glm::radians(32.0f) * deltaTime, glm::radians(360.0f));
 	
-	Model::step(deltaTime);
+	Object::step(deltaTime);
 }

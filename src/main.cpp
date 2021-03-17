@@ -9,7 +9,6 @@
 #include "Mesh.hpp"
 #include "GLSLShader.hpp"
 #include "GLRender.hpp"
-#include "Triangle.hpp"
 #include "Cube.hpp"
 #include "State.hpp"
 #include "Input.hpp"
@@ -53,6 +52,7 @@ int main(void) {
 	glfwSetJoystickCallback(Input::joystick_callback);
 	
 	GLRender* render = new GLRender();
+	world = new World();
 
 	if (!render->init())
 		return -1;
@@ -64,17 +64,18 @@ int main(void) {
 									 16.f);
 	State::initialize(shader, mat);
 
-	world = new World();
 	Plane* ground = new Plane();
-	Plane* glass = new Plane(2, Material(new GLTexture(texturePath + "window.png"),
+	Plane* glass = new Plane(2, new Material(new GLTexture(texturePath + "window.png"),
 										 new GLTexture(texturePath + "window.png"),
 										 new GLTexture(State::transparentMap, glm::vec2(1), 1),
-										 16.f));
+										 16.f),
+										 true);
 	
-	Plane* grass = new Plane(2, Material(new GLTexture(texturePath + "grass.png"),
+	Plane* grass = new Plane(2, new Material(new GLTexture(texturePath + "grass.png"),
 										 new GLTexture(State::transparentMap, glm::vec2(1), 1),
 										 new GLTexture(State::transparentMap, glm::vec2(1), 1),
-										 16.f));
+										 16.f),
+										 true);
 	
 	ground->setSize(glm::vec4(10, 1, 10, 1));
 	ground->setPos(glm::vec4(-5, 0, -5, 1));
@@ -84,25 +85,27 @@ int main(void) {
 	glass->setPos(glm::vec4(0, 0, 2, 1));
 
 	world->addObject(ground);
-	//world->addObject(grass);
-	world->addObject(glass);
-
-	
-	world->addObject(new Plane(*glass));
-	world->getObject(2)->setPos(glm::vec4(0, 0, -2, 1));
+	world->addObject(grass);
+	world->addTransparentObject(glass);
+	world->addTransparentObject(new Plane(*glass));
+	world->getTransparentObject(1)->setPos(glm::vec4(0, 0, -2, 1));
 	//world->addObject(AssetManager::loadModel(meshPath + "backpack.obj"));
 	
 	DirectionalLight* light = new DirectionalLight();
 	SpotLight* spotLight = new SpotLight();
 
 	world->addLight(light);
-	//world->addLight(spotLight);
+	world->addLight(spotLight);
 
+
+	// TODO: Models should be separated from entities.
+	//       We don't want to upload the same model 
+	//		 twice to the GPU
 	for (int i = 0; i < world->getNumObjects(); i++)
 		render->setupObj(world->getObject(i));
 
-	for (int i = 0; i < world->getNumLights(); i++)
-		render->setupObj(world->getLight(i));
+	for (int i = 0; i < world->getNumTransparentObjects(); i++)
+		render->setupObj(world->getTransparentObject(0));
 
 	world->addCamera(new Camera(glm::vec4(.0f, 1.f, 3.f, 1),  // position
 		glm::vec3(.0f, 1.f, .0f), // up 

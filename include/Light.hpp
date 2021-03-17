@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Cube.hpp"
+#include "Object.hpp"
 
-class Light : public Model {
+class Light : public Object {
     protected:
         glm::vec4 ambient;
         glm::vec4 diffuse;

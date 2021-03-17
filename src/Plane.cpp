@@ -1,22 +1,25 @@
 #include "Plane.hpp"
 
-Plane::Plane() : Model() {
+Plane::Plane() : Object() {
     vertexCount = 2;
-    addMesh(generate(), new Material());
+    addComponent<Mesh>(generate());
+    addComponent<Material>(new Material());
 }
 
-Plane::Plane(int vertexCount, const Material& material) : Model() {
+Plane::Plane(int vertexCount, Material* material, bool hasTransparency) : Object() {
     this->vertexCount = vertexCount;
-    addMesh(generate(), new Material(material));
+    addComponent<Mesh>(generate());
+    addComponent<Material>(material);
+    //this->hasTransparency = hasTransparency;
 }
 
 Plane::Plane(const Plane& plane) :
-    Model(plane), 
+    Object(plane), 
     vertexCount(plane.vertexCount)
     {}
 
 Plane::~Plane() {
-    Model::~Model();
+    Object::~Object();
 }
 
 Mesh* Plane::generate() {

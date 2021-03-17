@@ -1,19 +1,20 @@
 #include "Light.hpp"
 #include <glfw3.h>
 
-Light::Light() : Model() {
-    ambient = glm::vec4(.2f, .2f, .2f, 1);
-    diffuse = glm::vec4(.5f, .5f, .5f, 1);
+Light::Light() : Object() {
+    ambient = glm::vec4(.6f, .6f, .6f, 1);
+    diffuse = glm::vec4(1.f, 1.f, 1.f, 1);
     specular = glm::vec4(1, 1, 1, 1);
+    addComponent<Material>(State::defaultLightMaterial);
 }
 
-Light::Light(const Light& light) : Model(light),
+Light::Light(const Light& light) : Object(light),
     ambient(light.ambient),
     diffuse(light.diffuse),
     specular(light.specular)
     {}
 
-Light::Light(const glm::vec4& ambient, const glm::vec4& diffuse, const glm::vec4& specular) : Model() {
+Light::Light(const glm::vec4& ambient, const glm::vec4& diffuse, const glm::vec4& specular) : Object() {
     this->ambient = ambient;
     this->diffuse = diffuse;
     this->specular = specular;
@@ -31,9 +32,9 @@ void Light::setSpecular(const glm::vec4& color) { this->specular = color; }
 const glm::vec4& Light::getSpecular() const { return specular; }
 
 void Light::step(float deltaTime) {
-    computeModelMtx();
+    Object::step(deltaTime);
     
-    GLSLShader* shader = materialList[0]->getShader();
+    GLSLShader* shader = getComponent<Material>()->getShader();
 
     shader->use();
 

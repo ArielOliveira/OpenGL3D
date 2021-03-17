@@ -24,8 +24,8 @@ class GLRender {
 
 		bool init();
 
-		void setupObj(Model* obj);
-		void drawObject(Model* obj);
+		void setupObj(Object* obj);
+		void drawObject(Object* obj);
 		void drawWorld(World* world);
 };
 

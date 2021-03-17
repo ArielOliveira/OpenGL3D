@@ -2,6 +2,7 @@
 #include <glm.hpp>
 #include <vector>
 
+#include "Component.hpp"
 
 using std::vector;
 
@@ -11,7 +12,7 @@ struct vertex_t {
 	glm::vec2 texture;
 };
 
-class Mesh {
+class Mesh : public Component {
 	private:
 		glm::uint32 meshID;
 
@@ -41,5 +42,8 @@ class Mesh {
 		
 		vector<vertex_t>* getVertList();
 		vector<glm::int32>* getTriangleIdxList();
+
+		
+        void* as() { return this; }
 };
 

@@ -20,7 +20,6 @@ void Camera::move(float timeStep) {
 	rot.x += (Input::rightAxisX + Input::mouseX) * speed;
 	rot.y += (Input::rightAxisY + Input::mouseY) * speed;
 
-
 	if (rot.x >= 360.0f)
 		rot.x = 0;
 

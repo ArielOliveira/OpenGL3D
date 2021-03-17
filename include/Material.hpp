@@ -2,8 +2,9 @@
 #include "GLSLShader.hpp"
 #include "GLTexture.hpp"
 #include "State.hpp"
+#include "Component.hpp"
 
-class Material {
+class Material : public Component {
 	private:
 		GLSLShader* shader;
 		GLTexture* diffuseMap;
@@ -29,8 +30,9 @@ class Material {
 		void setEmissiveMap(GLTexture* emissiveMap);
 		const GLTexture& getEmissiveMap() const;
 
-
 		void setShineness(float shineness);
-		float getShineness();	
+		float getShineness();
+
+        void* as() { return this; }	
 };
 

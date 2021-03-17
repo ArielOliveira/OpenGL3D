@@ -3,15 +3,9 @@
 #include "PointLight.hpp"
 
 PointLight::PointLight() : Light() {
-    Cube cube;
     id = State::pLightsCount;
     State::pLightsCount++;
     uniformName = "pLights[" + std::to_string(id) + "]";
-    
-    addMesh(
-        cube.getMesh(0), 
-        State::defaultLightMaterial
-    );
 
     constant = 1;
     linear = .09f;
@@ -57,7 +51,7 @@ float PointLight::getQuadratic() const { return quadratic; }
 void PointLight::step(float deltaTime) {
     Light::step(deltaTime);
 
-    GLSLShader* shader = materialList[0]->getShader();
+    GLSLShader* shader = getComponent<Material>()->getShader();
     int p = glGetUniformLocation(shader->getID(), (uniformName + ".position").c_str());
     int c = glGetUniformLocation(shader->getID(), (uniformName + ".constant").c_str());
     int l = glGetUniformLocation(shader->getID(), (uniformName + ".linear").c_str());
