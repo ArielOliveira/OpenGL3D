@@ -61,6 +61,9 @@ void main() {
 	vec4 diffuseMap = texture(material.diffuse, fTextCoords) / material.diffuseQuotient;
 	vec4 specularMap = texture(material.specular, fTextCoords) / material.specularQuotient;
 
+	if (diffuseMap.a == 0)
+		discard;
+
 	vec4 viewDir = normalize(fCameraPos - fModelPos);
 	
 	specularMap.w = 0;

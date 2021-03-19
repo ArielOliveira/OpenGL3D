@@ -38,11 +38,11 @@ void Material::setEmissiveMap(GLTexture* emissiveMap) { this->emissiveMap = emis
 const GLTexture& Material::getEmissiveMap() const { return *emissiveMap; }
 
 void Material::prepare(glm::mat4 modelMatrix, glm::mat4 viewMatrix, glm::mat4 projectionMatrix, glm::mat3 normalMatrix, double time) {
-	//GLSLShader* shader = this->shader;
+	GLSLShader* shader = this->shader;
 	
-	//shader->use();
+	shader->use();
 
-	/*shader->setMat4x4(shader->getLocation("model"), modelMatrix);
+	shader->setMat4x4(shader->getLocation("model"), modelMatrix);
 	shader->setMat4x4(shader->getLocation("view"), viewMatrix);
 	shader->setMat4x4(shader->getLocation("projection"), projectionMatrix);
 	shader->setMat3x3(shader->getLocation("normalMatrix"), normalMatrix);
@@ -64,5 +64,5 @@ void Material::prepare(glm::mat4 modelMatrix, glm::mat4 viewMatrix, glm::mat4 pr
 	specularMap->bind();
 
 	glActiveTexture(GL_TEXTURE2);
-	emissiveMap->bind();*/
+	emissiveMap->bind();
 }

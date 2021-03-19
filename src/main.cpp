@@ -95,7 +95,7 @@ int main(void) {
 	SpotLight* spotLight = new SpotLight();
 
 	world->addLight(light);
-	world->addLight(spotLight);
+	//world->addLight(spotLight);
 
 
 	// TODO: Models should be separated from entities.
@@ -105,7 +105,7 @@ int main(void) {
 		render->setupObj(world->getObject(i));
 
 	for (int i = 0; i < world->getNumTransparentObjects(); i++)
-		render->setupObj(world->getTransparentObject(0));
+		render->setupObj(world->getTransparentObject(i));
 
 	world->addCamera(new Camera(glm::vec4(.0f, 1.f, 3.f, 1),  // position
 		glm::vec3(.0f, 1.f, .0f), // up 
