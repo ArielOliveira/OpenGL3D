@@ -1,42 +1,32 @@
 #include "Model.hpp"
 #include "pugixml.hpp"
 
-Model::Model() :
-	hasTransparency(false)
+Model::Model()
 	{}
 
 Model::Model(const Model& object) : 
 	meshList(object.meshList),
-	materialList(object.materialList),
-	hasTransparency(object.hasTransparency)
+	materialList(object.materialList)
 	{}
 
-Model::Model(const vector<Mesh*>& _meshList, const vector<Material*>& _materialList, bool _hasTransparency) :
+Model::Model(const vector<const Mesh*>& _meshList, const vector<const Material*>& _materialList) :
 	meshList(_meshList),
-	materialList(_materialList),
-	hasTransparency(_hasTransparency)
+	materialList(_materialList)
 	{}
-
-//Model::Model(const char* filename) {
-//	load(filename);
-//}
 
 Model::~Model() {}
 
-void Model::addMesh(Mesh* mesh, Material* material) { 
+void Model::addMesh(const Mesh* mesh, const Material* material) { 
 	meshList.push_back(mesh); 
 	materialList.push_back(material);
 }
 
-Mesh* Model::getMesh(const int& pos) { return meshList[pos]; }
+const Mesh* Model::getMesh(const int& pos) { return meshList[pos]; }
 
 const Material& Model::getMaterial(size_t pos) const { return *materialList[pos]; }
-Material& Model::getMaterial(size_t pos) { return *materialList[pos]; }
 
-size_t Model::getMeshCount() { return meshList.size(); }
-size_t Model::getMaterialCount() { return materialList.size(); }
-
-bool Model::isTransparent() { return hasTransparency; }
+size_t Model::getMeshCount() const { return meshList.size(); }
+size_t Model::getMaterialCount() const { return materialList.size(); }
 
 /*void Model::load(const char* filename) {
 	std::string path = FileLoader<void*>::extractPath(filename);

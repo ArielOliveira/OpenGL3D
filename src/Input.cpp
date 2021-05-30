@@ -39,18 +39,22 @@ void Input::keyCallback(GLFWwindow* window, int key, int scancode, int action, i
 	switch (action) {
 		case GLFW_PRESS:
 			keyEventMap[key] = true;
+			setAxis(key, action);
 			break;
 		case GLFW_RELEASE:
 			keyEventMap[key] = false;
+			setAxis(key, action);
 			break;
 		default:
 			break;
 	}
 }
 
-void Input::setAxis() {
-	leftAxisY = keyEventMap[GLFW_KEY_W] + -keyEventMap[GLFW_KEY_S];
-	leftAxisX = -keyEventMap[GLFW_KEY_A] + keyEventMap[GLFW_KEY_D];
+void Input::setAxis(int key, int action) {
+	if (key == GLFW_KEY_W || key == GLFW_KEY_S || key == GLFW_KEY_A || key == GLFW_KEY_D) {
+		leftAxisY = keyEventMap[GLFW_KEY_W] + -keyEventMap[GLFW_KEY_S];
+		leftAxisX = -keyEventMap[GLFW_KEY_A] + keyEventMap[GLFW_KEY_D];
+	}
 }
 
 void Input::setAxis(int joyid, float axisArray[4], GLFWgamepadstate state) {
@@ -90,9 +94,7 @@ void Input::update() {
 		float axisArray[] = { GLFW_GAMEPAD_AXIS_LEFT_X, GLFW_GAMEPAD_AXIS_LEFT_Y,
 							 GLFW_GAMEPAD_AXIS_RIGHT_X, GLFW_GAMEPAD_AXIS_RIGHT_Y };
 		setAxis(GLFW_JOYSTICK_1, axisArray, state);
-	} else {
-		setAxis();
-	}
+	} 
 
 	mouseX = (currentMouseX - lastMouseX) * mouseSensitivity;
 	mouseY = (currentMouseY - lastMouseY) * mouseSensitivity;

@@ -56,7 +56,6 @@ void GLTexture::load(const unsigned char* texture) {
 		break;
 	default:
 		format = GL_RGBA;
-		std::cout << "No color channel format found, assigning default format." << std::endl;
 		break;
 	}
 

@@ -22,7 +22,7 @@ glm::mat4 State::projectionMatrix = glm::mat4(1);
 glm::mat4 State::viewMatrix = glm::mat4(1);
 glm::mat4 State::modelMatrix = glm::mat4(1);
 
-bool State::initialize(GLSLShader* _defaultShader, Material* _defaultMaterial) {
+bool State::initialize(GLSLShader* _defaultShader) {
 	if (hasInitialized == true) {
 		std::cerr << "Attempting to initialize State twice. Aborting." << std::endl;
 		return false;
@@ -37,10 +37,10 @@ bool State::initialize(GLSLShader* _defaultShader, Material* _defaultMaterial) {
 		return false;
 	}
 
-	if (_defaultMaterial && !defaultMaterial) {
-		defaultMaterial = _defaultMaterial;
+	if (!defaultMaterial) {
+		defaultMaterial = new Material();
 	} else {
-		std::cerr << "Invalid texture assigning" << std::endl;
+		std::cerr << "Invalid material assigning" << std::endl;
 		return false;
 	}
 
@@ -48,6 +48,7 @@ bool State::initialize(GLSLShader* _defaultShader, Material* _defaultMaterial) {
 		defaultLightMaterial = new Material(new GLTexture(whiteMap, glm::vec2(1), 1),
 										    new GLTexture(whiteMap, glm::vec2(1), 1),
 										    new GLTexture(whiteMap, glm::vec2(1), 1),
+											false,
 										    32.f);
 	} else {
 		std::cerr << "Invalid material assigning" << std::endl;
@@ -58,6 +59,7 @@ bool State::initialize(GLSLShader* _defaultShader, Material* _defaultMaterial) {
 		transparentMaterial = new Material(new GLTexture(transparentMap, glm::vec2(1), 1),
 										   new GLTexture(transparentMap, glm::vec2(1), 1),
 										   new GLTexture(transparentMap, glm::vec2(1), 1),
+										   true,
 										   32.f);
 	} else {
 		std::cerr << "Invalid material assigning" << std::endl;
@@ -68,6 +70,7 @@ bool State::initialize(GLSLShader* _defaultShader, Material* _defaultMaterial) {
 		blackMaterial = new Material(new GLTexture(blackMap, glm::vec2(1), 1),
 									 new GLTexture(blackMap, glm::vec2(1), 1),
 									 new GLTexture(blackMap, glm::vec2(1), 1),
+									 false,
 										   32.f);
 	} else {
 		std::cerr << "Invalid material assigning" << std::endl;

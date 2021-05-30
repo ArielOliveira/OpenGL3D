@@ -35,17 +35,17 @@ public:
 
 	glm::uint32 compileShader(const glm::uint32& type, const std::string& source);
 	glm::uint32 createShader(const std::string& vertexShader, const std::string& fragmentShader);
-	glm::uint32 getID();
+	glm::uint32 getID() const;
 
 	const char* getError() const;
 
-	glm::uint32 getLocation(const string& name);
+	glm::uint32 getLocation(const string& name) const;
 
-	void setInt(const glm::uint32& loc, const int& val);
-	void setFloat(const glm::uint32& loc, const float& val);
-	void setVec3(const glm::uint32& loc, const glm::vec3& vec);
-	void setVec4(const glm::uint32& loc, const glm::vec4& vec);
-	void setMat4x4(const glm::uint32& loc, const glm::mat4& matrix);
-	void setMat3x3(const glm::uint32& loc, const glm::mat3& matrix);
+	void setInt(const glm::uint32& loc, const int& val) const;
+	void setFloat(const glm::uint32& loc, const float& val) const;
+	void setVec3(const glm::uint32& loc, const glm::vec3& vec) const;
+	void setVec4(const glm::uint32& loc, const glm::vec4& vec) const;
+	void setMat4x4(const glm::uint32& loc, const glm::mat4& matrix) const;
+	void setMat3x3(const glm::uint32& loc, const glm::mat3& matrix) const;
 };
 

@@ -1,4 +1,4 @@
-# Install script for directory: E:/OpenGL3D/build/cmake
+# Install script for directory: E:/OpenGL3D
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

@@ -51,7 +51,7 @@ float PointLight::getQuadratic() const { return quadratic; }
 void PointLight::step(float deltaTime) {
     Light::step(deltaTime);
 
-    GLSLShader* shader = getComponent<Material>()->getShader();
+    const GLSLShader* shader = &getComponent<Material>()->getShader();
     int p = glGetUniformLocation(shader->getID(), (uniformName + ".position").c_str());
     int c = glGetUniformLocation(shader->getID(), (uniformName + ".constant").c_str());
     int l = glGetUniformLocation(shader->getID(), (uniformName + ".linear").c_str());

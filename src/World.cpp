@@ -2,6 +2,7 @@
 
 World::World() {
 	activeCamera = 0;
+	sortedTransparent = new map<float, Object*>();
 }
 
 void World::addObject(Object* obj) { objs.push_back(obj); }
@@ -32,7 +33,7 @@ void World::removeLight(Light* light) {
 
 size_t World::getNumObjects() { return objs.size(); }
 size_t World::getNumTransparentObjects() { return transparentObjs.size(); }
-map<float, Object*> World::getSortedTransparent() { return sortedTransparent; }
+map<float, Object*>* World::getSortedTransparent() { return sortedTransparent; }
 size_t World::getNumCameras() { return cameras.size(); }
 size_t World::getNumLights() { return lights.size(); }
 
@@ -45,7 +46,7 @@ void World::setActiveCamera(size_t index) { activeCamera = index; }
 int World::getActiveCamera() { return activeCamera; }
 
 void World::update(float deltaTime) {
-	sortedTransparent.clear();
+	sortedTransparent->clear();
 
 	for (auto& object : objs)
 		object->step(deltaTime);
@@ -54,7 +55,7 @@ void World::update(float deltaTime) {
 		transparent->step(deltaTime);
 
 		float distance = glm::length2(cameras[activeCamera]->getPos() - transparent->getPos());
-		sortedTransparent[distance] = transparent;
+		(*sortedTransparent)[distance] = transparent;
 	}
 
 	for (auto& camera : cameras)

@@ -29,7 +29,7 @@ DirectionalLight::~DirectionalLight() {
 void DirectionalLight::step(float deltaTime) {
     Light::step(deltaTime);
 
-    GLSLShader* shader = getComponent<Material>()->getShader();
+    const GLSLShader* shader = &getComponent<Material>()->getShader();
     int dir = glGetUniformLocation(shader->getID(), (uniformName + ".direction").c_str());
 
     int dirCount = glGetUniformLocation(shader->getID(), "D_LIGHTS");

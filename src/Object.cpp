@@ -13,5 +13,8 @@ Object::~Object() {
 
 void Object::step(float deltaTime) {
     computeModelMtx();
+
+    for (auto child : childs) 
+        child->step(deltaTime);
 }
 

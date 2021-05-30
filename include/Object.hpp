@@ -11,6 +11,8 @@
 class Object : public Entity {
     private:
         std::unordered_map<std::type_index, Component*> components;
+        std::vector<Object*> childs;
+        Object* parent;
     public:
         Object();
         Object(const Object& object);
@@ -18,13 +20,13 @@ class Object : public Entity {
         ~Object();
 
         template <typename T>
-        void addComponent(T* component) { components.insert(std::pair<std::type_index, T*>(typeid(T), component)); }
+        void addComponent(T* component) { components.insert(std::pair<std::type_index, Component*>(typeid(T), component)); }
 
         template<typename T>
         T* getComponent() { return (T*) components[typeid(T)]; }
 
         template <typename T>
-        void removeComponent(Component* component) {
+        void removeComponent() {
             auto it = components.find(typeid(T));
             if (it != components.end())
                 components.erase(it);

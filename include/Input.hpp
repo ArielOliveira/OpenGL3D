@@ -4,7 +4,7 @@
 
 class Input {
 private:
-	static void setAxis();
+	static void setAxis(int key, int action);
 	static void setAxis(int joyid, float axisArray[4], GLFWgamepadstate);
 public:
 	/// Virtual Axis ////////////////////////////

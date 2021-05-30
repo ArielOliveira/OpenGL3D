@@ -10,29 +10,24 @@ using std::vector;
 
 class Model {
 	protected:
-		vector<Mesh*> meshList;
-		vector<Material*> materialList;
+		vector<const Mesh*> meshList;
+		vector<const Material*> materialList;
 
-		bool hasTransparency;
 	public:
 		Model();
 		Model(const Model& object);
-		Model(const vector<Mesh*>& _meshList, const vector<Material*>& _materialList, bool hasTrasnparency);
-		//Model(const char* filename);
+		Model(const vector<const Mesh*>& _meshList, const vector<const Material*>& _materialList);
 
 		~Model();
 
-		//void load(const char* filename);
-
-		void addMesh(Mesh* mesh, Material* material);
+		void addMesh(const Mesh* mesh, const Material* material);
 
 		const Material& getMaterial(size_t index) const;
-		Material& getMaterial(size_t index);
 		
-		size_t getMeshCount();
-		size_t getMaterialCount();
+		size_t getMeshCount() const;
+		size_t getMaterialCount() const;
 		
-		Mesh* getMesh(const int& pos);
+		const Mesh* getMesh(const int& pos);
 
 		bool isTransparent();
 };

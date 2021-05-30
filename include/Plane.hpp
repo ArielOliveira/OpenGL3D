@@ -4,12 +4,13 @@
 
 class Plane : public Object {
     private:
-        int vertexCount;
+        int gridSize;
 
         Mesh* generate();
     public:
         Plane();
-        Plane(int vertexCount, Material* material, bool hasTransparency);
+        Plane(int gridSize, Material* material);
         Plane(const Plane& plane);
+
         ~Plane();
 };

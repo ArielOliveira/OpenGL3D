@@ -57,7 +57,7 @@ float SpotLight::getOutterRadius() const { return outterRadius; }
 void SpotLight::step(float deltaTime)  {
     Light::step(deltaTime);
 
-    GLSLShader* shader = getComponent<Material>()->getShader();
+    const GLSLShader* shader = &getComponent<Material>()->getShader();
 
     int dir = glGetUniformLocation(shader->getID(), (uniformName + ".direction").c_str());
     int p = glGetUniformLocation(shader->getID(), (uniformName + ".position").c_str());

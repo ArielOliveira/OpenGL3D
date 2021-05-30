@@ -84,7 +84,7 @@ glm::uint32 GLSLShader::createShader(const std::string& vertexShader, const std:
 }
 
 
-glm::uint32 GLSLShader::getID() { return programID; }
+glm::uint32 GLSLShader::getID() const { return programID; }
 
 const char* GLSLShader::getError() const { return "0"; }
 
@@ -105,12 +105,12 @@ void GLSLShader::setupAttribs() {
 	GLCall(vShaderAttribs["material.emissiveQuotient"] = glGetUniformLocation(programID, "material.emissiveQuotient"));
 }
 
-glm::uint32 GLSLShader::getLocation(const string& name) { return vShaderAttribs[name]; }
+glm::uint32 GLSLShader::getLocation(const string& name) const { return vShaderAttribs.at(name); }
 
-void GLSLShader::setInt(const glm::uint32& loc, const int& val) { glUniform1i(loc, val); }
-void GLSLShader::setFloat(const glm::uint32& loc, const float& val) { glUniform1f(loc, val); }
-void GLSLShader::setVec3(const glm::uint32& loc, const glm::vec3& vec) { glUniform3f(loc, vec.x, vec.y, vec.z); }
-void GLSLShader::setVec4(const glm::uint32& loc, const glm::vec4& vec) { glUniform4f(loc, vec.x, vec.y, vec.z, vec.w); }
-void GLSLShader::setMat4x4(const glm::uint32& loc, const glm::mat4& matrix) { glUniformMatrix4fv(loc, 1, false, glm::value_ptr(matrix)); }
-void GLSLShader::setMat3x3(const glm::uint32& loc, const glm::mat3& matrix) { glUniformMatrix3fv(loc, 1, false, glm::value_ptr(matrix)); }
+void GLSLShader::setInt(const glm::uint32& loc, const int& val) const { glUniform1i(loc, val); }
+void GLSLShader::setFloat(const glm::uint32& loc, const float& val) const { glUniform1f(loc, val); }
+void GLSLShader::setVec3(const glm::uint32& loc, const glm::vec3& vec) const { glUniform3f(loc, vec.x, vec.y, vec.z); }
+void GLSLShader::setVec4(const glm::uint32& loc, const glm::vec4& vec) const { glUniform4f(loc, vec.x, vec.y, vec.z, vec.w); }
+void GLSLShader::setMat4x4(const glm::uint32& loc, const glm::mat4& matrix) const { glUniformMatrix4fv(loc, 1, false, glm::value_ptr(matrix)); }
+void GLSLShader::setMat3x3(const glm::uint32& loc, const glm::mat3& matrix) const { glUniformMatrix3fv(loc, 1, false, glm::value_ptr(matrix)); }
 

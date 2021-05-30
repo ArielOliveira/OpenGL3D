@@ -34,7 +34,7 @@ const glm::vec4& Light::getSpecular() const { return specular; }
 void Light::step(float deltaTime) {
     Object::step(deltaTime);
     
-    GLSLShader* shader = getComponent<Material>()->getShader();
+    const GLSLShader* shader = &getComponent<Material>()->getShader();
 
     shader->use();
 

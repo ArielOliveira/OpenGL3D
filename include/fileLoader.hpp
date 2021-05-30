@@ -3,6 +3,7 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <set>
 
 using std::cout;
 using std::endl;
@@ -12,14 +13,14 @@ using std::string;
 #include <scene.h>
 #include <postprocess.h>
 
-const std::string meshPath = "../../data/msh/";
-const std::string texturePath = "../../data/textures/";
-const std::string shaderPath = "../../data/shaders/";
+const std::string meshPath = "..\\..\\data\\msh\\";
+const std::string texturePath = "..\\..\\data\\textures\\";
+const std::string shaderPath = "..\\..\\data\\shaders\\";
 
 template <typename T>
 class FileLoader {
 	public:
-		static inline string extractPath(string filename) {
+		static string extractPath(string filename) {
 			while (filename.find('\\') != string::npos)
 				filename.replace(filename.find('\\'), 1, 1, '/');
 
@@ -28,6 +29,21 @@ class FileLoader {
 			filename = filename.substr(0, pos);
 			if (filename.size() > 0) filename += '/';
 			return filename;
+		}
+
+		static string extractFileName(string filename) {
+			if (extractPath(filename) != "") {
+				size_t pos = filename.rfind('\\');
+				return filename.substr(pos+1, filename.length());
+			} else {
+				return "";
+			}
+		}
+
+		static string extractFileNameNoExtension(string filename) {
+			filename = extractFileName(filename);
+			size_t pos = filename.rfind('.');
+			return filename.substr(0, pos);
 		}
 
 		static std::vector<T> splitString(const std::string& str, char delim);

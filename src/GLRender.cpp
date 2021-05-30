@@ -19,37 +19,43 @@ bool GLRender::init() {
 }
 
 void GLRender::setupObj(Object* obj) {	
-	Mesh* mesh = obj->getComponent<Mesh>();
-	GLSLShader* shader = obj->getComponent<Material>()->getShader();
+	//for (int i = 0; i < obj->getMeshCount(); i++) {
 
-	shader->use();
+		//const Mesh* mesh = obj->getMesh(i);
+		//const GLSLShader* shader = &obj->getMaterial(i).getShader();
 
-	std::vector<vertex_t>* vertices = mesh->getVertList();
-	std::vector<glm::int32>* indices = mesh->getTriangleIdxList();
+		const Mesh* mesh = obj->getComponent<Mesh>();
+		const GLSLShader* shader = &obj->getComponent<Material>()->getShader();
 
-	glm::uint32 meshID = mesh->getMeshID();
+		shader->use();
 
-	GLCall(glGenVertexArrays(1, &vMeshIDs[meshID].bufferID));
-	GLCall(glGenBuffers(1, &vMeshIDs[meshID].vertexArrayID));
-	GLCall(glGenBuffers(1, &vMeshIDs[meshID].indexArrayID));
+		const std::vector<vertex_t>* vertices = mesh->getVertList();
+		const std::vector<glm::int32>* indices = mesh->getTriangleIdxList();
 
-	GLCall(glBindVertexArray(vMeshIDs[meshID].bufferID));
+		glm::uint32 meshID = mesh->getMeshID();
 
-	GLCall(glBindBuffer(GL_ARRAY_BUFFER, vMeshIDs[meshID].vertexArrayID));
-	GLCall(glBufferData(GL_ARRAY_BUFFER, vertices->size() * sizeof(vertex_t), vertices->data(), GL_STATIC_DRAW));
+		GLCall(glGenVertexArrays(1, &vMeshIDs[meshID].bufferID));
+		GLCall(glGenBuffers(1, &vMeshIDs[meshID].vertexArrayID));
+		GLCall(glGenBuffers(1, &vMeshIDs[meshID].indexArrayID));
 
-	GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vMeshIDs[meshID].indexArrayID));
-	GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices->size(),
-		indices->data(), GL_STATIC_DRAW));
+		GLCall(glBindVertexArray(vMeshIDs[meshID].bufferID));
 
-	GLCall(glVertexAttribPointer(VERTEX_ATTRIB_IDX, mesh->getVertexCount(), GL_FLOAT, GL_FALSE, sizeof(vertex_t), (void*)0));
-	GLCall(glEnableVertexAttribArray(VERTEX_ATTRIB_IDX));
+		GLCall(glBindBuffer(GL_ARRAY_BUFFER, vMeshIDs[meshID].vertexArrayID));
+		GLCall(glBufferData(GL_ARRAY_BUFFER, vertices->size() * sizeof(vertex_t), vertices->data(), GL_STATIC_DRAW));
 
-	GLCall(glVertexAttribPointer(NORMAL_ATTRIB_IDX, mesh->getVertexCount(), GL_FLOAT, GL_FALSE, sizeof(vertex_t), (void*)offsetof(vertex_t, normal)));
-	GLCall(glEnableVertexAttribArray(NORMAL_ATTRIB_IDX));
+		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vMeshIDs[meshID].indexArrayID));
+		GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indices->size(),
+							indices->data(), GL_STATIC_DRAW));
 
-	GLCall(glVertexAttribPointer(TEXT_ATTRIB_IDX, mesh->getTextCount(), GL_FLOAT, GL_FALSE, sizeof(vertex_t), (void*)offsetof(vertex_t, texture)));
-	GLCall(glEnableVertexAttribArray(TEXT_ATTRIB_IDX));
+		GLCall(glVertexAttribPointer(VERTEX_ATTRIB_IDX, mesh->getVertexCount(), GL_FLOAT, GL_FALSE, sizeof(vertex_t), (void*)0));
+		GLCall(glEnableVertexAttribArray(VERTEX_ATTRIB_IDX));
+
+		GLCall(glVertexAttribPointer(NORMAL_ATTRIB_IDX, mesh->getVertexCount(), GL_FLOAT, GL_FALSE, sizeof(vertex_t), (void*)offsetof(vertex_t, normal)));
+		GLCall(glEnableVertexAttribArray(NORMAL_ATTRIB_IDX));
+
+		GLCall(glVertexAttribPointer(TEXT_ATTRIB_IDX, mesh->getTextCount(), GL_FLOAT, GL_FALSE, sizeof(vertex_t), (void*)offsetof(vertex_t, texture)));
+		GLCall(glEnableVertexAttribArray(TEXT_ATTRIB_IDX));
+	//}
 }
 
 void GLRender::drawObject(Object* obj) {
@@ -57,7 +63,7 @@ void GLRender::drawObject(Object* obj) {
 	Mesh* mesh = obj->getComponent<Mesh>();	
 	
 	material->prepare(State::modelMatrix, State::viewMatrix, State::projectionMatrix, obj->getNormalMtx(), glfwGetTime());
-	
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	GLCall(glBindVertexArray(vMeshIDs[mesh->getMeshID()].bufferID));
 	GLCall(glDrawElements(GL_TRIANGLES, mesh->getTriangleIdxList()->size(), GL_UNSIGNED_INT, nullptr));
 }
@@ -69,11 +75,10 @@ void GLRender::drawWorld(World* world) {
 		drawObject(obj);
 	}
 
-	map<float, Object*> sorted = world->getSortedTransparent();
+	map<float, Object*>* sorted = world->getSortedTransparent();
 
-	for (auto it = sorted.rbegin(); it != sorted.rend(); ++it) {
+	for (auto it = sorted->rbegin(); it != sorted->rend(); ++it) {
 		State::modelMatrix = it->second->getModelMtx();
 		drawObject(it->second);
 	}
-
 }

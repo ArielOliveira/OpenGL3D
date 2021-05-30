@@ -1,5 +1,7 @@
 #include "Mesh.hpp"
 
+glm::uint32 Mesh::globalMeshID = 0;
+
 Mesh::Mesh() {
 	globalMeshID++;
 
@@ -42,7 +44,7 @@ void Mesh::setTextCount(const int& count) { this->textCount = count; }
 const int Mesh::getVertexCount() const { return vertexCount; }
 const int Mesh::getTextCount() const { return textCount; }
 
-glm::uint32 Mesh::getMeshID() { return meshID; }
+glm::uint32 Mesh::getMeshID() const { return meshID; }
 
 void Mesh::addVertex(const vertex_t& vertex) { vVertList->push_back(vertex); }
 
@@ -52,5 +54,5 @@ void Mesh::addTriangleIdx(const glm::int32& v1, const glm::int32& v2, const glm:
 	vIdxList->push_back(v3);
 }
 
-vector<vertex_t>* Mesh::getVertList() { return vVertList; }
-vector<glm::int32>* Mesh::getTriangleIdxList() { return vIdxList; }
+const vector<vertex_t>* Mesh::getVertList() const { return vVertList; }
+const vector<glm::int32>* Mesh::getTriangleIdxList() const { return vIdxList; }

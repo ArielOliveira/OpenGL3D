@@ -34,6 +34,6 @@ class State {
 		static glm::mat4 viewMatrix;
 		static glm::mat4 modelMatrix;
 
-		static bool initialize(GLSLShader* _defaultShader, Material* _defaultMaterial);
+		static bool initialize(GLSLShader* _defaultShader);
 };
 

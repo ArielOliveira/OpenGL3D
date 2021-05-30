@@ -149,7 +149,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="E:\OpenGL3D\build\cmake\CMakeLists.txt" />
+    <CustomBuild Include="E:\OpenGL3D\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

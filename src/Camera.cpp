@@ -1,5 +1,11 @@
 #include "Camera.hpp"
 
+Camera::Camera() : Entity() {
+	this->clearColor = glm::vec3();
+	this->upView = this->up;
+	this->projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
+}
+
 Camera::Camera(glm::vec4 position, glm::vec3 up, glm::vec3 forward, glm::vec3 clearColor, glm::mat4 projection, glm::vec3 upView) {
 	this->pos = position;
 	this->up = up;

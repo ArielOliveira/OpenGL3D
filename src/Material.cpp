@@ -1,45 +1,45 @@
 #include "Material.hpp"
 
-Material::Material() {
-	diffuseMap = State::defaultMaterial->diffuseMap;
-	specularMap = State::defaultMaterial->specularMap;
-	emissiveMap = State::defaultMaterial->emissiveMap;
+Material::Material() {									    
+	diffuseMap = new GLTexture(State::whiteMap, glm::vec2(1), 1);
+	specularMap = new GLTexture(State::whiteMap, glm::vec2(1), 1);
+	emissiveMap = new GLTexture(State::blackMap, glm::vec2(1), 1);
 
-	glm::ivec2 diffuseOffset;
-	glm::ivec2 specularOffset;
-	glm::ivec2 emissiveOffset;
-
-	shineness = 32.f;
+	shineness = 16.f;
 
 	shader = State::defaultShader;
+
+	hasTransparency = false;
 }
 
-Material::Material(GLTexture* diffuseMap, GLTexture* specularMap, GLTexture* emissiveMap, const float& shineness, GLSLShader* shader) {
+Material::Material(const GLTexture* diffuseMap, const GLTexture* specularMap, const GLTexture* emissiveMap, const float& shineness, const bool& hasTransparency, const GLSLShader* shader) {
 	this->diffuseMap = diffuseMap;
 	this->specularMap = specularMap; 
 	this->emissiveMap = emissiveMap;
 	this->shineness = shineness;
 	this->shader = shader;
+	this->hasTransparency = hasTransparency;
 }
 
-void Material::setShader(GLSLShader* shader) { this->shader = shader; }
-GLSLShader* Material::getShader() const { return shader; }
+void Material::setShader(const GLSLShader* shader) { this->shader = shader; }
+const GLSLShader& Material::getShader() const { return *shader; }
 
-void Material::setDiffuseMap(GLTexture* diffuseMap) { this->diffuseMap = diffuseMap; }
+void Material::setDiffuseMap(const GLTexture* diffuseMap) { this->diffuseMap = diffuseMap; }
 const GLTexture& Material::getDiffuseMap() const { return *diffuseMap; }
 
-void Material::setSpecularMap(GLTexture* specularMap) { this->specularMap = specularMap; }
+void Material::setSpecularMap(const GLTexture* specularMap) { this->specularMap = specularMap; }
 const GLTexture& Material::getSpecularMap() const { return *specularMap; }
 
-void Material::setShineness(float shineness) { this->shineness = shineness; }
-float Material::getShineness() { return shineness; }
+void Material::setShineness(const float& shineness) { this->shineness = shineness; }
+const float Material::getShineness() const { return shineness; }
 
-void Material::setEmissiveMap(GLTexture* emissiveMap) { this->emissiveMap = emissiveMap; }
+void Material::setEmissiveMap(const GLTexture* emissiveMap) { this->emissiveMap = emissiveMap; }
 const GLTexture& Material::getEmissiveMap() const { return *emissiveMap; }
 
+void Material::setHasTransparency(const bool& hasTransparency) { this->hasTransparency = hasTransparency; }
+const bool Material::isTransparent() const { return hasTransparency; }
+
 void Material::prepare(glm::mat4 modelMatrix, glm::mat4 viewMatrix, glm::mat4 projectionMatrix, glm::mat3 normalMatrix, double time) {
-	GLSLShader* shader = this->shader;
-	
 	shader->use();
 
 	shader->setMat4x4(shader->getLocation("model"), modelMatrix);

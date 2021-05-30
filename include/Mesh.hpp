@@ -29,7 +29,7 @@ class Mesh : public Component {
 		Mesh(vector<vertex_t>* vertexList, vector<glm::int32>* indexList, int vertexCount, int textCount);
 		~Mesh();
 
-		glm::uint32 getMeshID();
+		glm::uint32 getMeshID() const;
 
 		void addVertex(const vertex_t& vertex);
 		void addTriangleIdx(const glm::int32& v1, const glm::int32& v2, const glm::int32& v3);
@@ -40,8 +40,8 @@ class Mesh : public Component {
 		const int getVertexCount() const;
 		const int getTextCount() const;
 		
-		vector<vertex_t>* getVertList();
-		vector<glm::int32>* getTriangleIdxList();
+		const vector<vertex_t>* getVertList() const;
+		const vector<glm::int32>* getTriangleIdxList() const;
 
 		
         void* as() { return this; }

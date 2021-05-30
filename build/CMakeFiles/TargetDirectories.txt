@@ -1,3 +1,0 @@
-E:/OpenGL3D/build/CMakeFiles/OpenGL3DEngine.dir
-E:/OpenGL3D/build/CMakeFiles/ALL_BUILD.dir
-E:/OpenGL3D/build/CMakeFiles/ZERO_CHECK.dir

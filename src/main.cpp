@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <time.h>
 
 #include "Mesh.hpp"
 #include "GLSLShader.hpp"
@@ -18,11 +19,6 @@
 #include "DirectionalLight.hpp"
 #include "AssetManager.hpp"
 #include "Plane.hpp"
-
-glm::uint32 Mesh::globalMeshID = 0;
-
-std::string directory;
-World* world;
 
 int main(void) {
 	GLFWwindow* window;
@@ -39,6 +35,8 @@ int main(void) {
 		return -1;
 	}
 
+	srand(time(NULL));
+
 	/* Make the window's context current */
 	glfwMakeContextCurrent(window);
 
@@ -52,66 +50,38 @@ int main(void) {
 	glfwSetJoystickCallback(Input::joystick_callback);
 	
 	GLRender* render = new GLRender();
-	world = new World();
+	World* world = new World();
 
 	if (!render->init())
 		return -1;
-
+	
 	GLSLShader* shader = new GLSLShader(shaderPath + "vertex.shader", shaderPath + "fragment.shader");
-	Material* mat = new Material(new GLTexture(State::whiteMap, glm::vec2(1), 1),
-								 new GLTexture(State::opaqueMap, glm::vec2(1), 1),
-								 new GLTexture(State::blackMap, glm::vec2(1), 1),
-									 16.f);
-	State::initialize(shader, mat);
 
-	Plane* ground = new Plane();
-	Plane* glass = new Plane(2, new Material(new GLTexture(texturePath + "window.png"),
-										 new GLTexture(texturePath + "window.png"),
-										 new GLTexture(State::transparentMap, glm::vec2(1), 1),
-										 16.f),
-										 true);
-	
-	Plane* grass = new Plane(2, new Material(new GLTexture(texturePath + "grass.png"),
-										 new GLTexture(State::transparentMap, glm::vec2(1), 1),
-										 new GLTexture(State::transparentMap, glm::vec2(1), 1),
-										 16.f),
-										 true);
-	
-	ground->setSize(glm::vec4(10, 1, 10, 1));
-	ground->setPos(glm::vec4(-5, 0, -5, 1));
-	grass->setRot(glm::vec4(-90, 0, 0, 1));
-	
-	glass->setRot(glm::vec4(-90, 0, 0, 1));
-	glass->setPos(glm::vec4(0, 0, 2, 1));
+	if (!State::initialize(shader)) {
+		std::cerr << "Aborting" << std::endl;
+		return -1;
+	}
 
-	world->addObject(ground);
-	world->addObject(grass);
-	world->addTransparentObject(glass);
-	world->addTransparentObject(new Plane(*glass));
-	world->getTransparentObject(1)->setPos(glm::vec4(0, 0, -2, 1));
-	//world->addObject(AssetManager::loadModel(meshPath + "backpack.obj"));
-	
+	Plane* plane = new Plane(1, State::defaultMaterial);
+
+	GLTexture* landscape = new GLTexture(texturePath + "landscape.jfif");
+
+	Material* mat = new Material(landscape, &State::blackMaterial->getSpecularMap(), &State::blackMaterial->getEmissiveMap(), .0f, false);
+	plane->removeComponent<Material>();
+	plane->addComponent<Material>(mat);	
+
 	DirectionalLight* light = new DirectionalLight();
-	SpotLight* spotLight = new SpotLight();
-
 	world->addLight(light);
-	//world->addLight(spotLight);
+	world->addObject(plane);
+	render->setupObj(plane);
+	
+	//for (auto model : AssetManager::modelHash)
+		//render->setupObj(model.second);
+	
+	Camera camera;
+	camera.setPos(glm::vec4(0, 1, 1, 1));
 
-
-	// TODO: Models should be separated from entities.
-	//       We don't want to upload the same model 
-	//		 twice to the GPU
-	for (int i = 0; i < world->getNumObjects(); i++)
-		render->setupObj(world->getObject(i));
-
-	for (int i = 0; i < world->getNumTransparentObjects(); i++)
-		render->setupObj(world->getTransparentObject(i));
-
-	world->addCamera(new Camera(glm::vec4(.0f, 1.f, 3.f, 1),  // position
-		glm::vec3(.0f, 1.f, .0f), // up 
-		glm::vec3(.0f, 0.f, 1.f), // lookAt
-		glm::vec3(0, 0, 0), // clearColor
-		glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f))); // projection
+	world->addCamera(&camera);
 	world->setActiveCamera(0);
 
 	double oldTimeSinceStart = 0;
@@ -123,9 +93,6 @@ int main(void) {
 		//limpiar buffer de color
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		Camera* camera = world->getCamera(world->getActiveCamera());
-
-		spotLight->setPos(camera->getPos());
-		spotLight->setRot(camera->getRot());
 
 		world->update(deltaTime);
 		render->drawWorld(world);

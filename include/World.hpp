@@ -13,7 +13,7 @@ class World {
 		std::vector<Camera*> cameras;
 		std::vector<Light*> lights;
 
-		map<float, Object*> sortedTransparent;
+		map<float, Object*> *sortedTransparent;
 
 		int activeCamera;
 	public:
@@ -36,7 +36,7 @@ class World {
 
 		Object* getObject(size_t index);
 		Object* getTransparentObject(size_t index);
-		map<float, Object*> getSortedTransparent();
+		map<float, Object*>* getSortedTransparent();
 		Camera* getCamera(size_t index);
 		Light* getLight(size_t index);
 	
